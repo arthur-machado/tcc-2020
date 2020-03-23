@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <!-- Fim Bootstrap-->
     <!-- 'Link' arquivo CSS-->
-    <link href="CSS/logincss.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="CSS/logincss.css" >
     <!-- Fim 'link' arquivo CSS-->
 </head>
 <body>
@@ -21,7 +21,7 @@
         <form action="/examples/actions/confirmation.php" method="post">
             <h2 class="text-center">Login</h2>       
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Usuário" required="required">
+                <input type="text" class="form-control" placeholder="E-mail" required="required">
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Senha" required="required">
@@ -29,12 +29,14 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Entrar</button>
             </div>
+            <!-- Deixamos de fora por enquanto
             <div class="clearfix">
                 <label class="pull-left checkbox-inline"><input type="checkbox"> Lembre-se</label>
                 <a href="#" class="pull-right">Esqueceu sua senha?</a>
             </div> 
+            -->
             <div class="text-center">
-                <a href="register.html" class="btn">Criar uma conta</a>      
+                <a href="register.html" class="btn">Não tem uma conta? Cadastre-se</a>      
             </div>
         </form>
         

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+    <title>Cadastre-se</title>
 
     <!-- Bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <!-- Fim Bootstrap-->
     <!-- 'Link' arquivo CSS-->
-    <link href="CSS/registercss.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="CSS/registercss.css">
     <!-- Fim 'link' arquivo CSS-->
 </head>
 <script language="JavaScript" src="JS/registerjs.js"></script>
@@ -21,25 +21,27 @@
     <div class="login-form">
         <!-- precisamos criar nosso arquivo próprio de execução em php-->
         <form action="/examples/actions/confirmation.php" method="post">
-            <h2 class="text-center">Registro</h2>
+            <h2 class="text-center">Cadastre-se</h2>
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Nome" required="required" >
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Usuário" required="required" maxlength="10" >
+                <input type="text" class="form-control" placeholder="E-mail" required="required" >
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Senha" required="required">
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block" onsubmit="validarLetras()">Entrar</button>
+                <button type="submit" class="btn btn-primary btn-block" >Cadastre-se</button>
             </div>
+            <!-- Deixamos de fora por enquanto
             <div class="clearfix">
                 <label class="pull-left checkbox-inline"><input type="checkbox"> Lembre-se</label>
                 <a href="#" class="pull-right">Esqueceu sua senha?</a>
             </div> 
+            -->
             <div class="text-center">
-                <a href="register.html" class="btn">Criar uma conta</a>      
+                <a href="login.html" class="btn">Já possuo uma conta</a>      
             </div>
         </form>
         

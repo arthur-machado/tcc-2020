@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus pets</title>
+
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    <!-- Fim Bootstrap-->
+    <!-- 'Link' arquivo CSS-->
+    <link rel="stylesheet" type="text/css" href="CSS/meuspetscss.css">
+    <!-- Fim 'link' arquivo CSS-->
+</head>
+<script language="JavaScript" src="JS/registerjs.js"></script>
+
+<body>
+    <header>
+        <nav id="menu">
+            <ul>
+                <li><a href="meuspets.html"></a>Meus pets</li>
+                <li><a href="acompanhamento.html"></a>Acompanhamento</li>
+                <li><a href="perfil.html"></a>Meu perfil</li>
+            </ul>
+        </nav>
+    </header>
+   
+    <div class="login-form">
+        <!-- precisamos criar nosso arquivo próprio de execução em php -->
+        <form action="/examples/actions/confirmation.php" method="post">
+        <h2>Meus pets</h2>
+        <div id="dogs">
+
+        </div>
+            <hr>
+        <div class="text-center">
+            <a href="cadastropet.html" class="btn">+ Adicionar Pet</a>      
+        </div>
+        </form>
+       
+    </div> 
+
+</body>
+</html>
