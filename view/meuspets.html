@@ -17,15 +17,22 @@
 <script language="JavaScript" src="JS/registerjs.js"></script>
 
 <body>
-    <header>
-        <nav id="menu">
-            <ul>
-                <li><a href="meuspets.html"></a>Meus pets</li>
-                <li><a href="acompanhamento.html"></a>Acompanhamento</li>
-                <li><a href="perfil.html"></a>Meu perfil</li>
-            </ul>
-        </nav>
+    <div class="container">
+    <!--header comum a todas as pages-->
+    <header class="logo">
+        Logo
     </header>
+
+    <nav class="navbar navbar-default  navbar-fixed-bottom">
+        <div class="container-fluid">
+           <ul class = "nav justify-content-center navbar-nav">
+              <li class = "active nav-item"><a href = "#">Basics</a></li>
+              <li class="nav-item"><a href = "#">Interface</a></li>
+              <li class="nav-item"><a href = "#">Polymorphism</a></li>
+              <li class="nav-item"><a href = "#">Encapsulation</a></li>
+           </ul>
+        </div>
+     </nav>
    
     <div class="login-form">
         <!-- precisamos criar nosso arquivo próprio de execução em php -->
@@ -41,6 +48,6 @@
         </form>
        
     </div> 
-
+</div>
 </body>
 </html>
