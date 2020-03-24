@@ -8,13 +8,9 @@
 
 /* até aqui só configura o menu*/
 
-
-
-
-
 .login-form {
     
-    width: 80%px;
+    width: 80%;
     height: 100%;
     margin: 50px auto;
     top: 10px;
@@ -57,9 +53,7 @@
 
 
 body{
-    
-    background: linear-gradient(90deg,  #11AFEE 0%, rgba(9, 132, 181, 0.3)100%);
-   
+    background: linear-gradient(90deg,  #11AFEE 0%, rgba(9, 132, 181, 0.3)100%); 
 }
 
 .logo{
@@ -86,25 +80,3 @@ body{
     color: #000000;
 }
 
-.navbar {
-    position: fixed;
-    
-   
-}
-
-.navbar li{
-    
-    float: left;
-    
-}
-nav {
-    text-align: center;
-    margin: 0 auto;
-    list-style: none;
-
-}
-
-nav a{
-    display:block;
-text-align:center;
-}
