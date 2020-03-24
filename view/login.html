@@ -15,13 +15,21 @@
     <!-- Fim 'link' arquivo CSS-->
 </head>
 <body>
-  
+    <!--header comum a todas as pages-->
+    <header class="logo">
+        Logo
+    </header>
+
     <div class="login-form">
         <!-- precisamos criar nosso arquivo próprio de execução em php-->
+        
         <form action="/examples/actions/confirmation.php" method="post">
             <h2 class="text-center">Login</h2>       
             <div class="form-group">
+                
+                <!--Faltam os icons dentro dos inputs-->
                 <input type="text" class="form-control" placeholder="E-mail" required="required">
+
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Senha" required="required">
@@ -35,6 +43,8 @@
                 <a href="#" class="pull-right">Esqueceu sua senha?</a>
             </div> 
             -->
+
+            <!--Aqui vai também o login com google-->
             <div class="text-center">
                 <a href="register.html" class="btn">Não tem uma conta? Cadastre-se</a>      
             </div>
