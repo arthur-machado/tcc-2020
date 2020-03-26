@@ -1,5 +1,9 @@
 .login-form {
-    width: 80% ;
+    
+    min-width: auto;
+    padding-left: 2%;
+    padding-right: 2%;
+    max-width: 394px;
     height: 100%;
     margin: 50px auto;
     top: 10px;
@@ -50,7 +54,7 @@ body{
 .logo{
     margin-bottom: 2px;
     position: relative;
-    font-family: Blackbird;
+    font-family: 'Yellowtail', cursive;
     font-style: normal;
     font-weight: normal;
     font-size: 48px;
@@ -59,6 +63,9 @@ body{
     text-align: center;
 
     color: #FFFFFF;
+}
+.logo a{
+    color: white;
 }
 
 .text-center{

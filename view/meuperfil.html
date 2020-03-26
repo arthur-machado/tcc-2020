@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Cadastrar Pet</title>
     
     <!--Link para fontes Google-->
     <link href="https://fonts.googleapis.com/css?family=Yellowtail&display=swap" rel="stylesheet"> 
@@ -14,12 +14,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <!-- Fim Bootstrap-->
     <!-- 'Link' arquivo CSS-->
-    <link rel="stylesheet" type="text/css" href="CSS/logincss.css" >
+    <link rel="stylesheet" type="text/css" href="CSS/meuperfilcss.css" >
     <!-- Fim 'link' arquivo CSS-->
 </head>
 <body>
-     <!--header comum a todas as pages-->
-     <header class="logo">
+    <!--header comum a todas as pages-->
+    <header class="logo">
         <a href="meuspets.html">
             Cusco
         </a>
@@ -29,30 +29,41 @@
         <!-- precisamos criar nosso arquivo próprio de execução em php-->
         
         <form class="md-form" action="/examples/actions/confirmation.php" method="post">
-            <h2 class="text-center">Login</h2>       
+            <h2 class="text-left">Meu perfil</h2>       
+            
+            <!--Falta adicionar o botão para foto do usuário-->
+        
             <div class="form-group">
-                
                 <!--Faltam os icons dentro dos inputs-->
-                <input type="text" class="form-control" placeholder="E-mail" required="required">
-
+                <input type="text" class="form-control" placeholder="Nome" required="required">
             </div>
+            
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Email" required="required">
+            </div>
+
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Senha" required="required">
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">Entrar</button>
-            </div>
-            <!-- Deixamos de fora por enquanto
-            <div class="clearfix">
-                <label class="pull-left checkbox-inline"><input type="checkbox"> Lembre-se</label>
-                <a href="#" class="pull-right">Esqueceu sua senha?</a>
-            </div> 
-            -->
 
-            <!--Aqui vai também o login com google-->
-            <div class="text-center">
-                <a href="register.html" class="btn">Não tem uma conta? Cadastre-se</a>      
+            
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-secondary btn-block">Editar</button>
             </div>
+            
+            <div class="form-group">
+                <button type="reset" class="btn btn-danger btn-block">Sair da conta</button>
+            </div>
+            
+            <hr>
+            
+            
+            <div class="text-center">
+                <a href="meuspets.html" class="btn"> < Voltar</a>      
+            </div>
+        
+        </form> 
         </form>
         
     </div> 

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Pet</title>
+    
+    <!--Link para fontes Google-->
+    <link href="https://fonts.googleapis.com/css?family=Yellowtail&display=swap" rel="stylesheet"> 
+
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    <!-- Fim Bootstrap-->
+    <!-- 'Link' arquivo CSS-->
+    <link rel="stylesheet" type="text/css" href="CSS/cadastroPetcss.css" >
+    <!-- Fim 'link' arquivo CSS-->
+</head>
+<body>
+    <!--header comum a todas as pages-->
+    <header class="logo">
+        <a href="meuspets.html">
+            Cusco
+        </a>
+    </header>
+
+    <div class="login-form">
+        <!-- precisamos criar nosso arquivo próprio de execução em php-->
+        
+        <form class="md-form" action="/examples/actions/confirmation.php" method="post">
+            <h2 class="text-left">Editar Pet</h2>       
+            
+            <!--Falta adicionar o botão para foto do pet-->
+        
+            <div class="form-group">
+                <!--Faltam os icons dentro dos inputs-->
+                <input type="text" class="form-control" placeholder="Nome" required="required">
+            </div>
+            
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="Peso (em Kg)" required="required">
+            </div>
+
+            <!--Select para a raça-->
+            <div class="form-group">
+                <select class="form-control custom-select custom-select-lg mb-3" name="raca">
+                    <option selected value="raca">Raça</option>
+                    <option value="vira-lata">Vira-Lata</option>
+                    <option value="pastor">Pastor Alemão</option>
+                    <option value="salsicha">Salsicha</option>
+                    <option value="golden">Golden Retriever</option>
+                    <option value="labrador">Labrador</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <button type="reset" class="btn btn-danger btn-block">Apagar</button>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-block">Salvar</button>
+            </div>
+           
+
+            <hr>
+        <div class="text-center">
+            <a href="meuspets.html" class="btn"> < Voltar</a>      
+        </div>
+        </form> 
+        </form>
+        
+    </div> 
+    
+</body>
+</html>

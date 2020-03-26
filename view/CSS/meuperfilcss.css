@@ -1,8 +1,19 @@
+
+*{margin: 0;padding: 0;box-sizing: border-box;}
+.center{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2%;
+}
+
+/* até aqui só configura o menu*/
+
 .login-form {
+    
     min-width: auto;
-    padding-left: 2%;
-    padding-right: 2%;
-    max-width: 420px;
+    padding-left: 1%;
+    padding-right: 1%;
+    max-width: 440px;
     height: 100%;
     margin: 50px auto;
     top: 10px;
@@ -23,11 +34,14 @@
     min-height: 38px;
     border-radius: 2px;
 }
-.form-control, .input{
+.form-control, .input option select{
     background: #F5F5F5;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
+    
 }
+
+
 
 .btn {        
     font-size: 15px;
@@ -35,29 +49,38 @@
 
 }
 
-.btn-primary{
-    background: #11AFEE;
+.btn-secondary{
+    
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
+    font-weight: bold;
+}
+
+.btn-danger {
+    background:  #D01E1E;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px; 
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
     
 }
 
 
 
 body{
-    
-    background: linear-gradient(90deg,  #11AFEE 0%, rgba(9, 132, 181, 0.3)100%);
-   
+    background: linear-gradient(90deg,  #11AFEE 0%, rgba(9, 132, 181, 0.3)100%); 
 }
 
-.logo{
+.logo {
     margin-bottom: 2px;
     position: relative;
-    font-family: 'Yellowtail', cursive;
+    font-family:'Yellowtail', cursive;
     font-style: normal;
     font-weight: normal;
     font-size: 48px;
     line-height: 62px;
+
 
     text-align: center;
 
@@ -67,12 +90,13 @@ body{
     color: white;
 }
 
-.text-center{
+.text-left{
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
     line-height: 28px;
-    text-align: center;
+    text-align: left;
 
     color: #000000;
 }
+
