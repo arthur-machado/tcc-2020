@@ -1,3 +1,5 @@
+<!--PÁGINA BASE PARA TODAS AS OUTRAS (MENOS AS REFERENTES À LOGIN-->
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -14,17 +16,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <!-- Fim Bootstrap-->
     
-    <!-- 'Link' arquivo CSS-->
-    <link rel="stylesheet" type="text/css" href="CSS/meuperfilcss.css" >
+    <!-- 'Link' arquivo CSS (aqui o href será alterado com o padrão Flask)-->
+    <link rel="stylesheet" type="text/css" href="CSS/base.css" >
     <!-- Fim 'link' arquivo CSS-->
-
 </head>
 <body>
-    
-    <!--
-        Header e nav provém da página base, depois de configurado o link correto com o Flask, apagar para teste.
-    -->
-
     <!--header comum a todas as pages-->
     <header class="logo">
         <a href="meuspets.html">
@@ -66,41 +62,7 @@
         </nav>
         <!--Fim da nav-->
 
-    <div class="login-form">
-        <!-- precisamos criar nosso arquivo próprio de execução em php-->
-        
-        <form class="md-form" action="/examples/actions/confirmation.php" method="post">
-            <h2 class="text-left">Meu perfil</h2>       
-            
-            <!--Falta adicionar o botão para foto do usuário-->
 
-        
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Nome" required="required">
-            </div>
-            
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Email" required="required">
-            </div>
-
-            <div class="form-group">
-                <input type="password" class="form-control" placeholder="Senha" required="required">
-            </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-secondary btn-block">Editar</button>
-            </div>
-
-
-            <hr>
-            
-            <div class="form-group">
-                <button type="" class="btn btn-danger btn-block">Sair da conta</button> 
-            </div>
-        </form> 
-        
-        
-    </div> 
     
 </body>
 </html>

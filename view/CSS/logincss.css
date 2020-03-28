@@ -77,3 +77,14 @@ body{
 
     color: #000000;
 }
+
+/* estilo icons dos inputs*/
+span {
+    background-color: #F5F5F5;
+    border-radius: 10px; 
+}
+
+span img{
+    height: 24.22px;
+    width: 24.22px;
+}

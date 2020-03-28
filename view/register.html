@@ -30,24 +30,32 @@
         <!-- precisamos criar nosso arquivo próprio de execução em php-->
         <form action="/examples/actions/confirmation.php" method="post">
             <h2 class="text-center">Cadastre-se</h2>
+            
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Nome" required="required" >
+                <div class="input-group">
+                    <span class="input-group-addon"><img src="icons/userIcon.png" alt=""></span>
+                    <input type="text" class="form-control" placeholder="Nome" required="required" >
+                </div>
             </div>
+
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="E-mail" required="required" >
+                <div class="input-group">
+                    <span class="input-group-addon"><img src="icons/iconMail.png" alt=""></span>
+                    <input type="text" class="form-control" placeholder="E-mail" required="required" >
+                </div>
             </div>
+
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Senha" required="required">
+                <div class="input-group">
+                    <span class="input-group-addon"><img src="icons/passIcon.png" alt=""></span>
+                    <input type="password" class="form-control" placeholder="Senha" required="required">
+                </div>
             </div>
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block" >Cadastre-se</button>
             </div>
-            <!-- Deixamos de fora por enquanto
-            <div class="clearfix">
-                <label class="pull-left checkbox-inline"><input type="checkbox"> Lembre-se</label>
-                <a href="#" class="pull-right">Esqueceu sua senha?</a>
-            </div> 
-            -->
+           
             <div class="text-center">
                 <a href="login.html" class="btn">Já possuo uma conta</a>      
             </div>
