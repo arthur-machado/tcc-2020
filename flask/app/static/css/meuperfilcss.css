@@ -1,0 +1,179 @@
+
+*{margin: 0;padding: 0;box-sizing: border-box;}
+.center{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2%;
+}
+
+/* até aqui só configura o menu*/
+
+.login-form {
+    
+    min-width: auto;
+    padding-left: 1%;
+    padding-right: 1%;
+    max-width: 440px;
+    height: 100%;
+    margin: 50px auto;
+    top: 10px;
+}
+.login-form form {
+    margin-bottom: 125px;
+    background: #ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    padding: 30px;
+    border-radius: 20px;
+    
+
+}
+.login-form h2 {
+    margin: 0 0 15px;
+}
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 2px;
+}
+.form-control, .input option select{
+    background: #F5F5F5;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    
+}
+
+
+
+.btn {        
+    font-size: 15px;
+    font-weight: normal;
+
+}
+
+.btn-secondary{
+    
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.btn-danger {
+    background:  #D01E1E;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px; 
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    
+}
+
+
+
+body{
+    background: linear-gradient(90deg,  #11AFEE 0%, rgba(9, 132, 181, 0.3)100%); 
+}
+
+.logo {
+    margin-bottom: 2px;
+    position: relative;
+    font-family:'Yellowtail', cursive;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 48px;
+    line-height: 62px;
+
+
+    text-align: center;
+
+    color: #FFFFFF;
+}
+.logo a{
+    color: white;
+}
+
+.text-left{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: left;
+
+    color: #000000;
+}
+
+/* Todo CSS da barra de navegação, não mexer*/
+.barra .nav{
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    padding-bottom: 0%;
+}
+
+.nav {
+    list-style:none;
+    margin:0;
+    padding:0;
+    text-align:center;
+
+}
+
+.nav li{
+    display: inline-block;
+    padding-bottom: 2px;   
+}
+
+
+.nav a{
+    display: inline-block;
+    padding-right: 10px;
+    color: #6d6d6b;
+    font-weight: initial;
+}
+
+
+.iconNavbar{
+    width: 37px;
+    height: 37px;
+}
+
+.btnMeusPets {
+    padding: 5px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 3px;
+}
+.btnMeusPets:hover{
+    background-color:  #e0e0e0;;
+}
+
+.btnMeusPets a{
+    padding-top: 3px;
+}
+
+.btnMeusPets img{
+    display: list-item;
+    align-content: center;
+    position: relative;
+    left: 18px;
+    padding-bottom: 5px;
+}
+
+.nav li a{
+    padding-bottom: 0%;
+}
+
+#meusPets {
+    color: #11AFEE;
+}
+
+#iconHeart{
+    left: 40px;
+    width: 38px;
+    height: 38px;
+}
+
+#userIcon {
+    left: 13px;
+}
