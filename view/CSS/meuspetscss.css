@@ -87,7 +87,7 @@ body{
     color: #000000;
 }
 
-/* Todo CSS da barra de navegação, não mexer*/
+/* Todo CSS da barra de navegação, NÃO MEXER*/
 .barra .nav{
     background-color: rgb(255, 255, 255);
     overflow: hidden;
@@ -162,5 +162,56 @@ body{
     left: 13px;
 }
 
+/*div dos cachorros cadastrados */
 
+.divPet {
+    width: 90%;
+    height: 100px;
+    position: relative;
+    left: 14px;
+
+    background: #E9EAED;
+    box-sizing: border-box;
+    border-radius: 20px;
+}
+
+/*Aqui é pra mexer na foto do cachorro que vai ficar do lado dele*/
+.fotoPet {
+    position: relative;
+    height: 100px;
+    width: 32%;
+    border-right: 0.3px solid black;
+}
+
+.fotoPet img {
+    position: relative;
+    width: 57px;
+    height: 57px;
+    left: 20%;
+    top: 20%;
+}
+
+/* FALTA ARRUMAR ISSO AQUI*/
+.infoPet {
+    position: fixed;
+    font-size: 12px;
+    height: 87px;
+    width: 64%;
+    left: 36%;
+    bottom: 100%;
+}
+
+.divPet .infoPet {
+    position: relative;
+   
+}
+
+.infoPet label {
+    line-height: 6px;
+    
+}
+.infoPet h4 {
+    line-height: 6px;
+    font-weight: bold;
+}
 

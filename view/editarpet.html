@@ -69,16 +69,35 @@
         <form class="md-form" action="/examples/actions/confirmation.php" method="post">
             <h2 class="text-left">Editar Pet</h2>       
             
-            <!--Falta adicionar o botão para foto do pet-->
+            <!--Input para add foto do pet-->
+            <!--Aqui dá para fazer um mini script para adicionar a foto atual do pet (isso é só pra bonito)-->
+            <form class="md-form">
+                <div class="file-field">
+                  <div class="mb-4">
+                    <img src="icons/iconAddFoto.png"
+                      class="rounded-circle z-depth-1-half avatar-pic" alt="">
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <div class="btn btn-mdb-color btn-rounded float-left">
+                      <input type="file" id="inputFile" >
+                     
+                      <small>Insira uma foto para seu pet</small>
+                    </div>
+                  </div>
+                </div>
         
-            <div class="form-group">
-                <!--Faltam os icons dentro dos inputs-->
-                <input type="text" class="form-control" placeholder="Nome" required="required">
-            </div>
-            
-            <div class="form-group">
-                <input type="number" class="form-control" placeholder="Peso (em Kg)" required="required">
-            </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Nome" name="nome-pet" required="required">
+                </div>
+                
+                <div class="form-group">
+                    <input type="number" class="form-control" placeholder="Idade" name="idade-pet" required="required">
+                </div>
+    
+                <div class="form-group">
+                    <input type="number" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">
+                </div>
+    
 
             <!--Select para a raça-->
             <div class="form-group">

@@ -68,7 +68,8 @@
         
         <form class="md-form" action="/examples/actions/confirmation.php" method="post" enctype="multipart/form-data">
             <h2 class="text-left">Novo Pet</h2>       
-            
+             
+            <!--Input para add foto do pet-->
             <form class="md-form">
               <div class="file-field">
                 <div class="mb-4">
@@ -86,11 +87,15 @@
             
         
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Nome" required="required">
+                <input type="text" class="form-control" placeholder="Nome" name="nome-pet" required="required">
             </div>
             
             <div class="form-group">
-                <input type="number" class="form-control" placeholder="Peso (em Kg)" required="required">
+                <input type="number" class="form-control" placeholder="Idade" name="idade-pet" required="required">
+            </div>
+
+            <div class="form-group">
+                <input type="number" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">
             </div>
 
             <!--Select para a raça-->
