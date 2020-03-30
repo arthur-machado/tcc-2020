@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Pet</title>
+    <title>Cusco - Editar Pet</title>
     
     <!--Link para fontes Google-->
     <link href="https://fonts.googleapis.com/css?family=Yellowtail&display=swap" rel="stylesheet"> 
@@ -14,13 +14,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <!-- Fim Bootstrap-->
     <!-- 'Link' arquivo CSS-->
-    <link rel="stylesheet" type="text/css" href="CSS/cadastroPetcss.css" >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/cadastroPetcss.css') }}" >
     <!-- Fim 'link' arquivo CSS-->
 </head>
 <body>
-     <!--
-        Header e nav provém da página base, depois de configurado o link correto com o Flask, apagar para teste.
-    -->
 
     <!--header comum a todas as pages-->
     <header class="logo">
@@ -36,14 +33,14 @@
                 <li>
                     <div class="btnMeusPets">
                         <a id="meusPets" href="meuspets.html"> 
-                            <img class="iconNavbar" src="icons/petIconBlue.png" alt="">Meus Pets
+                            <img class="iconNavbar" src="/static/img/petIconBlue.png" alt="">Meus Pets
                         </a>
                     </div>
                 </li>
     
                 <li>
                     <div class="btnMeusPets">
-                        <a id= "acompanhamento" href="#"><img class="iconNavbar" id="iconHeart" src="icons/iconHeart.png" alt="">
+                        <a id= "acompanhamento" href="#"><img class="iconNavbar" id="iconHeart" src="/static/img/iconHeart.png" alt="">
                             Acompanhamento
                         </a>
                     </div>
@@ -52,7 +49,7 @@
                 <li>
                     <div class="btnMeusPets">
                         <a id="meuperfil" href="meuperfil.html">
-                            <img class="iconNavbar" id="userIcon" src="icons/userIcon.png">
+                            <img class="iconNavbar" id="userIcon" src="/static/img/userIcon.png">
                             Meu Perfil
                             
                         </a>
@@ -74,7 +71,7 @@
             <form class="md-form">
                 <div class="file-field">
                   <div class="mb-4">
-                    <img src="icons/iconAddFoto.png"
+                    <img src="/static/img/iconAddFoto.png"
                       class="rounded-circle z-depth-1-half avatar-pic" alt="">
                   </div>
                   <div class="d-flex justify-content-center">

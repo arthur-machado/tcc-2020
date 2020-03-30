@@ -14,7 +14,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <!-- Fim Bootstrap-->
     <!-- 'Link' arquivo CSS-->
-    <link rel="stylesheet" type="text/css" href="CSS/logincss.css" >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/logincss.css') }}" >
     <!-- Fim 'link' arquivo CSS-->
 </head>
 <body>
@@ -34,7 +34,7 @@
                 
                 
                 <div class="input-group">
-                    <span class="input-group-addon"><img src="icons/userIcon.png" alt=""></span>
+                    <span class="input-group-addon"><img src="/static/img/userIcon.png" alt=""></span>
                     <input type="text" class="form-control" placeholder="E-mail" required="required">
                 </div>
 
@@ -42,7 +42,7 @@
 
             <div class="form-group">
                 <div class="input-group">
-                    <span class="input-group-addon"><img src="icons/passIcon.png" alt=""></span>
+                    <span class="input-group-addon"><img src="/static/img/passIcon.png" alt=""></span>
                     <input type="password" class="form-control" placeholder="Senha" required="required">
                 </div>
             </div>
