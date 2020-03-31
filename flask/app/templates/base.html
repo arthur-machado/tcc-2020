@@ -23,7 +23,7 @@
 <body>
     <!--header comum a todas as pages-->
     <header class="logo">
-        <a href="meuspets.html">
+        <a href="{{ url_for('meuspets') }}">
             Cusco
         </a>
     </header>
@@ -34,7 +34,7 @@
             <ul class="nav">
                 <li>
                     <div class="btnMeusPets">
-                        <a id="meusPets" href="meuspets.html"> 
+                        <a id="meusPets" href="{{ url_for('meuspets') }}"> 
                             <img class="iconNavbar" src="/static/img/petIconBlue.png" alt="">Meus Pets
                         </a>
                     </div>
@@ -50,7 +50,7 @@
     
                 <li>
                     <div class="btnMeusPets">
-                        <a id="meuperfil" href="meuperfil.html">
+                        <a id="meuperfil" href="{{ url_for('meuperfil') }}">
                             <img class="iconNavbar" id="userIcon" src="/static/img/userIcon.png">
                             Meu Perfil
                             
