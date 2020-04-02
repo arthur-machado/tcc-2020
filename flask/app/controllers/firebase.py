@@ -20,4 +20,4 @@ auth = firebase.auth()
 #instancia para o real time database
 db = firebase.database()
 #defini uma chave secreta para a sessao
-app.secret_key = os.urandom(24)
+#app.secret_key = os.urandom(24)
