@@ -1,12 +1,20 @@
+#importa os metodos
 from flask import render_template
 from app import app
 
+from app.models.forms import RegisterForm
+
+
+#defini rotas e seus respetivos acontecimentos
 @app.route("/registro/")
 def registro():
-    return render_template('register.html')
+    form = RegisterForm()
+    if form.validate_on_submit():
+        print("Nome: %s \n E-mail: %s \n Senha: %s" % (form.username.data))
+    return render_template('register.html', form=form)
 
 @app.route("/")
-@app.route("/login/")
+@app.route("/login/", methods=["GET", "POST"])
 def login():
     return render_template('login.html')
 

@@ -1,6 +1,8 @@
+#importa o Pyrebase4
 import pyrebase
 
-config = {
+#configuracao do firebase
+configFirebase = {
     "apiKey": "AIzaSyCDvWv2912C2QyUslTfKhK1xUIl5kWdD4U",
     "authDomain": "tcc2020-78c46.firebaseapp.com",
     "databaseURL": "https://tcc2020-78c46.firebaseio.com",
@@ -11,7 +13,11 @@ config = {
     "measurementId": "G-E0XTQ7F2LS"
 }
 
-firebase = pyrebase.initialize_app(config)
-
+#inicializa o firebase
+firebase =  pyrebase.initialize_app(configFirebase)
+#instancia de autenticacao
+auth = firebase.auth()
+#instancia para o real time database
 db = firebase.database()
-
+#defini uma chave secreta para a sessao
+app.secret_key = os.urandom(24)
