@@ -16,8 +16,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/registercss.css') }}">
     <!-- Fim 'link' arquivo CSS-->
 </head>
+<!--
 <script language="JavaScript" src="JS/registerjs.js"></script>
-
+-->
 <body>
      <!--header comum a todas as pages-->
      <header class="logo">
@@ -29,12 +30,14 @@
     <div class="login-form">
         <!-- precisamos criar nosso arquivo próprio de execução em php-->
         <form action="" method="POST">
+            <!-- campo de seguraça -->
+            {{ form.csrf_token }}
             <h2 class="text-center">Cadastre-se</h2>
             
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon"><img src="/static/img/userIcon.png" alt=""></span>
-                    {{ form.username(class="form-control", placeholder"Nome", required) }}
+                    {{ form.username(class="form-control", placeholder="Nome") }}
                     <!--<input type="text" class="form-control" placeholder="Nome" required="required" >-->
                 </div>
             </div>
@@ -42,7 +45,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon"><img src="/static/img/iconMail.png" alt=""></span>
-                    {{ form.email(class="form-control", placeholder"E-mail", required) }}
+                    {{ form.email(class="form-control", placeholder="E-mail") }}
                     <!--<input type="text" class="form-control" placeholder="E-mail" required="required" >-->
                 </div>
             </div>
@@ -50,7 +53,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon"><img src="/static/img/passIcon.png" alt=""></span>
-                    {{ form.username(class="form-control", placeholder"Senha", required) }}
+                    {{ form.password(class="form-control", placeholder="Senha") }}
                     <!--<input type="password" class="form-control" placeholder="Senha" required="required">-->
                 </div>
             </div>

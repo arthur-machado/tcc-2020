@@ -6,11 +6,11 @@ from app.models.forms import RegisterForm
 
 
 #defini rotas e seus respetivos acontecimentos
-@app.route("/registro/")
+@app.route("/registro/", methods=["GET", "POST"])
 def registro():
     form = RegisterForm()
     if form.validate_on_submit():
-        print("Nome: %s \n E-mail: %s \n Senha: %s" % (form.username.data))
+        print("Nome: %s \nE-mail: %s \nSenha: %s" % (form.username.data, form.email.data, form.password.data))
     return render_template('register.html', form=form)
 
 @app.route("/")
