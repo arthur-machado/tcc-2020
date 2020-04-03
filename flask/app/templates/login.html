@@ -26,16 +26,17 @@
     </header>
 
     <div class="login-form">
-        <!-- precisamos criar nosso arquivo próprio de execução em php-->
-        
-        <form class="md-form" action="/examples/actions/confirmation.php" method="post">
+        <form action="" method="POST">
+        <!-- campo de seguraça -->
+        {{ form.csrf_token }}
             <h2 class="text-center">Login</h2>       
             <div class="form-group">
                 
                 
                 <div class="input-group">
                     <span class="input-group-addon"><img src="/static/img/userIcon.png" alt=""></span>
-                    <input type="text" class="form-control" placeholder="E-mail" required="required">
+                    {{ form.email(class="form-control", placeholder="E-mail") }}
+                    <!--<input type="text" class="form-control" placeholder="E-mail" required="required">-->
                 </div>
 
             </div>
@@ -43,7 +44,8 @@
             <div class="form-group">
                 <div class="input-group">
                     <span class="input-group-addon"><img src="/static/img/passIcon.png" alt=""></span>
-                    <input type="password" class="form-control" placeholder="Senha" required="required">
+                    {{ form.password(class="form-control", placeholder="Senha") }}
+                    <!--<input type="password" class="form-control" placeholder="Senha" required="required">-->
                 </div>
             </div>
 

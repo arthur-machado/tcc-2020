@@ -3,7 +3,7 @@ from flask import render_template, redirect
 from app import app
 
 from app.models.forms import RegisterForm, LoginForm
-from app.controllers.firebase import InsertUser
+from app.controllers.firebase import user
 
 #defini rotas e seus respetivos acontecimentos
 @app.route("/registro/", methods=["GET", "POST"])
@@ -13,7 +13,7 @@ def registro():
         name = form.username.data
         email = form.email.data
         password = form.password.data
-        InsertUser(name, email, password)
+        user.InsertUser(name, email, password)
         return redirect('/login')
     return render_template('register.html', form=form)
 
@@ -22,10 +22,10 @@ def registro():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        name = form.username.data
         email = form.email.data
-      
-    return render_template('login.html')
+        password = form.password.data
+        user.Login(email, password)
+    return render_template('login.html', form=form)
 
 @app.route("/cadastropet/")
 def cadastropet():
