@@ -3,7 +3,7 @@ from flask import render_template
 from app import app
 
 from app.models.forms import RegisterForm
-from app.controllers.firebase import db
+from app.controllers.firebase import InsertUser
 
 #defini rotas e seus respetivos acontecimentos
 @app.route("/registro/", methods=["GET", "POST"])
@@ -13,9 +13,7 @@ def registro():
         name = form.username.data
         email = form.email.data
         password = form.password.data
-
-        db.child("users").push(name, email, password)      
-        print("BANCO ATUALIZADO!")
+        InsertUser(name, email, password)
     return render_template('register.html', form=form)
 
 @app.route("/")
