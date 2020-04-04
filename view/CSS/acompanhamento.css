@@ -17,7 +17,7 @@
     height: 100%;
     margin: 50px auto;
     top: 10px;
-
+    padding-top: 5px;
     
 }
 .login-form form {
@@ -25,11 +25,11 @@
     background: #ffffff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
     padding: 30px;
-    padding-top: 13px;
+    padding-left: 37px;
+    padding-top: 12px;
     border-radius: 20px;
     
-    /*Essa cor vai variar conforme o estado do cão, depois criar condições para isso */
-    background: linear-gradient(180deg, #53CB1A -48.41%, rgb(255, 255, 255) 100%);
+   
 }
 
 .login-form h2 {
@@ -58,7 +58,32 @@
     
 }
 
+.btn-secondary{
+    
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: left;
+    margin: 0px;
+    background-color: #F5F5F5;
+    color: black;
+    
+}
 
+.btn-secondary #img-btn{
+    width: 37px;
+    height: 48px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.btn-secondary #img-btn2{
+    width: 37px;
+    height: 30px;
+    margin: 0px;
+    padding: 0px;
+    padding-right: 9px;
+}
 
 body{
     background: linear-gradient(90deg,  #11AFEE 0%, rgba(9, 132, 181, 0.3)100%); 
@@ -90,6 +115,8 @@ body{
 
     color: #000000;
 }
+
+
 
 /* Todo CSS da barra de navegação, NÃO MEXER*/
 .barra .nav{
@@ -175,7 +202,7 @@ body{
 
 .dog1 .fotoDog {
     position: relative;
-    left: 48%;
+    left: 46%;
     
 }
 
@@ -188,10 +215,59 @@ body{
 }
 
 .estado {
-    display: inline;
+    color: #53CB1A;
+    position: relative;
+    left: 14px;
+    margin: 0px;
+    padding-top: 4%;
+    padding-right: 0%;
+    padding-left: 0%;
 }
 
- #separador {
-    border-left: 6px solid green;
-    height: 50px;
+ .estado #separador {
+    border-left: 1px solid #7a7a7a;
+    height: 45px;
+    border-top: 0px; 
+    display: inline-block;
+    position: relative;
+    margin: 0px;
+    top: 7px;
+
+}
+
+.estado h1 {
+    font-weight: bold;    
+    display: inline;
+    position: relative;
+    padding-right: 4%;
+    
+    
+}
+
+.estado .atividade {
+    width: 48px;
+    height: 42px;
+    position: relative;
+    top: -9px;
+    padding-left: 16px;
+    padding-right: 5px;
+    
+}
+
+.estado-mensagem {
+    padding: 12px;
+}
+
+.estado-mensagem #iconOk{
+    height: 35px;
+    display: inline-block;
+    position: relative;
+    left: 10%;
+}
+
+.estado-mensagem p{
+    position: relative;
+    display: inline;
+    left: 12%;
+    
 }

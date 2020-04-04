@@ -68,8 +68,9 @@
     <!--Fim da nav-->
 
     <div class="login-form">
-        <!-- precisamos criar nosso arquivo próprio de execução em php -->
-        <form action="/examples/actions/confirmation.php" method="post">
+       
+                                                                        <!--Essa cor aqui varia conforme a condição do cão-->
+        <form action="" method="post"  style="background: linear-gradient(180deg, #53CB1A -70.41%, rgb(255, 255, 255) 87%);">
       
         
         <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
@@ -84,10 +85,25 @@
                     <hr id="separador">
                     <img src="icons/iconDogCaminhaBem.png" alt="" class="atividade">
                     <label for="img">Caminhada</label>
+
+                    <div class="estado-mensagem">
+                        <img src="icons/iconOK.png" alt="" id="iconOk">
+                        <p>No momento, tudo certo!</p>
+                    </div>
                 </div>
 
+                <div class="form-group">
+                    <a href="historico.html">
+                        <button type="" class="btn btn-secondary btn-block"><img src="icons/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
+                    </a>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-secondary btn-block"><img src="icons/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
+                </div>
             </div>
 
+            
             
             <hr>
 
@@ -96,6 +112,47 @@
         </div>
         </form>
        
+        <form action="" method="post"  style="background: linear-gradient(180deg, #53CB1A -70.41%, rgb(255, 255, 255) 87%);">
+      
+        
+            <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
+                <div class="dog1">
+                    <div class="fotoDog">
+                        <img src="icons/petIcon.png" alt="">
+                        <h5>Pet1</h5>
+                    </div>
+    
+                    <div class="estado">
+                        <h1>55 BPM</h1>
+                        <hr id="separador">
+                        <img src="icons/iconDogCaminhaBem.png" alt="" class="atividade">
+                        <label for="img">Caminhada</label>
+    
+                        <div class="estado-mensagem">
+                            <img src="icons/iconOK.png" alt="" id="iconOk">
+                            <p>No momento, tudo certo!</p>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <a href="historico.html">
+                            <button type="" class="btn btn-secondary btn-block"><img src="icons/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
+                        </a>
+                    </div>
+    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary btn-block"><img src="icons/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
+                    </div>
+                </div>
+    
+                
+                
+                <hr>
+    
+            <div class="text-center">
+                <a href="editarpet.html" class="btn">Editar informações</a>      
+            </div>
+            </form>
     </div> 
 </div>
 
