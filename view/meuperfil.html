@@ -39,7 +39,7 @@
                 <li>
                     <div class="btnMeusPets">
                         <a id="meusPets" href="meuspets.html"> 
-                            <img class="iconNavbar" src="icons/petIconBlue.png" alt="">Meus Pets
+                            <img class="iconNavbar" src="icons/petIconGray.png" alt="">Meus Pets
                         </a>
                     </div>
                 </li>
@@ -55,7 +55,7 @@
                 <li>
                     <div class="btnMeusPets">
                         <a id="meuperfil" href="meuperfil.html">
-                            <img class="iconNavbar" id="userIcon" src="icons/userIcon.png">
+                            <img class="iconNavbar" id="userIcon" src="icons/userIconBlue.png">
                             Meu Perfil
                             
                         </a>
@@ -73,7 +73,11 @@
             <h2 class="text-left">Meu perfil</h2>       
             
             <!--Falta adicionar o botão para foto do usuário-->
-
+            <div class="addFoto">
+                <input type="file" id="inputFile" style="display: none;">
+                <img src="icons/iconAddFoto.png" class="btn-inputFoto" alt="" onclick="document.getElementById('inputFile').click();">
+                <label for="btn-inputFoto" onclick="document.getElementById('inputFile').click();">+ Adicionar foto</label>
+            </div>
         
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Nome" required="required">

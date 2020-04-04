@@ -164,7 +164,7 @@ body{
     padding-bottom: 0%;
 }
 
-#meusPets {
+#meuperfil {
     color: #11AFEE;
 }
 
@@ -176,4 +176,25 @@ body{
 
 #userIcon {
     left: 13px;
+    
+}
+
+.addFoto .btn-inputFoto {
+    position: relative;
+    left: 135px;
+    padding-bottom: 15px;
+    height: 82px;
+    
+}
+
+.addFoto label {
+    position: relative;
+    top: 36px;
+    margin: 0px;
+    left: 42px;
+    color: #11AFEE;
+}
+
+.addFoto {
+    padding-bottom: 20px;
 }

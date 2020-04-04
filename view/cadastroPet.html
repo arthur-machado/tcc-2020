@@ -70,20 +70,13 @@
             <h2 class="text-left">Novo Pet</h2>       
              
             <!--Input para add foto do pet-->
-            <form class="md-form">
-              <div class="file-field">
-                <div class="mb-4">
-                  <img src="icons/iconAddFoto.png"
-                    class="rounded-circle z-depth-1-half avatar-pic" alt="">
-                </div>
-                <div class="d-flex justify-content-center">
-                  <div class="btn btn-mdb-color btn-rounded float-left">
-                    <input type="file" id="inputFile" >
-                   
-                    <small>Insira uma foto para seu pet</small>
-                  </div>
-                </div>
-              </div>
+            <!--Ainda falta script js para receber a foto e mostrar preview-->
+            <div class="addFoto">
+                <input type="file" id="inputFile" style="display: none;">
+                <img src="icons/iconAddFoto.png" class="btn-inputFoto" alt="" onclick="document.getElementById('inputFile').click();">
+                <label for="btn-inputFoto" onclick="document.getElementById('inputFile').click();">+ Adicionar foto</label>
+            </div>
+            
             
         
             <div class="form-group">
@@ -123,7 +116,7 @@
         <div class="text-center">
             <a href="meuspets.html" class="btn"> < Voltar</a>      
         </div>
-        </form> 
+         
         </form>
         
     </div> 

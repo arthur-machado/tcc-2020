@@ -17,16 +17,21 @@
     height: 100%;
     margin: 50px auto;
     top: 10px;
+
+    
 }
 .login-form form {
     margin-bottom: 125px;
     background: #ffffff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
     padding: 30px;
+    padding-top: 13px;
     border-radius: 20px;
     
-
+    /*Essa cor vai variar conforme o estado do cão, depois criar condições para isso */
+    background: linear-gradient(180deg, #53CB1A -48.41%, rgb(255, 255, 255) 100%);
 }
+
 .login-form h2 {
     margin: 0 0 15px;
 }
@@ -34,14 +39,11 @@
     min-height: 38px;
     border-radius: 2px;
 }
-.form-control, .input option select{
+.form-control, .input{
     background: #F5F5F5;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    
 }
-
-
 
 .btn {        
     font-size: 15px;
@@ -49,20 +51,10 @@
 
 }
 
-.btn-success{
-    background: #53CB1A;
+.btn-primary{
+    background: #11AFEE;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    font-weight: bold;
-}
-
-.btn-danger {
-    background:  #D01E1E;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-    border-radius: 10px; 
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
     
 }
 
@@ -72,7 +64,7 @@ body{
     background: linear-gradient(90deg,  #11AFEE 0%, rgba(9, 132, 181, 0.3)100%); 
 }
 
-.logo {
+.logo{
     margin-bottom: 2px;
     position: relative;
     font-family:'Yellowtail', cursive;
@@ -80,7 +72,6 @@ body{
     font-weight: normal;
     font-size: 48px;
     line-height: 62px;
-
 
     text-align: center;
 
@@ -100,7 +91,7 @@ body{
     color: #000000;
 }
 
-/* Todo CSS da barra de navegação, não mexer*/
+/* Todo CSS da barra de navegação, NÃO MEXER*/
 .barra .nav{
     background-color: rgb(255, 255, 255);
     overflow: hidden;
@@ -161,7 +152,7 @@ body{
     padding-bottom: 0%;
 }
 
-#meusPets {
+#acompanhamento {
     color: #11AFEE;
 }
 
@@ -175,43 +166,32 @@ body{
     left: 13px;
 }
 
-.file-field{
-    position: relative;
-    padding: 2%;
-    left: 37%;
+
+/* Icon*/
+.dog1 .fotoDog img{
+    width: 35px;
+    height: 35px;
 }
 
-.file-field img{
-    width: 80px;
-    height: 80px;
-}
-
-.file-field input {
+.dog1 .fotoDog {
     position: relative;
-    right: 9%;
-}
-.file-field small {
-    right: 40%;
-    position: relative;
-    padding: 4px;
-}
-
- .addFoto .btn-inputFoto {
-    position: relative;
-    left: 135px;
-    padding-bottom: 15px;
-    height: 82px;
+    left: 48%;
     
 }
 
-.addFoto label {
+.dog1 .fotoDog h5 {
+    font-weight: bold;
+    margin: 4px;
     position: relative;
-    top: 36px;
-    margin: 0px;
-    left: 42px;
-    color: #11AFEE;
+    right: 2%;
+
 }
 
-.addFoto {
-    padding-bottom: 20px;
+.estado {
+    display: inline;
+}
+
+ #separador {
+    border-left: 6px solid green;
+    height: 50px;
 }
