@@ -24,8 +24,14 @@
             Cusco
         </a>
     </header>
-
+    
     <div class="login-form">
+        {% if s %}
+			<div class="alert alert-danger">
+				<h2>{{error}}</h2>
+			</div>
+        {% endif %}
+        
         <form action="" method="POST">
         <!-- campo de seguraça -->
         {{ form.csrf_token }}
@@ -35,7 +41,7 @@
                 
                 <div class="input-group">
                     <span class="input-group-addon"><img src="/static/img/userIcon.png" alt=""></span>
-                    {{ form.email(class="form-control", placeholder="E-mail") }}
+                    {{ form.email(class="form-control", placeholder="Usuário") }}
                     <!--<input type="text" class="form-control" placeholder="E-mail" required="required">-->
                 </div>
 
