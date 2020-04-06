@@ -22,11 +22,12 @@
     margin-bottom: 125px;
     background: #ffffff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-    padding: 30px;
+    padding: 20px;
     border-radius: 20px;
-    
+    padding-top: 10px;
 
 }
+
 .login-form h2 {
     margin: 0 0 15px;
 }
@@ -34,14 +35,11 @@
     min-height: 38px;
     border-radius: 2px;
 }
-.form-control, .input option select{
+.form-control, .input{
     background: #F5F5F5;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    
 }
-
-
 
 .btn {        
     font-size: 15px;
@@ -49,20 +47,10 @@
 
 }
 
-.btn-secondary{
-    
+.btn-primary{
+    background: #11AFEE;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    font-weight: bold;
-}
-
-.btn-danger {
-    background:  #D01E1E;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-    border-radius: 10px; 
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
     
 }
 
@@ -72,7 +60,7 @@ body{
     background: linear-gradient(90deg,  #11AFEE 0%, rgba(9, 132, 181, 0.3)100%); 
 }
 
-.logo {
+.logo{
     margin-bottom: 2px;
     position: relative;
     font-family:'Yellowtail', cursive;
@@ -80,8 +68,6 @@ body{
     font-weight: normal;
     font-size: 48px;
     line-height: 62px;
-
-
     text-align: center;
 
     color: #FFFFFF;
@@ -100,7 +86,7 @@ body{
     color: #000000;
 }
 
-/* Todo CSS da barra de navegação, não mexer*/
+/* Todo CSS da barra de navegação, NÃO MEXER*/
 .barra .nav{
     background-color: rgb(255, 255, 255);
     overflow: hidden;
@@ -145,9 +131,6 @@ body{
     padding-left: 20px;
     padding-bottom: 3px;
 }
-.btnMeusPets:hover{
-    background-color:  #e0e0e0;;
-}
 
 .btnMeusPets a{
     padding-top: 3px;
@@ -165,7 +148,7 @@ body{
     padding-bottom: 0%;
 }
 
-#meuperfil {
+#acompanhamento {
     color: #11AFEE;
 }
 
@@ -177,25 +160,78 @@ body{
 
 #userIcon {
     left: 13px;
-    
 }
 
-.addFoto .btn-inputFoto {
+/*div dos cachorros cadastrados */
+
+.divPet {
+    width: 90%;
+    height: 100px;
     position: relative;
-    left: 135px;
-    padding-bottom: 15px;
-    height: 82px;
+    left: 14px;
     
+    background: #E9EAED;
+    box-sizing: border-box;
+    border-radius: 20px;
 }
 
-.addFoto label {
+/*Aqui é pra mexer na foto do cachorro que vai ficar do lado dele*/
+.fotoPet {
     position: relative;
-    top: 36px;
+    height: 100px;
+    width: 32%;
+    border-right: 0.3px solid black;
+}
+
+.fotoPet img {
+    position: relative;
+    width: 57px;
+    height: 57px;
+    left: 20%;
+    top: 20%;
+}
+
+.infoPet {
+    position: fixed;
+    font-size: 12px;
+    height: 87px;
+    width: 64%;
+    left: 36%;
+    bottom: 100%;
+}
+
+.divPet .infoPet {
+    position: relative;
+   
+}
+
+.infoPet label {
+    line-height: 6px;
+    
+}
+.infoPet h4 {
+    line-height: 6px;
+    font-weight: bold;
+}
+
+/* Icon*/
+
+.dog1 .fotoDog img{
+    width: 35px;
+    height: 35px;
+}
+
+.dog1 .fotoDog {
+    position: relative;
+    left: 46%;
     margin: 0px;
-    left: 42px;
-    color: #11AFEE;
+    padding: 8px;
 }
 
-.addFoto {
-    padding-bottom: 20px;
+.dog1 .fotoDog h5 {
+    font-weight: bold;
+    margin: 4px;
+    position: relative;
+    right: 2%;
+
 }

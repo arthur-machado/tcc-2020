@@ -18,7 +18,7 @@
     margin: 50px auto;
     top: 10px;
     padding-top: 5px;
-    
+    z-index: 2;
 }
 .login-form form {
     margin-bottom: 125px;
@@ -127,6 +127,7 @@ body{
     width: 100%;
     left: 0;
     padding-bottom: 0%;
+    z-index: 1;
 }
 
 .nav {
@@ -215,13 +216,14 @@ body{
 }
 
 .estado {
-    color: #53CB1A;
+   
     position: relative;
     left: 14px;
     margin: 0px;
     padding-top: 4%;
     padding-right: 0%;
     padding-left: 0%;
+    
 }
 
  .estado #separador {
@@ -269,5 +271,6 @@ body{
     position: relative;
     display: inline;
     left: 12%;
+    
     
 }

@@ -96,6 +96,7 @@ body{
     width: 100%;
     left: 0;
     padding-bottom: 0%;
+    z-index: 1;
 }
 
 .nav {
@@ -214,3 +215,23 @@ body{
     font-weight: bold;
 }
 
+/* Icon*/
+
+.dog1 .fotoDog img{
+    width: 35px;
+    height: 35px;
+}
+
+.dog1 .fotoDog {
+    position: relative;
+    left: 46%;
+    margin: 0px;
+}
+
+.dog1 .fotoDog h5 {
+    font-weight: bold;
+    margin: 4px;
+    position: relative;
+    right: 2%;
+
+}
