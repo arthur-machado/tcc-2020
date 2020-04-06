@@ -38,7 +38,7 @@ def login():
         if user.Login() == True:
             return redirect('/meuspets')
         else:
-            render_template('/login', error="Credenciais inválidas")
+            render_template('login.html', error="Credenciais inválidas")
     return render_template('login.html', form=form)
 
 @app.route("/cadastropet/")

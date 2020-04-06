@@ -26,16 +26,17 @@ class User():
         return result
         
     def Login(self):
-        #pega somente o 'user' do email
+        #pega os dados digitados
+            #pega somente o 'user' do email
             #achar outra solucao
         split = self.email.split('@')
         #defini o 'validador'
         ticket = False
         #faz a consulta dos dados no banco
-        usernameTicket = self.firebase.get('/Users', split[0]+'/Email')
-        passwordTicket = self.firebase.get('/Users', split[0]+'/Password')
+        usernameTicket = firebase.get('/Users/', split[0]+'/Email')
+        passwordTicket = firebase.get('/Users/', split[0]+'/Password')
         #defini as condições
-        if split[0] == emailTicket and self.email != None and self.password == passwordTicket and self.password != None:
+        if split[0] == usernameTicket and self.email != None and self.password == passwordTicket and self.password != None:
             ticket = True
         elif split[0] == None or passwordTicket == None:
             ticket = False
