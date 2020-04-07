@@ -18,9 +18,18 @@ def registro():
         user.email = form.email.data
         user.password = form.password.data
         #'chama' o metodo InsertUser
-        user.InsertUser()
+        validacao = user.InsertUser()
         #redireciona para página de login
-        return redirect(url_for('login'))
+            #if validacao == "Usuário e E-mail já cadastrados":
+            #   flash('Usuário e E-mail já cadastrados')
+        if validacao == "Usuário já cadastrado":
+            flash('Usuário já cadastrado')
+            #elif validacao == "E-mail já cadastrado"
+            #    flash('E-mail já cadastrado')
+        elif validacao == "Erro":
+            flash('Erro')
+        else:
+            return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
 @app.route("/", methods=["GET", "POST"])
@@ -41,13 +50,28 @@ def login():
             flash('Credenciais inválidas')
     return render_template('login.html', form=form)
 
+@app.route("/meuperfil/", methods=["GET", "POST"])
+def meuperfil():
+    #'chama' o formulário
+#    form = ProfileForm()
+#    if form.validate_on_submit():
+        #'chama' a classe
+#        user = User()
+        #pega os dados do campo
+#        user.username = form.username.data
+#        user.email = form.email.data
+#        user.password = form.password.data
+        #'chama' a funcao Editar
+#        if user.Login() == True:
+#            return redirect(url_for('meuspets'))
+#        else:
+#            flash('Credenciais inválidas')
+    return render_template('meuperfil.html')
+
 @app.route("/cadastropet/")
 def cadastropet():
     return render_template('cadastroPet.html')
 
-@app.route("/meuperfil/")
-def meuperfil():
-    return render_template('meuperfil.html')
 
 @app.route("/meuspets/")
 def meuspets():

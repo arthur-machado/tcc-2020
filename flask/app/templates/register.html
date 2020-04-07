@@ -32,6 +32,20 @@
             <!-- campo de seguraça -->
             {{ form.csrf_token }}
             <h2 class="text-center">Cadastre-se</h2>
+
+                        <!-- Se houver, carrega mensagens flash-->
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <div class="alert alert-warning">
+                            <ul class=flashes>
+                            {% for category, message in messages %}
+                                <li class="{{ category }}">{{ message }}</li>
+                            {% endfor %}
+                            </ul>
+                            </div> 
+                        {% endif %}
+                    {% endwith %}
+    
             
             <div class="form-group">
                 <div class="input-group">
