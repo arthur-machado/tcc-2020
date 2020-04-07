@@ -8,37 +8,31 @@ firebase =  firebase.FirebaseApplication("https://tcc2020-78c46.firebaseio.com/"
 
 #defini classes, metodos
 class User():
-    name = ""
+    username = ""
     email = ""
     password = ""
     #metodo para cadastrar usuario
     def InsertUser(self):
         data = {
-            'Name': self.name,
+            'Username': self.username,
             'Email': self.email,
             'Password': self.password
         }
-        #pega somente o 'user' do email
-            #achar outra solucao
-        split = self.email.split('@')
         #envia os dados para o firebase
-        result = firebase.put('Users/', split[0], data)
+        result = firebase.put('Users/', self.username, data)
         return result
         
     def Login(self):
         #pega os dados digitados
-            #pega somente o 'user' do email
-            #achar outra solucao
-        split = self.email.split('@')
         #defini o 'validador'
         ticket = False
         #faz a consulta dos dados no banco
-        usernameTicket = firebase.get('/Users/', split[0]+'/Email')
-        passwordTicket = firebase.get('/Users/', split[0]+'/Password')
+        usernameTicket = firebase.get('/Users/', self.username+'/Username')
+        passwordTicket = firebase.get('/Users/', self.username+'/Password')
         #defini as condições
-        if split[0] == usernameTicket and self.email != None and self.password == passwordTicket and self.password != None:
+        if self.username == usernameTicket and self.username != None and self.password == passwordTicket and self.password != None:
             ticket = True
-        elif split[0] == None or passwordTicket == None:
+        elif self.username == None or passwordTicket == None:
             ticket = False
         else:
             ticket = False

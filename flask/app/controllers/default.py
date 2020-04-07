@@ -1,5 +1,5 @@
 #importa os metodos
-from flask import render_template, redirect
+from flask import render_template, redirect, url_for, flash
 from app import app
 
 from app.models.forms import RegisterForm, LoginForm
@@ -14,16 +14,16 @@ def registro():
         #'chama' a classe
         user = User()
         #pega os dados informados pelo usuario
-        user.name = form.username.data
+        user.username = form.username.data
         user.email = form.email.data
         user.password = form.password.data
         #'chama' o metodo InsertUser
         user.InsertUser()
         #redireciona para página de login
-        return redirect('/login')
+        return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     #'chama' o formulário
@@ -32,13 +32,13 @@ def login():
         #'chama' a classe
         user = User()
         #pega os dados informados pelo usuario
-        user.email = form.email.data
+        user.username = form.username.data
         user.password = form.password.data
         #'chama' a funcao Login
         if user.Login() == True:
-            return redirect('/meuspets')
+            return redirect(url_for('meuspets'))
         else:
-            render_template('login.html', error="Credenciais inválidas")
+            flash('Credenciais inválidas')
     return render_template('login.html', form=form)
 
 @app.route("/cadastropet/")
