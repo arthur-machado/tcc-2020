@@ -8,9 +8,13 @@ firebase =  firebase.FirebaseApplication("https://tcc2020-78c46.firebaseio.com/"
 
 #defini classes, metodos
 class User():
+    #dados comuns do usuario
     username = ""
     email = ""
     password = ""
+    #variavel que armazena o usuario 'logado' no momento
+    logged = ""
+
     #metodo para cadastrar usuario
     def InsertUser(self):
         data = {
@@ -40,7 +44,7 @@ class User():
     def Login(self):
         #defini o 'validador'
         ticket = False
-        #faz a consulta dos dados no banco
+        #faz a consulta dos dados na base
         usernameTicket = firebase.get('/Users/', self.username+'/Username')
         passwordTicket = firebase.get('/Users/', self.username+'/Password')
         #defini as condições entre os dados digitados e os encontrados na base de dados
@@ -52,6 +56,14 @@ class User():
             ticket = False
         return ticket
 
+    def ReadUser(self):
+        #faz a consulta dos dados na base
+        FRusername = firebase.get('/Users/', self.logged+'/Username')
+        FRemail = firebase.get('/Users/', self.logged+'/Email')
+        FRpassword = firebase.get('/Users/', self.logged+'/Password')
+        #registra os dados lidos na base na lista
+        user_data_received = [FRusername, FRemail, FRpassword]  
+        return user_data_received
     
         
 

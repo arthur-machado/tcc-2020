@@ -11,7 +11,7 @@ def registro():
     #'chama' o formulário
     form = RegisterForm()
     if form.validate_on_submit():
-        #'chama' a classe
+        #'chama' a classe User
         user = User()
         #pega os dados informados pelo usuario
         user.username = form.username.data
@@ -38,35 +38,29 @@ def login():
     #'chama' o formulário
     form = LoginForm()
     if form.validate_on_submit():
-        #'chama' a classe
+        #'chama' a classe User
         user = User()
         #pega os dados informados pelo usuario
         user.username = form.username.data
         user.password = form.password.data
         #'chama' a funcao Login
         if user.Login() == True:
+            user.logged = user.username
             return redirect(url_for('meuspets'))
         else:
-            flash('Credenciais inválidas')
+            flash('Usuário e/ou senha inválidos')
     return render_template('login.html', form=form)
 
 @app.route("/meuperfil/", methods=["GET", "POST"])
 def meuperfil():
     #'chama' o formulário
-#    form = ProfileForm()
-#    if form.validate_on_submit():
-        #'chama' a classe
-#        user = User()
-        #pega os dados do campo
-#        user.username = form.username.data
-#        user.email = form.email.data
-#        user.password = form.password.data
-        #'chama' a funcao Editar
-#        if user.Login() == True:
-#            return redirect(url_for('meuspets'))
-#        else:
-#            flash('Credenciais inválidas')
-    return render_template('meuperfil.html')
+    form = ProfileForm()
+    #'chama' a classe User
+    user = User()
+    #'chama' a funcao ReadUser
+    user_data = user.ReadUser()
+
+    return render_template('meuperfil.html', form=form)
 
 @app.route("/cadastropet/")
 def cadastropet():
