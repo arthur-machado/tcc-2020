@@ -1,6 +1,8 @@
 #importa os metodos
 from firebase import firebase
 from flask import jsonify, make_response, request, redirect
+from app.models.standard import StandardId
+from flask_login import login_user
 
 
 #configuracao do firebase
@@ -12,8 +14,23 @@ class User():
     username = ""
     email = ""
     password = ""
-    #variavel que armazena o usuario 'logado' no momento
-    logged = ""
+    
+
+    #metodos do flask-login
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+                
+    def get_id(self):
+        return str(StandardId(self.username))
 
     #metodo para cadastrar usuario
     def InsertUser(self):
@@ -50,6 +67,8 @@ class User():
         #defini as condições entre os dados digitados e os encontrados na base de dados
         if self.username == usernameTicket and self.username != None and self.password == passwordTicket and self.password != None:
             ticket = True
+            #envia o username para a 'padronizacao' em codigo ascii e executa o metodo flask
+            login_user(StandardId(self.username))
         elif self.username == None or passwordTicket == None:
             ticket = False
         else:
@@ -58,11 +77,13 @@ class User():
 
     def ReadUser(self):
         #faz a consulta dos dados na base
-        FRusername = firebase.get('/Users/', self.logged+'/Username')
-        FRemail = firebase.get('/Users/', self.logged+'/Email')
-        FRpassword = firebase.get('/Users/', self.logged+'/Password')
+        print('USUÁRIO BUSCADO: %s' % (logged))  
+        FRusername = firebase.get('/Users/', logged+'/Username')
+        FRemail = firebase.get('/Users/', logged+'/Email')
+        FRpassword = firebase.get('/Users/', logged+'/Password')
         #registra os dados lidos na base na lista
-        user_data_received = [FRusername, FRemail, FRpassword]  
+        user_data_received = [FRusername, FRemail, FRpassword]
+        print('DADOS FIREBASE: %s' % (user_data_received))  
         return user_data_received
     
         
