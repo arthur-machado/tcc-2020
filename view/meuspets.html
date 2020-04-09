@@ -69,7 +69,7 @@
 
     <div class="login-form">
         <!-- precisamos criar nosso arquivo próprio de execução em php -->
-        <form action="/examples/actions/confirmation.php" method="post">
+        <div class="box">
         <h2 class="text-left">Meus pets</h2>
         
         <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
@@ -79,7 +79,7 @@
                   <img src="icons/petIcon.png" alt="">  
                 </div>
 
-                <div class="infoPet">
+                <div class="infoPet" onclick="location.href = 'acompanhamento.html'; ">
                     <h4>Cachorro 1</h4>
                     <p> 
                         <label>Idade:</label> 2 anos <br>
@@ -97,7 +97,7 @@
         <div class="text-center">
             <a href="cadastropet.html" class="btn">+ Adicionar Pet</a>      
         </div>
-        </form>
+    </div>
        
     </div> 
 </div>

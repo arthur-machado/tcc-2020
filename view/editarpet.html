@@ -66,36 +66,29 @@
     <div class="login-form">
         <!-- precisamos criar nosso arquivo próprio de execução em php-->
         
-        <form class="md-form" action="/examples/actions/confirmation.php" method="post">
+        <form class="md-form" action="/examples/actions/confirmation.php" method="GET">
             <h2 class="text-left">Editar Pet</h2>       
             
             <!--Input para add foto do pet-->
             <!--Aqui dá para fazer um mini script para adicionar a foto atual do pet (isso é só pra bonito)-->
             <form class="md-form">
-                <div class="file-field">
-                  <div class="mb-4">
-                    <img src="icons/iconAddFoto.png"
-                      class="rounded-circle z-depth-1-half avatar-pic" alt="">
-                  </div>
-                  <div class="d-flex justify-content-center">
-                    <div class="btn btn-mdb-color btn-rounded float-left">
-                      <input type="file" id="inputFile" >
-                     
-                      <small>Insira uma foto para seu pet</small>
-                    </div>
-                  </div>
+                <div class="addFoto">
+                    <input type="file" id="inputFile" style="display: none;">
+                    <img src="icons/iconAddFoto.png" class="btn-inputFoto" alt="" onclick="document.getElementById('inputFile').click();">
+                    <label for="btn-inputFoto" onclick="document.getElementById('inputFile').click();">+ Adicionar foto</label>
                 </div>
+            
         
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Nome" name="nome-pet" required="required">
                 </div>
                 
                 <div class="form-group">
-                    <input type="number" class="form-control" placeholder="Idade" name="idade-pet" required="required">
+                    <input type="number" class="form-control" placeholder="Idade (em meses)" name="idade-pet" required="required">
                 </div>
     
                 <div class="form-group">
-                    <input type="number" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">
+                    <input type="number" step="0.1" min="0" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">
                 </div>
     
 
