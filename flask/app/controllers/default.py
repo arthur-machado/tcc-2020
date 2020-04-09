@@ -1,17 +1,9 @@
 #importa os metodos
 from flask import render_template, redirect, url_for, flash
-#from flask_login import login_user
-from app import app, lm
+from app import app
 
 from app.models.forms import RegisterForm, LoginForm, ProfileForm
-from app.controllers.firebase import User
-from app.models.standard import StandardId
-
-@lm.user_loader
-def load_user(id):
-    #'chama' a classe User
-    user = User()
-    return (StandardId(id=user.username))
+from app.controllers.firebase import User, logged
 
 #defini rotas e seus respetivos acontecimentos
 @app.route("/registro/", methods=["GET", "POST"])
@@ -53,8 +45,6 @@ def login():
         user.password = form.password.data
         #'chama' a funcao Login
         if user.Login() == True:
-            #envia o username para a 'padronizacao' em codigo ascii e executa o metodo flask
-            #login_user(StandardId(user.username))
             return redirect(url_for('meuspets'))
         else:
             flash('Usuário e/ou senha inválidos')
@@ -68,8 +58,8 @@ def meuperfil():
     user = User()
     #'chama' a funcao ReadUser
     user_data = user.ReadUser()
-    print('DADOS DO USUÁRIO: %s' % (user_data))
     if user_data != None:
+        print('DADOS DO USUÁRIO: %s' % (user_data))
         return render_template('meuperfil.html', form=form, user_data=user_data)
     else:
         flash('Dados do usuário não encontrados')

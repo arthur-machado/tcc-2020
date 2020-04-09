@@ -1,12 +1,11 @@
 #importa os metodos
 from firebase import firebase
-from flask import jsonify, make_response, request, redirect
-from app.models.standard import StandardId
-from flask_login import login_user
-
 
 #configuracao do firebase
 firebase =  firebase.FirebaseApplication("https://tcc2020-78c46.firebaseio.com/", None)
+
+#'guarda' o usuário logado
+logged = ""
 
 #defini classes, metodos
 class User():
@@ -14,23 +13,6 @@ class User():
     username = ""
     email = ""
     password = ""
-    
-
-    #metodos do flask-login
-    @property
-    def is_authenticated(self):
-        return True
-
-    @property
-    def is_active(self):
-        return True
-
-    @property
-    def is_anonymous(self):
-        return False
-                
-    def get_id(self):
-        return str(StandardId(self.username))
 
     #metodo para cadastrar usuario
     def InsertUser(self):
@@ -67,8 +49,10 @@ class User():
         #defini as condições entre os dados digitados e os encontrados na base de dados
         if self.username == usernameTicket and self.username != None and self.password == passwordTicket and self.password != None:
             ticket = True
-            #envia o username para a 'padronizacao' em codigo ascii e executa o metodo flask
-            login_user(StandardId(self.username))
+            #'puxa' a variavel global para ser usada dentro do metodo
+            global logged
+            #defini o usuario que 'logou'
+            logged = self.username
         elif self.username == None or passwordTicket == None:
             ticket = False
         else:
@@ -76,14 +60,14 @@ class User():
         return ticket
 
     def ReadUser(self):
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
         #faz a consulta dos dados na base
-        print('USUÁRIO BUSCADO: %s' % (logged))  
         FRusername = firebase.get('/Users/', logged+'/Username')
         FRemail = firebase.get('/Users/', logged+'/Email')
         FRpassword = firebase.get('/Users/', logged+'/Password')
         #registra os dados lidos na base na lista
         user_data_received = [FRusername, FRemail, FRpassword]
-        print('DADOS FIREBASE: %s' % (user_data_received))  
         return user_data_received
     
         
