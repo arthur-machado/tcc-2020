@@ -62,11 +62,26 @@
 
     <div class="login-form">
         
-        <!--MUDAR ARQUIVO DE EXECUÇÃO-->
-        <form class="md-form" action="/examples/actions/confirmation.php" method="post" enctype="multipart/form-data">
-            <h2 class="text-left">Novo Pet</h2>       
+        <form action="" method="POST" >
+            <!-- campo de seguraça -->
+            {{ form.csrf_token }}
+
+            <h2 class="text-left">Novo Pet</h2> 
+            
+               <!-- Se houver, carrega mensagens do flash-->
+               {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="alert alert-warning">
+                        <ul class=flashes>
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                        </div> 
+                    {% endif %}
+                {% endwith %}
              
-            <!--Input para add foto do pet-->
+            <!--Input para add foto do pet DEPOIS ARRUMAR
             <form class="md-form">
               <div class="file-field">
                 <div class="mb-4">
@@ -81,23 +96,28 @@
                   </div>
                 </div>
               </div>
-            
+            -->
         
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Nome" name="nome-pet" required="required">
+                {{ form.dogname(class="form-control", placeholder="Nome do cão") }}
+                <!--<input type="text" class="form-control" placeholder="Nome" name="nome-pet" required="required">-->
             </div>
             
             <div class="form-group">
-                <input type="number" class="form-control" placeholder="Idade" name="idade-pet" required="required">
+                {{ form.age(class="form-control", placeholder="Idade") }}
+                <!--<input type="number" class="form-control" placeholder="Idade" name="idade-pet" required="required">-->
             </div>
 
             <div class="form-group">
-                <input type="number" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">
+                {{ form.weight(class="form-control", placeholder="Peso") }}
+                <!--<input type="number" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">-->
             </div>
 
             <!--Select para a raça-->
+
             <div class="form-group">
-                <select class="form-control custom-select custom-select-lg mb-3" name="raca">
+                {{ form.breed(class="form-control custom-select custom-select-lg mb-3") }}
+                <!--<select class="form-control custom-select custom-select-lg mb-3" name="raca">
                     <option selected value="raca">Raça</option>
                     <option value="vira-lata">Vira-Lata</option>
                     <option value="pastor">Pastor Alemão</option>
@@ -105,12 +125,13 @@
                     <option value="golden">Golden Retriever</option>
                     <option value="labrador">Labrador</option>
                     <option value="outro">Outro</option>
-                </select>
+                </select>-->
             </div>
             
             <div class="form-group">
                 <button type="reset" class="btn btn-danger btn-block">Apagar</button>
             </div>
+            
             <div class="form-group">
                 <button type="submit" class="btn btn-success btn-block">Salvar</button>
             </div>

@@ -2,14 +2,14 @@
 from flask import render_template, redirect, url_for, flash
 from app import app
 
-from app.models.forms import RegisterForm, LoginForm, ProfileForm
-from app.controllers.firebase import User, logged
+from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm
+from app.controllers.firebase import User, logged, Dog
 
 #defini rotas e seus respetivos acontecimentos
 @app.route("/registro/", methods=["GET", "POST"])
 def registro():
     #'chama' o formulário
-    form = RegisterForm()
+    form = RegisterUserForm()
     if form.validate_on_submit():
         #'chama' a classe User
         user = User()
@@ -59,15 +59,37 @@ def meuperfil():
     #'chama' a funcao ReadUser
     user_data = user.ReadUser()
     if user_data != None:
-        print('DADOS DO USUÁRIO: %s' % (user_data))
         return render_template('meuperfil.html', form=form, user_data=user_data)
     else:
         flash('Dados do usuário não encontrados')
     return render_template('meuperfil.html', form=form)
 
-@app.route("/cadastropet/")
+@app.route("/cadastropet/", methods=["GET", "POST"])
 def cadastropet():
-    return render_template('cadastroPet.html')
+    #'chama' o formulário
+    form = RegisterDogForm()
+    if form.validate_on_submit():
+        #'chama' a classe Dog
+        dog = Dog()
+        #pega os dados informados pelo usuario
+        dog.dogname = form.dogname.data
+        dog.age = form.age.data
+        dog.weight = form.weight.data
+        dog.breed = form.breed.data
+        #'chama' o metodo InsertDog
+        validacao = dog.InsertDog()
+        #redireciona para página de login
+            #if validacao == "Usuário e E-mail já cadastrados":
+            #   flash('Usuário e E-mail já cadastrados')
+        if validacao == "Cão já cadastrado":
+            flash('Cão já cadastrado')
+            #elif validacao == "E-mail já cadastrado"
+            #    flash('E-mail já cadastrado')
+        elif validacao == "Erro":
+            flash('Erro')
+        elif validacao == None:
+            return redirect(url_for('meuspets'))
+    return render_template('cadastroPet.html', form=form)
 
 @app.route("/meuspets/")
 def meuspets():

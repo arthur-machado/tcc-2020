@@ -70,8 +70,36 @@ class User():
         user_data_received = [FRusername, FRemail, FRpassword]
         return user_data_received
     
-        
+class Dog():
+    #dadis comuns ao cao
+    #adicionar foto
+    dogname=""
+    age=""
+    weight=""
+    breed=""
 
+    def InsertDog(self):
+        data = {
+            'Dog_Name': self.dogname,
+            'Age': self.age,
+            'Weight': self.weight,
+            'Breed': self.breed
+        }
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
+        #defini o 'resultado'
+        result = ""
+        #pesquisa se já existe o cao cadastrado
+        dognameTicket = firebase.get('/Users/', logged+'/Dogs/Dog_Name')
+        print("RETORNO: %s" %(dognameTicket))
+        if dognameTicket == self.dogname:
+            result = "Cão já cadastrado"
+        elif dognameTicket == None:
+            #envia os dados para o firebase
+            result = firebase.put('Users/'+logged+'/Dogs', self.dogname, data)
+        else:
+            result = "Erro"
+        return result
 
         
 
