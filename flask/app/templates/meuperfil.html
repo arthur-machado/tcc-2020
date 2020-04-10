@@ -87,13 +87,13 @@
 
         
             <div class="form-group">
-                {{ form.username(class="form-control", placeholder="Usuário", value=user_data[0]) }}
+                {{ form.username(class="form-control", placeholder="Usuário", disabled="", value=user_data[0]) }}
                 <!--<input type="text" class="form-control" placeholder="Usuário" required="required">-->
             </div>
             
             <div class="form-group">
                 <!--<input type="text" class="form-control" placeholder="Email" required="required" >-->
-                {{ form.email(class="form-control", placeholder="E-mail", value=user_data[1]) }}
+                {{ form.email(class="form-control", placeholder="E-mail") user_data[1] }}
             </div>
 
             <div class="form-group">
@@ -105,12 +105,12 @@
                 <button type="submit" class="btn btn-secondary btn-block">Editar</button>
             </div>
 
-
             <hr>
-            
+            <!--
             <div class="form-group">
-                <button type="" class="btn btn-danger btn-block">Sair da conta</button> 
+                <button type="submit" name="action" value="sair" class="btn btn-danger btn-block">Sair da conta</button> 
             </div>
+            -->
         </form> 
         
         

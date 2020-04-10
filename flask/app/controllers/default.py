@@ -1,5 +1,5 @@
 #importa os metodos
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from app import app
 
 from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm
@@ -40,7 +40,7 @@ def login():
     if form.validate_on_submit():
         #'chama' a classe User
         user = User()
-        #pega os dados informados pelo usuario
+        #'pega' os dados informados pelo usuario
         user.username = form.username.data
         user.password = form.password.data
         #'chama' a funcao Login
@@ -56,13 +56,31 @@ def meuperfil():
     form = ProfileForm()
     #'chama' a classe User
     user = User()
-    #'chama' a funcao ReadUser
+    #'chama' o metodoo ReadUser
     user_data = user.ReadUser()
-    if user_data != None:
-        return render_template('meuperfil.html', form=form, user_data=user_data)
-    else:
-        flash('Dados do usuário não encontrados')
-    return render_template('meuperfil.html', form=form)
+    #'bota' os valores recebidos nos campos
+    form.username.data = user_data[0]
+    form.email.data = user_data[1]
+    form.password.data = user_data[2]
+
+#   if user_data == None:
+#       print("EU LI")
+#       flash('Dados do usuário não encontrados')
+#        return render_template('meuperfil.html', form=form, user_data=user_data)  
+    if form.validate_on_submit():
+        #'referencia' os dados encontrados nos campos na classe
+        user.username = form.username.data
+        user.email = 'funciona'
+        user.password = form.password.data
+        print("Nome: %s \nEmail: %s \nPassword: %s" % (user.username, user.email, user.password))
+        #chama o metodo EditUser
+        if user.EditUser() == "ok":
+            flash('Dados alterados')
+        else:
+            flash('Não foi possível realizar a edição')
+
+    return render_template('meuperfil.html', form=form)        
+#   return render_template('meuperfil.html', form=form, user_data=user_data)
 
 @app.route("/cadastropet/", methods=["GET", "POST"])
 def cadastropet():

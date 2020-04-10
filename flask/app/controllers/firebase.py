@@ -70,6 +70,18 @@ class User():
         user_data_received = [FRusername, FRemail, FRpassword]
         return user_data_received
     
+    def EditUser(self):
+        #defini os dados a serem editados
+        data = {
+            'Username': self.username,
+            'Email': self.email,
+            'Password': self.password
+        }
+        #edita os dados na base de dados
+        firebase.put('/Users/', self.username, data)
+        result = "ok"
+        return result
+        
 class Dog():
     #dadis comuns ao cao
     #adicionar foto
@@ -91,7 +103,6 @@ class Dog():
         result = ""
         #pesquisa se já existe o cao cadastrado
         dognameTicket = firebase.get('/Users/', logged+'/Dogs/Dog_Name')
-        print("RETORNO: %s" %(dognameTicket))
         if dognameTicket == self.dogname:
             result = "Cão já cadastrado"
         elif dognameTicket == None:
