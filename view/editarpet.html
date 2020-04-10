@@ -75,7 +75,7 @@
                 <div class="addFoto">
                     <input type="file" id="inputFile" style="display: none;">
                     <img src="icons/iconAddFoto.png" class="btn-inputFoto" alt="" onclick="document.getElementById('inputFile').click();">
-                    <label for="btn-inputFoto" onclick="document.getElementById('inputFile').click();">+ Adicionar foto</label>
+                    <label id="textoPreview" for="btn-inputFoto" onclick="document.getElementById('inputFile').click();">+ Adicionar foto</label>
                 </div>
             
         
@@ -122,5 +122,34 @@
         
     </div> 
     
+    <!--script pra adicionar preview foto de usuário-->
+    <script>
+        const inputFile = document.getElementById("inputFile")
+        const addFoto = document.getElementsByClassName("addFoto")
+        const fotoPreview = document.querySelector(".btn-inputFoto")
+        const textoPreview = document.getElementById("textoPreview")
+
+        inputFile.addEventListener("change", function(){
+            const arquivo = this.files[0];
+
+            if (arquivo){
+                const fileReader = new FileReader();
+
+                textoPreview.style.left = "52px"
+                textoPreview.textContent = "* Alterar a foto"
+                fotoPreview.style.left = "140px"
+                
+                
+                fileReader.addEventListener("load", function(){
+                    
+                    
+                    fotoPreview.setAttribute("src", this.result);
+                })
+
+                fileReader.readAsDataURL(arquivo)
+            }
+        })
+
+    </script>
 </body>
 </html>
