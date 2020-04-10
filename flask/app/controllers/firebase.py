@@ -71,14 +71,15 @@ class User():
         return user_data_received
     
     def EditUser(self):
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
         #defini os dados a serem editados
         data = {
-            'Username': self.username,
+            'Username': logged,
             'Email': self.email,
             'Password': self.password
         }
-        #edita os dados na base de dados
-        firebase.put('/Users/', self.username, data)
+        firebase.put('Users/', logged, data)
         result = "ok"
         return result
         
@@ -112,6 +113,20 @@ class Dog():
             result = "Erro"
         return result
 
-        
+    def ReadDog(self):
+        #defini result
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
+        #pesquisa se já existe algum cao cadastrado
+        dognameTicket = firebase.get('/Users/', logged+'/Dogs/Dog_Name')
+        if dognameTicket == None:
+            result
+        #faz a consulta dos dados na base
+        FRdog_name = firebase.get('/Users/'+logged+'/Dogs/Dog_Name')
+        FRemail = firebase.get('/Users/', logged+'/Email')
+        FRpassword = firebase.get('/Users/', logged+'/Password')
+        #registra os dados lidos na base na lista
+        user_data_received = [FRusername, FRemail, FRpassword]
+        return user_data_received
 
     

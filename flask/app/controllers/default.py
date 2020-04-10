@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, flash, request
 from app import app
 
 from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm
-from app.controllers.firebase import User, logged, Dog
+from app.controllers.firebase import User, Dog
 
 #defini rotas e seus respetivos acontecimentos
 @app.route("/registro/", methods=["GET", "POST"])
@@ -58,29 +58,13 @@ def meuperfil():
     user = User()
     #'chama' o metodoo ReadUser
     user_data = user.ReadUser()
-    #'bota' os valores recebidos nos campos
-    form.username.data = user_data[0]
-    form.email.data = user_data[1]
-    form.password.data = user_data[2]
-
-#   if user_data == None:
-#       print("EU LI")
-#       flash('Dados do usuário não encontrados')
-#        return render_template('meuperfil.html', form=form, user_data=user_data)  
+    #testa se ocorreu algum problema ao encontrar dados do usuário
+    if user_data == None:
+       flash('Dados do usuário não encontrados')
     if form.validate_on_submit():
-        #'referencia' os dados encontrados nos campos na classe
-        user.username = form.username.data
-        user.email = 'funciona'
-        user.password = form.password.data
-        print("Nome: %s \nEmail: %s \nPassword: %s" % (user.username, user.email, user.password))
-        #chama o metodo EditUser
-        if user.EditUser() == "ok":
-            flash('Dados alterados')
-        else:
-            flash('Não foi possível realizar a edição')
+        return redirect(url_for('logout'))
 
-    return render_template('meuperfil.html', form=form)        
-#   return render_template('meuperfil.html', form=form, user_data=user_data)
+    return render_template('meuperfil.html', form=form, user_data=user_data)
 
 @app.route("/cadastropet/", methods=["GET", "POST"])
 def cadastropet():

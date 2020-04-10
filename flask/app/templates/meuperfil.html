@@ -85,32 +85,34 @@
 
             <!--Falta adicionar o botão para foto do usuário-->
 
-        
+            <h4 class="text-center">Usuário</h4>     
             <div class="form-group">
                 {{ form.username(class="form-control", placeholder="Usuário", disabled="", value=user_data[0]) }}
                 <!--<input type="text" class="form-control" placeholder="Usuário" required="required">-->
             </div>
-            
+
+            <h4 class="text-center">E-mail</h4>
             <div class="form-group">
+                {{ form.email(class="form-control", placeholder="E-mail", disabled="", value=user_data[1]) }}
                 <!--<input type="text" class="form-control" placeholder="Email" required="required" >-->
-                {{ form.email(class="form-control", placeholder="E-mail") user_data[1] }}
             </div>
 
+            <h4 class="text-center">Senha</h4>
             <div class="form-group">
-                {{ form.password(class="form-control", placeholder="Senha", value=user_data[2]) }}
+                {{ form.password(class="form-control", placeholder="Senha", disabled="", value=user_data[2]) }}
                 <!--<input type="password" class="form-control" placeholder="Senha" required="required" >-->
             </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-secondary btn-block">Editar</button>
-            </div>
-
-            <hr>
             <!--
+            <div class="form-group">
+                <button type="submit" class="btn btn-secondary btn-block">Editar meu perfil</button>
+            </div>
+            -->
+            <hr>
+  
             <div class="form-group">
                 <button type="submit" name="action" value="sair" class="btn btn-danger btn-block">Sair da conta</button> 
             </div>
-            -->
+            
         </form> 
         
         

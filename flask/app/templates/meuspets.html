@@ -69,6 +69,19 @@
         <!-- precisamos criar nosso arquivo próprio de execução em php -->
         <form action="/examples/actions/confirmation.php" method="post">
         <h2 class="text-left">Meus pets</h2>
+
+                    <!-- Se houver, carrega mensagens do flash-->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="alert alert-warning">
+                        <ul class=flashes>
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                        </div> 
+                    {% endif %}
+                {% endwith %}
         
         <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
             <div class="divPet">
