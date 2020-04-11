@@ -85,19 +85,22 @@
         
         <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
             <div class="divPet">
-               
+                
                 <div class="fotoPet">
                   <img src="/static/img/petIcon.png" alt="">  
                 </div>
-
+                
                 <div class="infoPet">
-                    <h4>Cachorro 1</h4>
+                    <h4>{{ dog_data[0] }}</h4>
                     <p> 
-                        <label>Idade:</label> 2 anos <br>
-                        <label>Peso:</label> 4.5 Kg <br>
-                        <label>Raça:</label> Vira-Lata <br>
-                        <label>Última freq. card.:</label> 75 BPM
+                        <label>Última freq. card.:</label> Não configurado
                     </p>
+                    <!--<p> 
+                        <label>Idade:</label>{{ dog_data[1] }}<br>
+                        <label>Peso:</label>{{ dog_data[2] }}<br>
+                        <label>Raça:</label>{{ dog_data[3] }} <br>
+                        <label>Última freq. card.:</label> Não configurado
+                    </p>-->
                 </div>
             </div>
 

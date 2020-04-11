@@ -1,5 +1,7 @@
 #importa os metodos
 from firebase import firebase
+import json
+
 
 #configuracao do firebase
 firebase =  firebase.FirebaseApplication("https://tcc2020-78c46.firebaseio.com/", None)
@@ -84,7 +86,7 @@ class User():
         return result
         
 class Dog():
-    #dadis comuns ao cao
+    #dados comuns ao cao
     #adicionar foto
     dogname=""
     age=""
@@ -114,19 +116,28 @@ class Dog():
         return result
 
     def ReadDog(self):
-        #defini result
+        #defini o result
+        result = ""
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
         #pesquisa se já existe algum cao cadastrado
-        dognameTicket = firebase.get('/Users/', logged+'/Dogs/Dog_Name')
+        dognameTicket = firebase.get('/Users/', logged+'/Dogs')
         if dognameTicket == None:
-            result
-        #faz a consulta dos dados na base
-        FRdog_name = firebase.get('/Users/'+logged+'/Dogs/Dog_Name')
-        FRemail = firebase.get('/Users/', logged+'/Email')
-        FRpassword = firebase.get('/Users/', logged+'/Password')
-        #registra os dados lidos na base na lista
-        user_data_received = [FRusername, FRemail, FRpassword]
-        return user_data_received
+            result = "Nenhum cão cadastrado"
+        elif dognameTicket != None:
+            #faz a consulta dos dados na base
+            FRdogname = firebase.get('/Users/', logged+'/Dogs/luna')
+            #FRdogage = firebase.get('/Users/', logged+'/Dogs/Age')
+            #FRdogweight = firebase.get('/Users/', logged+'/Dogs/Weight')
+            #FRdogbreed = firebase.get('/Users/', logged+'/Dogs/Breed')
+            #registra os dados lidos na base na lista
+            #result = [FRdogname, FRdogage, FRdogweight, FRdogbreed]
+            
+            #obj = json.loads(FRdogname)
+            #print(obj['Dog_Name'])
+            result = FRdogname
+            print("ACHADO: %s" % (result))
+            
+        return result
 
     

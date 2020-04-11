@@ -95,6 +95,17 @@ def cadastropet():
 
 @app.route("/meuspets/")
 def meuspets():
+    #'chama' a classe Dog
+    dog = Dog()
+    #'chama' o metodoo ReadDog
+    dog_data = dog.ReadDog()
+    print("DADOS: %s" % (dog_data))
+    #testa se ocorreu algum problema ao encontrar dados do usuário
+    if dog_data == None:
+       flash('Nenhum cão foi cadastrado')
+    else:
+        return render_template('meuspets.html', dog_data=dog_data)
+
     return render_template('meuspets.html')
 
 @app.route("/editarpet/")
