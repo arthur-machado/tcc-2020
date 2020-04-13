@@ -21,4 +21,4 @@ class RegisterDogForm(FlaskForm):
     dogname = StringField("dogname", validators=[DataRequired()])
     age = StringField("age", validators=[DataRequired()])
     weight = StringField("weight", validators=[DataRequired()])
-    breed = SelectField("breed", choices=[('SRD', 'SRD'), ('PA','Pastor Alemão'), ('S', 'Salsicha'), ('GR', 'Golden Retriever'), ('L', 'Labrador'), ('O', 'Outro')])
+    breed = SelectField("breed", choices=[('SRD', 'Sem Raça Definida'), ('Pastor Alemão','Pastor Alemão'), ('Salsicha', 'Salsicha'), ('Golden Retriever', 'Golden Retriever'), ('Labrador', 'Labrador'), ('Outro', 'Outro')])

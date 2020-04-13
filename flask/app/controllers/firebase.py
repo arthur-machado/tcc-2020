@@ -2,6 +2,8 @@
 from firebase import firebase
 import json
 
+from app.models.functions import TransformationRequest
+
 
 #configuracao do firebase
 firebase =  firebase.FirebaseApplication("https://tcc2020-78c46.firebaseio.com/", None)
@@ -126,17 +128,24 @@ class Dog():
             result = "Nenhum cão cadastrado"
         elif dognameTicket != None:
             #faz a consulta dos dados na base
-            FRdogname = firebase.get('/Users/', logged+'/Dogs/luna')
-            #FRdogage = firebase.get('/Users/', logged+'/Dogs/Age')
-            #FRdogweight = firebase.get('/Users/', logged+'/Dogs/Weight')
-            #FRdogbreed = firebase.get('/Users/', logged+'/Dogs/Breed')
-            #registra os dados lidos na base na lista
-            #result = [FRdogname, FRdogage, FRdogweight, FRdogbreed]
-            
-            #obj = json.loads(FRdogname)
-            #print(obj['Dog_Name'])
-            result = FRdogname
-            print("ACHADO: %s" % (result))
+            FRdogsid = firebase.get('/Users/', logged+'/Dogs')            
+            #trata o dict com o metodo
+            firebaseResult = TransformationRequest(FRdogsid)
+            #utiliza o metodo json
+            obj = json.loads(firebaseResult)
+            #lista que armazena os id's de cada dicionario aninhado
+            dogs_ids = []
+            #for que pega os id's de cada cao
+            for dogs in obj.values():
+                dogs_ids.append(dogs['Dog_Name'])
+            #cria lista que armazena os dados de cada cao
+            dogsinf = []
+            #for que pega os dados [nome, idade, raca, peso] de cada cachorro e salva na lista
+            for dogs in dogs_ids:
+                dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight']]
+                dogsinf.append(dogsdata)
+                
+            result = dogsinf
             
         return result
 

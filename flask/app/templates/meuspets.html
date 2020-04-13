@@ -83,27 +83,29 @@
                     {% endif %}
                 {% endwith %}
         
-        <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
+<!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
+    {% if dog_data != None %}
+        {% for dogs in range(len) %}
             <div class="divPet">
                 
                 <div class="fotoPet">
-                  <img src="/static/img/petIcon.png" alt="">  
+                    <img src="/static/img/petIcon.png" alt="">  
                 </div>
-                
+
                 <div class="infoPet">
-                    <h4>{{ dog_data[0] }}</h4>
+                    <h4>{{ dog_data[dogs][0] }}</h4>
                     <p> 
+                        <label>Idade:</label> {{ dog_data[dogs][1] }}<br>
+                        <label>Raça:</label> {{ dog_data[dogs][2] }} <br>
+                        <label>Peso:</label> {{ dog_data[dogs][3] }}<br>
                         <label>Última freq. card.:</label> Não configurado
                     </p>
-                    <!--<p> 
-                        <label>Idade:</label>{{ dog_data[1] }}<br>
-                        <label>Peso:</label>{{ dog_data[2] }}<br>
-                        <label>Raça:</label>{{ dog_data[3] }} <br>
-                        <label>Última freq. card.:</label> Não configurado
-                    </p>-->
                 </div>
+                
             </div>
-
+            <br>
+        {% endfor %}
+    {% endif %}
             <br>
 
             <hr>
