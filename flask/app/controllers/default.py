@@ -80,16 +80,11 @@ def cadastropet():
         dog.breed = form.breed.data
         #'chama' o metodo InsertDog
         validacao = dog.InsertDog()
-        #redireciona para página de login
-            #if validacao == "Usuário e E-mail já cadastrados":
-            #   flash('Usuário e E-mail já cadastrados')
         if validacao == "Cão já cadastrado":
             flash('Cão já cadastrado')
-            #elif validacao == "E-mail já cadastrado"
-            #    flash('E-mail já cadastrado')
         elif validacao == "Erro":
             flash('Erro')
-        elif validacao == None:
+        elif validacao == "Feito":
             return redirect(url_for('meuspets'))
     return render_template('cadastroPet.html', form=form)
 
@@ -99,8 +94,6 @@ def meuspets():
     dog = Dog()
     #'chama' o metodoo ReadDog
     dog_data = dog.ReadDog()
-    print("DADOS: %s" % (dog_data))
-
     #testa se ocorreu algum problema ao encontrar dados do usuário
     if dog_data == None:
        flash('Nenhum cão foi cadastrado')
@@ -108,7 +101,6 @@ def meuspets():
     else:
         #pega o numero de caes na lista
         dogs_in_list=len(dog_data)
-        print("CAES: %s" % (dogs_in_list))
         return render_template('meuspets.html', dogs_in_list=dogs_in_list, dog_data=dog_data)
 
     return render_template('meuspets.html')

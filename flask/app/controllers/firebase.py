@@ -105,14 +105,17 @@ class Dog():
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
         #defini o 'resultado'
-        result = ""
+        result = "empty"
         #pesquisa se já existe o cao cadastrado
-        dognameTicket = firebase.get('/Users/', logged+'/Dogs/Dog_Name')
+        dognameTicket = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/Dog_Name')
+        print("CONSULTA = %s" % (dognameTicket))
+
         if dognameTicket == self.dogname:
             result = "Cão já cadastrado"
         elif dognameTicket == None:
             #envia os dados para o firebase
-            result = firebase.put('Users/'+logged+'/Dogs', self.dogname, data)
+            firebase.put('Users/'+logged+'/Dogs', self.dogname, data)
+            result = "Feito"
         else:
             result = "Erro"
         return result
