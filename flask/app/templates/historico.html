@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cusco - Histórico</title>
+
+    <!--Link para fontes Google-->
+    <link href="https://fonts.googleapis.com/css?family=Yellowtail&display=swap" rel="stylesheet"> 
+
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    <!-- Fim Bootstrap-->
+    <!-- 'Link' arquivo CSS - Ele herda tudo dos meuspets.css porque aplica mesmo layout-->
+    <link rel="stylesheet" type="text/css" href="CSS/historico.css">
+    <!-- Fim 'link' arquivo CSS-->
+</head>
+<script language="JavaScript" src="JS/registerjs.js"></script>
+
+<body>
+     <!--
+        Header e nav provém da página base, depois de configurado o link correto com o Flask, apagar para teste.
+    -->
+
+    <div class="container-fluid">
+    
+    <!--header comum a todas as pages-->
+    <header class="logo">
+        <a href="meuspets.html">
+            Cusco
+        </a>
+    </header>
+   
+    <!--Navbar que vai ao fundo-->
+    <nav>
+    <div class="barra">
+        <ul class="nav">
+            <li>
+                <div class="btnMeusPets">
+                    <a id="meusPets" href="meuspets.html"> 
+                        <img class="iconNavbar" src="icons/petIconGray.png" alt="">Meus Pets
+                    </a>
+                </div>
+            </li>
+
+            <li>
+                <div class="btnMeusPets">
+                    <a id= "acompanhamento" href="acompanhamento.html"><img class="iconNavbar" id="iconHeart" src="icons/iconHeartBlue.png" alt="">
+                        Acompanhamento
+                    </a>
+                </div>
+            </li>
+
+            <li>
+                <div class="btnMeusPets">
+                    <a id="meuperfil" href="meuperfil.html">
+                        <img class="iconNavbar" id="userIcon" src="icons/userIcon.png">
+                        Meu Perfil
+                        
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    </nav>
+    <!--Fim da nav-->
+
+    <div class="login-form">
+        
+        <div class="box">
+            <div class="dog1">
+                <div class="fotoDog">
+                    <img src="icons/petIcon.png" alt="">
+                    <h5>Pet1</h5>
+                </div>
+
+                <div class="infoMedia">
+                    <h5>Média diária</h5>
+                    <h3>55 BPM</h3>
+                </div>
+        
+                <!--Aqui embaixo vai um gráfico para médias, provavelmente iremos usar pandas do python-->
+                <div class="grafico">
+                    
+                </div>
+
+                <hr>
+            <div class="text-center">
+                <a href="acompanhamento.html"  class="btn"> < Voltar</a>
+            </div>
+        </div>
+
+    </div>
+
+    
+
+
+</body>
+</html>

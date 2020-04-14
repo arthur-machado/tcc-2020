@@ -17,11 +17,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/meuspetscss.css') }}">
     <!-- Fim 'link' arquivo CSS-->
 </head>
-<!-- Descobrir o que é esse JavaScript-->
-<!--<script language="JavaScript" src="JS/registerjs.js"></script>-->
 
 <body>
-     
+
     <div class="container-fluid">
     
     <!--header comum a todas as pages-->
@@ -45,7 +43,7 @@
 
             <li>
                 <div class="btnMeusPets">
-                    <a id= "acompanhamento" href="#"><img class="iconNavbar" id="iconHeart" src="/static/img/iconHeart.png" alt="">
+                    <a id= "acompanhamento" href=""><img class="iconNavbar" id="iconHeart" src="/static/img/iconHeart.png" alt="">
                         Acompanhamento
                     </a>
                 </div>
@@ -66,54 +64,56 @@
     <!--Fim da nav-->
 
     <div class="login-form">
-        <!-- precisamos criar nosso arquivo próprio de execução em php -->
-        <form action="/examples/actions/confirmation.php" method="post">
+        <!-- Arrumar esse box-->
+        <div class="box">
         <h2 class="text-left">Meus pets</h2>
 
-                    <!-- Se houver, carrega mensagens do flash-->
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        <div class="alert alert-warning">
-                        <ul class=flashes>
+        
+        <!-- Se houver, carrega mensagens do flash-->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-warning">
+                    <ul class=flashes>
                         {% for category, message in messages %}
                             <li class="{{ category }}">{{ message }}</li>
                         {% endfor %}
-                        </ul>
-                        </div> 
-                    {% endif %}
-                    {% endwith %}
+                    </ul>
+                </div> 
+            {% endif %}
+        {% endwith %}
+        
         
 <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
-    {% if dog_data != 0 %}
-        {% for dogs in range(dogs_in_list) %}
-            <div class="divPet">
-                
-                <div class="fotoPet">
-                    <img src="/static/img/petIcon.png" alt="">  
-                </div>
+{% if dog_data != 0 %}
+{% for dogs in range(dogs_in_list) %}
+    <div class="divPet">
+        
+        <div class="fotoPet">
+            <img src="/static/img/petIcon.png" alt="">  
+        </div>
 
-                <div class="infoPet">
-                    <h4>{{ dog_data[dogs][0] }}</h4>
-                    <p> 
-                        <label>Idade:</label> {{ dog_data[dogs][1] }}<br>
-                        <label>Raça:</label> {{ dog_data[dogs][2] }} <br>
-                        <label>Peso:</label> {{ dog_data[dogs][3] }}<br>
-                        <label>Última freq. card.:</label> Não configurado
-                    </p>
-                </div>
-                
-            </div>
-            <br>
-        {% endfor %}
-    {% endif %}
-            <br>
+        <div class="infoPet" ><!-- onclick="location.href = 'acompanhamento.html'; " -->
+            <h4>{{ dog_data[dogs][0] }}</h4>
+            <p> 
+                <label>Idade:</label> {{ dog_data[dogs][1] }}<br>
+                <label>Raça:</label> {{ dog_data[dogs][2] }} <br>
+                <label>Peso:</label> {{ dog_data[dogs][3] }}<br>
+                <label>Última freq. card.:</label> Não configurado
+            </p>
+        </div>
+        
+    </div>
+    <br>
+{% endfor %}
+{% endif %}
+    <br>
 
-            <hr>
+    <hr>
 
         <div class="text-center">
             <a href="{{ url_for('cadastropet') }}" class="btn">+ Adicionar Pet</a>      
         </div>
-        </form>
+    </div>
        
     </div> 
 </div>

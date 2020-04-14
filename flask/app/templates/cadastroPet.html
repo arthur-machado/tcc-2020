@@ -40,7 +40,7 @@
     
                 <li>
                     <div class="btnMeusPets">
-                        <a id= "acompanhamento" href="#"><img class="iconNavbar" id="iconHeart" src="/static/img/iconHeart.png" alt="">
+                        <a id= "acompanhamento" href=""><img class="iconNavbar" id="iconHeart" src="/static/img/iconHeart.png" alt="">
                             Acompanhamento
                         </a>
                     </div>
@@ -61,42 +61,36 @@
         <!--Fim da nav-->
 
     <div class="login-form">
-        
-        <form action="" method="POST" >
+
+        <form class="md-form" action="" method="POST" enctype="multipart/form-data">
+            
             <!-- campo de seguraça -->
             {{ form.csrf_token }}
 
-            <h2 class="text-left">Novo Pet</h2> 
-            
-               <!-- Se houver, carrega mensagens do flash-->
-               {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        <div class="alert alert-warning">
-                        <ul class=flashes>
-                        {% for category, message in messages %}
-                            <li class="{{ category }}">{{ message }}</li>
-                        {% endfor %}
-                        </ul>
-                        </div> 
-                    {% endif %}
-                {% endwith %}
+            <h2 class="text-left">Novo Pet</h2>       
              
-            <!--Input para add foto do pet DEPOIS ARRUMAR
-            <form class="md-form">
-              <div class="file-field">
-                <div class="mb-4">
-                  <img src="/static/img/iconAddFoto.png"
-                    class="rounded-circle z-depth-1-half avatar-pic" alt="">
-                </div>
-                <div class="d-flex justify-content-center">
-                  <div class="btn btn-mdb-color btn-rounded float-left">
-                    <input type="file" id="inputFile" >
-                   
-                    <small>Insira uma foto para seu pet</small>
-                  </div>
-                </div>
-              </div>
+            <!-- Se houver, carrega mensagens do flash-->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="alert alert-warning">
+                        <ul class=flashes>
+                            {% for category, message in messages %}
+                                <li class="{{ category }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div> 
+                {% endif %}
+            {% endwith %}
+
+            <!--Input para add foto do pet A SER FEITO
+           
+            <div class="addFoto">
+                <input type="file" id="inputFile" style="display: none;">
+                <img src="icons/iconAddFoto.png" class="btn-inputFoto" alt="" onclick="document.getElementById('inputFile').click();">
+                <label id="textoPreview" for="btn-inputFoto" onclick="document.getElementById('inputFile').click();">+ Adicionar foto</label>
+            </div>
             -->
+            
         
             <div class="form-group">
                 {{ form.dogname(class="form-control", placeholder="Nome do cão") }}
@@ -114,7 +108,6 @@
             </div>
 
             <!--Select para a raça-->
-
             <div class="form-group">
                 {{ form.breed(class="form-control custom-select custom-select-lg mb-3") }}
                 <!--<select class="form-control custom-select custom-select-lg mb-3" name="raca">
@@ -131,7 +124,6 @@
             <div class="form-group">
                 <button type="reset" class="btn btn-danger btn-block">Apagar</button>
             </div>
-            
             <div class="form-group">
                 <button type="submit" class="btn btn-success btn-block">Salvar</button>
             </div>
@@ -141,10 +133,39 @@
         <div class="text-center">
             <a href="{{ url_for('meuspets') }}" class="btn"> < Voltar</a>      
         </div>
-        </form> 
+         
         </form>
         
     </div> 
     
+    <!--script pra adicionar preview foto de usuário-->
+    <!--<script>
+        const inputFile = document.getElementById("inputFile")
+        const addFoto = document.getElementsByClassName("addFoto")
+        const fotoPreview = document.querySelector(".btn-inputFoto")
+        const textoPreview = document.getElementById("textoPreview")
+
+        inputFile.addEventListener("change", function(){
+            const arquivo = this.files[0];
+
+            if (arquivo){
+                const fileReader = new FileReader();
+
+                textoPreview.style.left = "52px"
+                textoPreview.textContent = "* Alterar a foto"
+                fotoPreview.style.left = "140px"
+                
+                
+                fileReader.addEventListener("load", function(){
+                    
+                    
+                    fotoPreview.setAttribute("src", this.result);
+                })
+
+                fileReader.readAsDataURL(arquivo)
+            }
+        })
+
+    </script>-->
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cusco - Editar Pet</title>
+    <title>Cadastrar Pet</title>
     
     <!--Link para fontes Google-->
     <link href="https://fonts.googleapis.com/css?family=Yellowtail&display=swap" rel="stylesheet"> 
@@ -14,14 +14,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <!-- Fim Bootstrap-->
     <!-- 'Link' arquivo CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/cadastroPetcss.css') }}" >
+    <link rel="stylesheet" type="text/css" href="CSS/cadastroPetcss.css" >
     <!-- Fim 'link' arquivo CSS-->
 </head>
 <body>
+     <!--
+        Header e nav provém da página base, depois de configurado o link correto com o Flask, apagar para teste.
+    -->
 
     <!--header comum a todas as pages-->
     <header class="logo">
-        <a href="{{ url_for('meuspets') }}">
+        <a href="meuspets.html">
             Cusco
         </a>
     </header>
@@ -32,15 +35,15 @@
             <ul class="nav">
                 <li>
                     <div class="btnMeusPets">
-                        <a id="meusPets" href="{{ url_for('meuspets') }}"> 
-                            <img class="iconNavbar" src="/static/img/petIconBlue.png" alt="">Meus Pets
+                        <a id="meusPets" href="meuspets.html"> 
+                            <img class="iconNavbar" src="icons/petIconBlue.png" alt="">Meus Pets
                         </a>
                     </div>
                 </li>
     
                 <li>
                     <div class="btnMeusPets">
-                        <a id= "acompanhamento" href="#"><img class="iconNavbar" id="iconHeart" src="/static/img/iconHeart.png" alt="">
+                        <a id= "acompanhamento" href="#"><img class="iconNavbar" id="iconHeart" src="icons/iconHeart.png" alt="">
                             Acompanhamento
                         </a>
                     </div>
@@ -48,8 +51,8 @@
     
                 <li>
                     <div class="btnMeusPets">
-                        <a id="meuperfil" href="{{ url_for('meuperfil') }}">
-                            <img class="iconNavbar" id="userIcon" src="/static/img/userIcon.png">
+                        <a id="meuperfil" href="meuperfil.html">
+                            <img class="iconNavbar" id="userIcon" src="icons/userIcon.png">
                             Meu Perfil
                             
                         </a>
@@ -63,36 +66,29 @@
     <div class="login-form">
         <!-- precisamos criar nosso arquivo próprio de execução em php-->
         
-        <form class="md-form" action="/examples/actions/confirmation.php" method="post">
+        <form class="md-form" action="/examples/actions/confirmation.php" method="GET">
             <h2 class="text-left">Editar Pet</h2>       
             
             <!--Input para add foto do pet-->
             <!--Aqui dá para fazer um mini script para adicionar a foto atual do pet (isso é só pra bonito)-->
             <form class="md-form">
-                <div class="file-field">
-                  <div class="mb-4">
-                    <img src="/static/img/iconAddFoto.png"
-                      class="rounded-circle z-depth-1-half avatar-pic" alt="">
-                  </div>
-                  <div class="d-flex justify-content-center">
-                    <div class="btn btn-mdb-color btn-rounded float-left">
-                      <input type="file" id="inputFile" >
-                     
-                      <small>Insira uma foto para seu pet</small>
-                    </div>
-                  </div>
+                <div class="addFoto">
+                    <input type="file" id="inputFile" style="display: none;">
+                    <img src="icons/iconAddFoto.png" class="btn-inputFoto" alt="" onclick="document.getElementById('inputFile').click();">
+                    <label id="textoPreview" for="btn-inputFoto" onclick="document.getElementById('inputFile').click();">+ Adicionar foto</label>
                 </div>
+            
         
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Nome" name="nome-pet" required="required">
                 </div>
                 
                 <div class="form-group">
-                    <input type="number" class="form-control" placeholder="Idade" name="idade-pet" required="required">
+                    <input type="number" class="form-control" placeholder="Idade (em meses)" name="idade-pet" required="required">
                 </div>
     
                 <div class="form-group">
-                    <input type="number" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">
+                    <input type="number" step="0.1" min="0" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">
                 </div>
     
 
@@ -119,12 +115,41 @@
 
             <hr>
         <div class="text-center">
-            <a href="{{ url_for('meuspets') }}" class="btn"> < Voltar</a>      
+            <a href="meuspets.html" class="btn"> < Voltar</a>      
         </div>
         </form> 
         </form>
         
     </div> 
     
+    <!--script pra adicionar preview foto de usuário-->
+    <script>
+        const inputFile = document.getElementById("inputFile")
+        const addFoto = document.getElementsByClassName("addFoto")
+        const fotoPreview = document.querySelector(".btn-inputFoto")
+        const textoPreview = document.getElementById("textoPreview")
+
+        inputFile.addEventListener("change", function(){
+            const arquivo = this.files[0];
+
+            if (arquivo){
+                const fileReader = new FileReader();
+
+                textoPreview.style.left = "52px"
+                textoPreview.textContent = "* Alterar a foto"
+                fotoPreview.style.left = "140px"
+                
+                
+                fileReader.addEventListener("load", function(){
+                    
+                    
+                    fotoPreview.setAttribute("src", this.result);
+                })
+
+                fileReader.readAsDataURL(arquivo)
+            }
+        })
+
+    </script>
 </body>
 </html>

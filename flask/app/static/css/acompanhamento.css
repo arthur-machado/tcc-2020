@@ -17,62 +17,59 @@
     height: 100%;
     margin: 50px auto;
     top: 10px;
+    padding-top: 5px;
+    z-index: 2;
 }
-.login-form form {
+.login-form .box {
     margin-bottom: 125px;
     background: #ffffff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
     padding: 30px;
+    padding-left: 37px;
+    padding-top: 12px;
     border-radius: 20px;
     
-
+   
 }
+
 .login-form h2 {
     margin: 0 0 15px;
 }
-.form-control, .btn {
-    min-height: 38px;
-    border-radius: 2px;
-}
-.form-control, .input option select{
-    background: #F5F5F5;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    
-}
 
 
-
-.btn {        
-    font-size: 15px;
-    font-weight: normal;
-
-}
 
 .btn-secondary{
     
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     font-weight: bold;
-}
-
-.btn-danger {
-    background:  #D01E1E;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-    border-radius: 10px; 
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
+    text-align: left;
+    margin: 0px;
+    background-color: #F5F5F5;
+    color: black;
     
 }
 
+.btn-secondary #img-btn{
+    width: 37px;
+    height: 48px;
+    margin: 0px;
+    padding: 0px;
+}
 
+.btn-secondary #img-btn2{
+    width: 37px;
+    height: 30px;
+    margin: 0px;
+    padding: 0px;
+    padding-right: 9px;
+}
 
 body{
     background: linear-gradient(90deg,  #11AFEE 0%, rgba(9, 132, 181, 0.3)100%); 
 }
 
-.logo {
+.logo{
     margin-bottom: 2px;
     position: relative;
     font-family:'Yellowtail', cursive;
@@ -80,7 +77,6 @@ body{
     font-weight: normal;
     font-size: 48px;
     line-height: 62px;
-
 
     text-align: center;
 
@@ -100,7 +96,9 @@ body{
     color: #000000;
 }
 
-/* Todo CSS da barra de navegação, não mexer*/
+
+
+/* Todo CSS da barra de navegação, NÃO MEXER*/
 .barra .nav{
     background-color: rgb(255, 255, 255);
     overflow: hidden;
@@ -145,9 +143,6 @@ body{
     padding-left: 20px;
     padding-bottom: 3px;
 }
-.btnMeusPets:hover{
-    background-color:  #e0e0e0;;
-}
 
 .btnMeusPets a{
     padding-top: 3px;
@@ -165,7 +160,7 @@ body{
     padding-bottom: 0%;
 }
 
-#meuperfil {
+#acompanhamento {
     color: #11AFEE;
 }
 
@@ -177,25 +172,85 @@ body{
 
 #userIcon {
     left: 13px;
+}
+
+
+/* Icon*/
+.dog1 .fotoDog img{
+    width: 35px;
+    height: 35px;
+}
+
+.dog1 .fotoDog {
+    position: relative;
+    left: 46%;
     
 }
 
-.addFoto .btn-inputFoto {
+.dog1 .fotoDog h5 {
+    font-weight: bold;
+    margin: 4px;
     position: relative;
-    left: 135px;
-    padding-bottom: 15px;
-    height: 82px;
-    
+    right: 2%;
+
 }
 
-.addFoto label {
+.estado {
+   
     position: relative;
-    top: 36px;
+    left: 14px;
     margin: 0px;
-    left: 42px;
-    color: #11AFEE;
+    padding-top: 4%;
+    padding-right: 0%;
+    padding-left: 0%;
+    
 }
 
-.addFoto {
-    padding-bottom: 20px;
+ .estado #separador {
+    border-left: 1px solid #7a7a7a;
+    height: 45px;
+    border-top: 0px; 
+    display: inline-block;
+    position: relative;
+    margin: 0px;
+    top: 7px;
+
+}
+
+.estado h1 {
+    font-weight: bold;    
+    display: inline;
+    position: relative;
+    padding-right: 4%;
+    
+    
+}
+
+.estado .atividade {
+    width: 48px;
+    height: 42px;
+    position: relative;
+    top: -9px;
+    padding-left: 16px;
+    padding-right: 5px;
+    
+}
+
+.estado-mensagem {
+    padding: 12px;
+}
+
+.estado-mensagem #iconOk{
+    height: 35px;
+    display: inline-block;
+    position: relative;
+    left: 10%;
+}
+
+.estado-mensagem p{
+    position: relative;
+    display: inline;
+    left: 12%;
+    
+    
 }

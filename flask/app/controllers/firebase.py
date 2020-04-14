@@ -108,8 +108,6 @@ class Dog():
         result = "empty"
         #pesquisa se já existe o cao cadastrado
         dognameTicket = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/Dog_Name')
-        print("CONSULTA = %s" % (dognameTicket))
-
         if dognameTicket == self.dogname:
             result = "Cão já cadastrado"
         elif dognameTicket == None:

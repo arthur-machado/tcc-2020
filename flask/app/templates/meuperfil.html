@@ -35,14 +35,14 @@
                 <li>
                     <div class="btnMeusPets">
                         <a id="meusPets" href="{{ url_for('meuspets') }}"> 
-                            <img class="iconNavbar" src="/static/img/petIconBlue.png" alt="">Meus Pets
+                            <img class="iconNavbar" src="/static/img/petIconGray.png" alt="">Meus Pets
                         </a>
                     </div>
                 </li>
     
                 <li>
                     <div class="btnMeusPets">
-                        <a id= "acompanhamento" href="#"><img class="iconNavbar" id="iconHeart" src="/static/img/iconHeart.png" alt="">
+                        <a id= "acompanhamento" href=""><img class="iconNavbar" id="iconHeart" src="/static/img/iconHeart.png" alt="">
                             Acompanhamento
                         </a>
                     </div>
@@ -51,7 +51,7 @@
                 <li>
                     <div class="btnMeusPets">
                         <a id="meuperfil" href="{{ url_for('meuperfil') }}">
-                            <img class="iconNavbar" id="userIcon" src="/static/img/userIcon.png">
+                            <img class="iconNavbar" id="userIcon" src="/static/img/userIconBlue.png">
                             Meu Perfil
                             
                         </a>
@@ -63,60 +63,92 @@
         <!--Fim da nav-->
 
     <div class="login-form">
-        <!-- precisamos criar nosso arquivo próprio de execução em php-->
         
-        <form action="" method="POST">
+        <form class="md-form" action="" method="POST">
             <!-- campo de seguraça -->
             {{ form.csrf_token }}
             <h2 class="text-left">Meu perfil</h2>       
-                        
-            <!-- Se houver, carrega mensagens do flash-->
+            
+             <!-- Se houver, carrega mensagens do flash-->
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     <div class="alert alert-warning">
-                    <ul class=flashes>
-                    {% for category, message in messages %}
-                        <li class="{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                    </ul>
+                        <ul class=flashes>
+                            {% for category, message in messages %}
+                                <li class="{{ category }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
                     </div> 
                 {% endif %}
             {% endwith %}
 
-            <!--Falta adicionar o botão para foto do usuário-->
-
-            <h4 class="text-center">Usuário</h4>     
-            <div class="form-group">
-                {{ form.username(class="form-control", placeholder="Usuário", disabled="", value=user_data[0]) }}
-                <!--<input type="text" class="form-control" placeholder="Usuário" required="required">-->
-            </div>
-
-            <h4 class="text-center">E-mail</h4>
-            <div class="form-group">
-                {{ form.email(class="form-control", placeholder="E-mail", disabled="", value=user_data[1]) }}
-                <!--<input type="text" class="form-control" placeholder="Email" required="required" >-->
-            </div>
-
-            <h4 class="text-center">Senha</h4>
-            <div class="form-group">
-                {{ form.password(class="form-control", placeholder="Senha", disabled="", value=user_data[2]) }}
-                <!--<input type="password" class="form-control" placeholder="Senha" required="required" >-->
-            </div>
-            <!--
-            <div class="form-group">
-                <button type="submit" class="btn btn-secondary btn-block">Editar meu perfil</button>
+            <!--Falta adicionar o botão para foto do usuário ARRUMAR
+            <div class="addFoto">
+                <input type="file" id="inputFile" style="display: none;">
+                
+                <img src="icons/iconAddFoto.png" class="btn-inputFoto" alt="" onclick="document.getElementById('inputFile').click();">
+                <label id="textoPreview" for="btn-inputFoto" onclick="document.getElementById('inputFile').click();">+ Adicionar foto</label>
             </div>
             -->
-            <hr>
-  
             <div class="form-group">
-                <button type="submit" name="action" value="sair" class="btn btn-danger btn-block">Sair da conta</button> 
+                {{ form.username(class="form-control", placeholder="Usuário", disabled="", value=user_data[0]) }}
+                <!--<input type="text" class="form-control" placeholder="Nome" required="required">-->
             </div>
             
+            <div class="form-group">
+                {{ form.email(class="form-control", placeholder="E-mail", disabled="", value=user_data[1]) }}
+                <!--<input type="text" class="form-control" placeholder="Email" required="required">-->
+            </div>
+
+            <div class="form-group">
+                {{ form.password(class="form-control", placeholder="Senha", disabled="", value=user_data[2]) }}
+                <!--<input type="password" class="form-control" placeholder="Senha" required="required">-->
+            </div>
+
+            <!-- ARRUMAR
+            <div class="form-group">
+                <button type="submit" class="btn btn-secondary btn-block">Editar</button>
+            </div>
+            -->
+
+            <hr>
+            
+            <div class="form-group">
+                <!--Aqui encaminha de volta pro login somente como exemplo, na prática tem que encerrar sessão-->
+                <button href ="{{ url_for('login') }}" class="btn btn-danger btn-block">Sair da conta</button> 
+            </div>
         </form> 
         
         
     </div> 
     
+    <!--script pra adicionar preview foto de usuário
+    <script>
+        const inputFile = document.getElementById("inputFile")
+        const addFoto = document.getElementsByClassName("addFoto")
+        const fotoPreview = document.querySelector(".btn-inputFoto")
+        const textoPreview = document.getElementById("textoPreview")
+
+        inputFile.addEventListener("change", function(){
+            const arquivo = this.files[0];
+
+            if (arquivo){
+                const fileReader = new FileReader();
+
+                textoPreview.style.left = "52px"
+                textoPreview.textContent = "* Alterar a foto"
+                fotoPreview.style.left = "140px"
+                
+                fileReader.addEventListener("load", function(){
+                    
+                    
+                    fotoPreview.setAttribute("src", this.result);
+                })
+
+                fileReader.readAsDataURL(arquivo)
+            }
+        })
+
+    </script>-->
 </body>
 </html>

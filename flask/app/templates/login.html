@@ -24,34 +24,31 @@
             Cusco
         </a>
     </header>
-    
+
     <div class="login-form">
-        <!-- alerta de dados informados inválidos
-        {% if s %}
-			<div class="alert alert-danger">
-				<h2>{{error}}</h2>
-			</div>
-        {% endif %}
-        -->
-        <form action="" method="POST">
+        <!-- precisamos criar nosso arquivo próprio de execução em php-->
+        
+        <form class="md-form" action="" method="POST">
             <!-- campo de seguraça -->
             {{ form.csrf_token }}
-            <h2 class="text-center">Login</h2>       
+            <h2 class="text-center">Login</h2>
+            
             
             <!-- Se houver, carrega mensagens do flash-->
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        <div class="alert alert-warning">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="alert alert-warning">
                         <ul class=flashes>
-                        {% for category, message in messages %}
-                            <li class="{{ category }}">{{ message }}</li>
-                        {% endfor %}
+                            {% for category, message in messages %}
+                                <li class="{{ category }}">{{ message }}</li>
+                            {% endfor %}
                         </ul>
-                        </div> 
-                    {% endif %}
-                {% endwith %}
-
+                    </div> 
+                {% endif %}
+            {% endwith %}
+            
             <div class="form-group">
+                
                 
                 <div class="input-group">
                     <span class="input-group-addon"><img src="/static/img/userIcon.png" alt=""></span>
