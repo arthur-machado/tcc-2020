@@ -99,12 +99,17 @@ def meuspets():
     dog = Dog()
     #'chama' o metodoo ReadDog
     dog_data = dog.ReadDog()
-    #print("DADOS: %s" % (dog_data))
+    print("DADOS: %s" % (dog_data))
+
     #testa se ocorreu algum problema ao encontrar dados do usuário
     if dog_data == None:
        flash('Nenhum cão foi cadastrado')
+       return render_template('meuspets.html', dog_data=0)
     else:
-        return render_template('meuspets.html', len=len(dog_data), dog_data=dog_data)
+        #pega o numero de caes na lista
+        dogs_in_list=len(dog_data)
+        print("CAES: %s" % (dogs_in_list))
+        return render_template('meuspets.html', dogs_in_list=dogs_in_list, dog_data=dog_data)
 
     return render_template('meuspets.html')
 

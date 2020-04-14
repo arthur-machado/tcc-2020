@@ -81,11 +81,11 @@
                         </ul>
                         </div> 
                     {% endif %}
-                {% endwith %}
+                    {% endwith %}
         
 <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
-    {% if dog_data != None %}
-        {% for dogs in range(len) %}
+    {% if dog_data != 0 %}
+        {% for dogs in range(dogs_in_list) %}
             <div class="divPet">
                 
                 <div class="fotoPet">

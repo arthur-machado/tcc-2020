@@ -125,7 +125,7 @@ class Dog():
         #pesquisa se já existe algum cao cadastrado
         dognameTicket = firebase.get('/Users/', logged+'/Dogs')
         if dognameTicket == None:
-            result = "Nenhum cão cadastrado"
+            result = None
         elif dognameTicket != None:
             #faz a consulta dos dados na base
             FRdogsid = firebase.get('/Users/', logged+'/Dogs')            
