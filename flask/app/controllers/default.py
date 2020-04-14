@@ -109,5 +109,16 @@ def meuspets():
 def editarpet():
     return render_template('editarpet.html')
 
+@app.route("/acompanhamento/")
+def acompanhamento():
+    return render_template('acompanhamento.html')
+
+@app.route("/historico/")
+def historico():
+    return render_template('historico.html')
+
+@app.route("/avisos/")
+def avisos():
+    return render_template('avisos.html')
 
 

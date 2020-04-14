@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acompanhamento</title>
+    <title>Cusco - Acompanhamento</title>
 
     <!--Link para fontes Google-->
     <link href="https://fonts.googleapis.com/css?family=Yellowtail&display=swap" rel="stylesheet"> 
@@ -14,21 +14,18 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <!-- Fim Bootstrap-->
     <!-- 'Link' arquivo CSS-->
-    <link rel="stylesheet" type="text/css" href="CSS/acompanhamento.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/acompanhamento.css') }}">
     <!-- Fim 'link' arquivo CSS-->
 </head>
-<script language="JavaScript" src="JS/registerjs.js"></script>
+
 
 <body>
-     <!--
-        Header e nav provém da página base, depois de configurado o link correto com o Flask, apagar para teste.
-    -->
-
+ 
     <div class="container-fluid">
     
     <!--header comum a todas as pages-->
     <header class="logo">
-        <a href="meuspets.html">
+        <a href="{{ url_for('meuspets') }}">
             Cusco
         </a>
     </header>
@@ -39,15 +36,15 @@
         <ul class="nav">
             <li>
                 <div class="btnMeusPets">
-                    <a id="meusPets" href="meuspets.html"> 
-                        <img class="iconNavbar" src="icons/petIconGray.png" alt="">Meus Pets
+                    <a id="meusPets" href="{{ url_for('meuspets') }}"> 
+                        <img class="iconNavbar" src="/static/img/petIconGray.png" alt="">Meus Pets
                     </a>
                 </div>
             </li>
 
             <li>
                 <div class="btnMeusPets">
-                    <a id= "acompanhamento" href="acompanhamento.html"><img class="iconNavbar" id="iconHeart" src="icons/iconHeartBlue.png" alt="">
+                    <a id= "acompanhamento" href="{{ url_for('acompanhamento') }}"><img class="iconNavbar" id="iconHeart" src="/static/img/iconHeartBlue.png" alt="">
                         Acompanhamento
                     </a>
                 </div>
@@ -55,8 +52,8 @@
 
             <li>
                 <div class="btnMeusPets">
-                    <a id="meuperfil" href="meuperfil.html">
-                        <img class="iconNavbar" id="userIcon" src="icons/userIcon.png">
+                    <a id="meuperfil" href="{{ url_for('meuperfil') }}">
+                        <img class="iconNavbar" id="userIcon" src="/static/img/userIcon.png">
                         Meu Perfil
                         
                     </a>
@@ -69,38 +66,38 @@
 
     <div class="login-form">
        
-                                                                        <!--Essa cor aqui varia conforme a condição do cão-->
+        <!--Essa cor aqui varia conforme a condição do cão-->
         <div class="box" style="background: linear-gradient(180deg, #53CB1A -70.41%, rgb(255, 255, 255) 87%);">
       
         
         <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
             <div class="dog1">
                 <div class="fotoDog">
-                    <img src="icons/petIcon.png" alt="">
+                    <img src="/static/img/petIcon.png" alt="">
                     <h5>Pet1</h5>
                 </div>
 
                 <div class="estado" style="color:#53CB1A;">
                     <h1>55 BPM</h1>
                     <hr id="separador">
-                    <img src="icons/iconDogCaminhaBem.png" alt="" class="atividade">
+                    <img src="/static/img/iconDogCaminhaBem.png" alt="" class="atividade">
                     <label for="img">Caminhada</label>
 
                     <div class="estado-mensagem">
-                        <img src="icons/iconOK.png" alt="" id="iconOk">
+                        <img src="/static/img/iconOK.png" alt="" id="iconOk">
                         <p>No momento, tudo certo!</p>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <a href="historico.html">
-                        <button type="" class="btn btn-secondary btn-block"><img src="icons/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
+                    <a href="{{ url_for('historico') }}">
+                        <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
                     </a>
                 </div>
 
                 <div class="form-group">
-                    <a href="avisos.html">
-                        <button type="" class="btn btn-secondary btn-block"><img src="icons/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
+                    <a href="{{ url_for('avisos') }}">
+                        <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
                     </a>
                 </div>
             </div>
@@ -109,8 +106,8 @@
             
             <hr>
 
-        <div class="text-center">
-            <a href="editarpet.html" class="btn">Editar informações</a>      
+        <div class="text-center"><!--ARRUMAR-->
+            <a href="" class="btn">Editar informações</a>      
         </div>
         </div>
        
@@ -121,31 +118,31 @@
             <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
                 <div class="dog1">
                     <div class="fotoDog">
-                        <img src="icons/petIcon.png" alt="">
+                        <img src="/static/img/petIcon.png" alt="">
                         <h5>Pet1</h5>
                     </div>
     
                     <div class="estado" style="color:#D01E1E;">
                         <h1>55 BPM</h1>
                         <hr id="separador">
-                        <img src="icons/iconDogCorrendoMal.png" alt="" class="atividade">
+                        <img src="/static/img/iconDogCorrendoMal.png" alt="" class="atividade">
                         <label for="img">Caminhada</label>
     
                         <div class="estado-mensagem">
-                            <img src="icons/iconAvisosMal.png" alt="" id="iconOk">
+                            <img src="/static/img/iconAvisosMal.png" alt="" id="iconOk">
                             <p>Frequência cardíaca alterada!</p>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <a href="historico.html">
-                            <button type="" class="btn btn-secondary btn-block"><img src="icons/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
+                        <a href="{{ url_for('historico') }}">
+                            <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
                         </a>
                     </div>
     
                     <div class="form-group">
-                        <a href="avisos.html">
-                            <button type="" class="btn btn-secondary btn-block"><img src="icons/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
+                        <a href="{{ url_for('avisos') }}">
+                            <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
                         </a>
                     </div>
                    
@@ -155,8 +152,8 @@
                 
                 <hr>
     
-            <div class="text-center">
-                <a href="editarpet.html" class="btn">Editar informações</a>      
+            <div class="text-center"><!--ARRUMAR-->
+                <a href="" class="btn">Editar informações</a>      
             </div>
         </div>
         </div>
