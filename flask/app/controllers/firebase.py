@@ -43,7 +43,8 @@ class User():
         else:
             result = "Erro"
         return result
-        
+    
+    #metodo para efetuar login
     def Login(self):
         #defini o 'validador'
         ticket = False
@@ -63,6 +64,7 @@ class User():
             ticket = False
         return ticket
 
+    #metodo para pegar os dados do usuario
     def ReadUser(self):
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
@@ -74,6 +76,7 @@ class User():
         user_data_received = [FRusername, FRemail, FRpassword]
         return user_data_received
     
+    #metodo para editar usuario
     def EditUser(self):
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
@@ -95,6 +98,7 @@ class Dog():
     weight=""
     breed=""
 
+    #metodo para cadastrar cao
     def InsertDog(self):
         data = {
             'Dog_Name': self.dogname,
@@ -118,6 +122,7 @@ class Dog():
             result = "Erro"
         return result
 
+    #metodo para pegar dados de todos os caes
     def ReadDog(self):
         #defini o result
         result = ""
@@ -144,12 +149,38 @@ class Dog():
             #for que pega os dados [nome, idade, raca, peso] de cada cachorro e salva na lista
             for dogs in dogs_ids:
                 dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight']]
-                #quando os dados estiverem prontos
+                #quando os sensores estiverem prontos
                 #dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight'], obj[dogs]['Status']]
                 dogsinf.append(dogsdata)
                 
             result = dogsinf
             
         return result
+
+    def SearchDog(self):
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
+        #pesquisa se existe o id do cao informado
+        dognameTicket = firebase.get('/Users/', logged+'/Dogs/'+self.dogname)
+        if dognameTicket == None:
+            result = None
+        elif dognameTicket != None:
+            #faz a consulta dos dados na base
+            FRdogsid = firebase.get('/Users/', logged+'/Dogs/'+self.dogname)            
+            #trata o dict com o metodo
+            firebaseResult = TransformationRequest(FRdogsid)
+            #utiliza o metodo json
+            obj = json.loads(firebaseResult)
+           
+            #variavel que armazena, em lista, os dados [nome, idade, raca, peso] do cao
+            dogsdata = [obj['Dog_Name'], obj['Age'], obj['Breed'], obj['Weight']]
+            #quando os sensores estiverem prontos
+            #dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight'], obj[dogs]['Status']]
+            
+            result = dogsdata
+            
+        return result
+
+
 
     

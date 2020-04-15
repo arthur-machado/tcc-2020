@@ -2,7 +2,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from app import app
 
-from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm
+from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm, EditDogForm
 from app.controllers.firebase import User, Dog
 
 #defini rotas e seus respetivos acontecimentos
@@ -56,7 +56,7 @@ def meuperfil():
     form = ProfileForm()
     #'chama' a classe User
     user = User()
-    #'chama' o metodoo ReadUser
+    #'chama' o metodo ReadUser
     user_data = user.ReadUser()
     #testa se ocorreu algum problema ao encontrar dados do usuário
     if user_data == None:
@@ -92,7 +92,7 @@ def cadastropet():
 def meuspets():
     #'chama' a classe Dog
     dog = Dog()
-    #'chama' o metodoo ReadDog
+    #'chama' o metodo ReadDog
     dog_data = dog.ReadDog()
     #testa se ocorreu algum problema ao encontrar dados do usuário
     if dog_data == None:
@@ -109,7 +109,7 @@ def meuspets():
 def acompanhamento():
     #'chama' a classe Dog
     dog = Dog()
-    #'chama' o metodoo ReadDog
+    #'chama' o metodo ReadDog
     dog_data = dog.ReadDog()
     #testa se ocorreu algum problema ao encontrar dados do usuário
     if dog_data == None:
@@ -119,13 +119,41 @@ def acompanhamento():
         #pega o numero de caes na lista
         dogs_in_list=len(dog_data)
         #esse valor, posteriormente, vai estar dentro de dog_data
-        dog_status = "notok"
+        dog_status = "ok"
         return render_template('acompanhamento.html', dogs_in_list=dogs_in_list, dog_status=dog_status, dog_data=dog_data)
 
     return render_template('acompanhamento.html')
 
-@app.route("/editarpet/")
-def editarpet():
+@app.route("/editarpet/<string:dog_id>")
+def editarpet(dog_id):
+    #'chama' o formulário
+    form = EditDogForm()
+    #'chama' a classe Dog
+    dog = Dog()
+    #defini qual cao a ser pesquisado
+    dog.dogname = dog_id
+    #'chama' o metodo SearchDog
+    dog_data = dog.SearchDog()
+    print('RESULTADO: %s' % (dog_data))
+    if dog_id == None:
+        print("NÃO EXISTE ESSE CACHORRO")
+    else:
+        return render_template('editarpet.html', form=form, dog_data=dog_data)
+
+    #'chama' o formulário
+    #form = ProfileForm()
+    #'chama' a classe User
+    #user = User()
+    #'chama' o metodo ReadUser
+    #user_data = user.ReadUser()
+    #testa se ocorreu algum problema ao encontrar dados do usuário
+    #if user_data == None:
+    #   flash('Dados do usuário não encontrados')
+    #if form.validate_on_submit():
+    #    return redirect(url_for('logout'))
+
+    #return render_template('meuperfil.html', form=form, user_data=user_data)
+
     return render_template('editarpet.html')
 
 @app.route("/historico/")
