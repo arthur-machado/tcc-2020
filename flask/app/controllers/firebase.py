@@ -144,6 +144,8 @@ class Dog():
             #for que pega os dados [nome, idade, raca, peso] de cada cachorro e salva na lista
             for dogs in dogs_ids:
                 dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight']]
+                #quando os dados estiverem prontos
+                #dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight'], obj[dogs]['Status']]
                 dogsinf.append(dogsdata)
                 
             result = dogsinf

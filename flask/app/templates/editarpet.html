@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Pet</title>
+    <title>Cusco - Editar Pet</title>
     
     <!--Link para fontes Google-->
     <link href="https://fonts.googleapis.com/css?family=Yellowtail&display=swap" rel="stylesheet"> 
@@ -14,17 +14,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <!-- Fim Bootstrap-->
     <!-- 'Link' arquivo CSS-->
-    <link rel="stylesheet" type="text/css" href="CSS/cadastroPetcss.css" >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/cadastroPetcss.css') }}" >
     <!-- Fim 'link' arquivo CSS-->
 </head>
 <body>
-     <!--
-        Header e nav provém da página base, depois de configurado o link correto com o Flask, apagar para teste.
-    -->
 
     <!--header comum a todas as pages-->
     <header class="logo">
-        <a href="meuspets.html">
+        <a href="{{ url_for('meuspets') }}">
             Cusco
         </a>
     </header>
@@ -35,15 +32,15 @@
             <ul class="nav">
                 <li>
                     <div class="btnMeusPets">
-                        <a id="meusPets" href="meuspets.html"> 
-                            <img class="iconNavbar" src="icons/petIconBlue.png" alt="">Meus Pets
+                        <a id="meusPets" href="{{ url_for('meuspets') }}"> 
+                            <img class="iconNavbar" src="/static/img/petIconBlue.png" alt="">Meus Pets
                         </a>
                     </div>
                 </li>
     
                 <li>
                     <div class="btnMeusPets">
-                        <a id= "acompanhamento" href="{{ url_for('acompanhamento') }}"><img class="iconNavbar" id="iconHeart" src="icons/iconHeart.png" alt="">
+                        <a id= "acompanhamento" href="{{ url_for('acompanhamento') }}"><img class="iconNavbar" id="iconHeart" src="/static/img/iconHeart.png" alt="">
                             Acompanhamento
                         </a>
                     </div>
@@ -51,8 +48,8 @@
     
                 <li>
                     <div class="btnMeusPets">
-                        <a id="meuperfil" href="meuperfil.html">
-                            <img class="iconNavbar" id="userIcon" src="icons/userIcon.png">
+                        <a id="meuperfil" href="{{ url_for('meuperfil') }}">
+                            <img class="iconNavbar" id="userIcon" src="/static/img/userIcon.png">
                             Meu Perfil
                             
                         </a>
@@ -64,37 +61,57 @@
         <!--Fim da nav-->
 
     <div class="login-form">
-        <!-- precisamos criar nosso arquivo próprio de execução em php-->
         
-        <form class="md-form" action="/examples/actions/confirmation.php" method="GET">
+        <form class="md-form" action="" method="POST">
+
+            <!-- campo de seguraça -->
+            {{ form.csrf_token }}
+
             <h2 class="text-left">Editar Pet</h2>       
             
+            <!-- Se houver, carrega mensagens do flash-->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="alert alert-warning">
+                        <ul class=flashes>
+                            {% for category, message in messages %}
+                                <li class="{{ category }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div> 
+                {% endif %}
+            {% endwith %}
+
             <!--Input para add foto do pet-->
             <!--Aqui dá para fazer um mini script para adicionar a foto atual do pet (isso é só pra bonito)-->
-            <form class="md-form">
+            <!--<form class="md-form"> A SER FEITO
                 <div class="addFoto">
                     <input type="file" id="inputFile" style="display: none;">
-                    <img src="icons/iconAddFoto.png" class="btn-inputFoto" alt="" onclick="document.getElementById('inputFile').click();">
+                    <img src="/static/img/iconAddFoto.png" class="btn-inputFoto" alt="" onclick="document.getElementById('inputFile').click();">
                     <label id="textoPreview" for="btn-inputFoto" onclick="document.getElementById('inputFile').click();">+ Adicionar foto</label>
                 </div>
-            
+            -->
         
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Nome" name="nome-pet" required="required">
+                    {{ form.dogname(class="form-control", type="text", placeholder="Nome do cão") }}
+                    <!--<input type="text" class="form-control" placeholder="Nome" name="nome-pet" required="required">-->
                 </div>
                 
                 <div class="form-group">
-                    <input type="number" class="form-control" placeholder="Idade (em meses)" name="idade-pet" required="required">
+                    {{ form.age(class="form-control", type="number",  placeholder="Idade") }}
+                    <!--<input type="number" class="form-control" placeholder="Idade (em meses)" name="idade-pet" required="required">-->
                 </div>
     
                 <div class="form-group">
-                    <input type="number" step="0.1" min="0" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">
+                    {{ form.weight(class="form-control", type="number", placeholder="Peso") }}
+                    <!--<input type="number" step="0.1" min="0" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">-->
                 </div>
     
 
             <!--Select para a raça-->
             <div class="form-group">
-                <select class="form-control custom-select custom-select-lg mb-3" name="raca">
+                {{ form.breed(class="form-control custom-select custom-select-lg mb-3") }}
+                <!--<select class="form-control custom-select custom-select-lg mb-3" name="raca">
                     <option selected value="raca">Raça</option>
                     <option value="vira-lata">Vira-Lata</option>
                     <option value="pastor">Pastor Alemão</option>
@@ -102,11 +119,11 @@
                     <option value="golden">Golden Retriever</option>
                     <option value="labrador">Labrador</option>
                     <option value="outro">Outro</option>
-                </select>
+                </select>-->
             </div>
             
             <div class="form-group">
-                <button type="reset" class="btn btn-danger btn-block">Apagar</button>
+                <button type="submit" class="btn btn-danger btn-block">Apagar</button>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success btn-block">Salvar</button>
@@ -115,14 +132,14 @@
 
             <hr>
         <div class="text-center">
-            <a href="meuspets.html" class="btn"> < Voltar</a>      
+            <a href="{{ url_for('meuspets') }}" class="btn"> < Voltar</a>      
         </div>
         </form> 
         </form>
         
     </div> 
     
-    <!--script pra adicionar preview foto de usuário-->
+    <!--script pra adicionar preview foto de usuário A FAZER
     <script>
         const inputFile = document.getElementById("inputFile")
         const addFoto = document.getElementsByClassName("addFoto")
@@ -150,6 +167,6 @@
             }
         })
 
-    </script>
+    </script>-->
 </body>
 </html>

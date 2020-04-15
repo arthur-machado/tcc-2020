@@ -105,13 +105,28 @@ def meuspets():
 
     return render_template('meuspets.html')
 
+@app.route("/acompanhamento/")
+def acompanhamento():
+    #'chama' a classe Dog
+    dog = Dog()
+    #'chama' o metodoo ReadDog
+    dog_data = dog.ReadDog()
+    #testa se ocorreu algum problema ao encontrar dados do usuário
+    if dog_data == None:
+       flash('Nenhum cão foi cadastrado')
+       return render_template('acompanhamento.html', dog_data=0)
+    else:
+        #pega o numero de caes na lista
+        dogs_in_list=len(dog_data)
+        #esse valor, posteriormente, vai estar dentro de dog_data
+        dog_status = "notok"
+        return render_template('acompanhamento.html', dogs_in_list=dogs_in_list, dog_status=dog_status, dog_data=dog_data)
+
+    return render_template('acompanhamento.html')
+
 @app.route("/editarpet/")
 def editarpet():
     return render_template('editarpet.html')
-
-@app.route("/acompanhamento/")
-def acompanhamento():
-    return render_template('acompanhamento.html')
 
 @app.route("/historico/")
 def historico():

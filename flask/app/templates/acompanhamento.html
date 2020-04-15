@@ -64,17 +64,47 @@
     </nav>
     <!--Fim da nav-->
 
+  
+     
+    <!-- Se houver, carrega mensagens do flash-->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="login-form">
+        <div class="box">
+            <div class="alert alert-warning">
+                <ul class=flashes>
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div> 
+        </div>
+        </div>
+        {% endif %}
+    {% endwith %}
+        
+ 
+    
+
+
+    {% if dog_data != 0 %}
+    {% for dogs in range(dogs_in_list) %}  
+
     <div class="login-form">
        
+        {% if dog_status == "ok"  %}
         <!--Essa cor aqui varia conforme a condição do cão-->
         <div class="box" style="background: linear-gradient(180deg, #53CB1A -70.41%, rgb(255, 255, 255) 87%);">
       
         
         <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
-            <div class="dog1">
+            
+              
+
+                <div class="dog1">
                 <div class="fotoDog">
                     <img src="/static/img/petIcon.png" alt="">
-                    <h5>Pet1</h5>
+                    <h5>{{ dog_data[dogs][0] }}</h5>
                 </div>
 
                 <div class="estado" style="color:#53CB1A;">
@@ -106,11 +136,13 @@
             
             <hr>
 
-        <div class="text-center"><!--ARRUMAR-->
-            <a href="" class="btn">Editar informações</a>      
+        <div class="text-center">
+            <a href="{{ url_for('editarpet') }}" class="btn">Editar informações</a>      
         </div>
         </div>
-       
+        <!-- AQUI TERMINA-->
+        {% elif dog_status == "notok"  %}
+
         <div class="login-form">
             <div class="box"  style="background: linear-gradient(180deg, #D01E1E -70.41%, rgb(255, 255, 255) 87%);">
       
@@ -119,7 +151,7 @@
                 <div class="dog1">
                     <div class="fotoDog">
                         <img src="/static/img/petIcon.png" alt="">
-                        <h5>Pet1</h5>
+                        <h5>{{ dog_data[dogs][0] }}</h5>
                     </div>
     
                     <div class="estado" style="color:#D01E1E;">
@@ -152,12 +184,19 @@
                 
                 <hr>
     
-            <div class="text-center"><!--ARRUMAR-->
-                <a href="" class="btn">Editar informações</a>      
+            <div class="text-center">
+                <a href="{{ url_for('editarpet') }}" class="btn">Editar informações</a>      
             </div>
+            <!--TERMINA AQUI-->
+            
         </div>
         </div>
-    </div> 
+        {% endif %}
+    </div>
+    
+    {% endfor %}
+    {% endif %}
+    
 </div>
 
     
