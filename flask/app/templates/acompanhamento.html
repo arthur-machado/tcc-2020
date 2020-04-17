@@ -135,9 +135,10 @@
             
             
             <hr>
-
+        
+        <!-- ARRUMAR O DOG_ID -->    
         <div class="text-center">
-            <a href="{{ url_for('editarpet', dog_id='luna') }}" class="btn">Editar informações</a>      
+            <a href="{{ url_for('editarpet', dog_id=dog_data[dogs][0]) }}" class="btn">Editar informações</a>      
         </div>
         </div>
         <!-- AQUI TERMINA-->
@@ -185,7 +186,7 @@
                 <hr>
     
             <div class="text-center">
-                <a href="{{ url_for('editarpet') }}" class="btn">Editar informações</a>      
+                <a href="{{ url_for('editarpet', dog_id=dog_data[dogs][0]) }}" class="btn">Editar informações</a>      
             </div>
             <!--TERMINA AQUI-->
             

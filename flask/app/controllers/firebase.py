@@ -10,6 +10,7 @@ firebase =  firebase.FirebaseApplication("https://tcc2020-78c46.firebaseio.com/"
 
 #'guarda' o usuário logado
 logged = ""
+check_login = "access denied"
 
 #defini classes, metodos
 class User():
@@ -17,6 +18,19 @@ class User():
     username = ""
     email = ""
     password = ""
+
+    #metodo para checar login
+    def CheckLogin(self):
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global check_login
+        return check_login
+
+    #metodo para fazer logout
+    def Logout(self):
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global check_login
+        check_login = "access denied"
+        return check_login
 
     #metodo para cadastrar usuario
     def InsertUser(self):
@@ -54,10 +68,11 @@ class User():
         #defini as condições entre os dados digitados e os encontrados na base de dados
         if self.username == usernameTicket and self.username != None and self.password == passwordTicket and self.password != None:
             ticket = True
-            #'puxa' a variavel global para ser usada dentro do metodo
-            global logged
+            #'puxa' as variaveis globais para serem usadas dentro do metodo
+            global logged, check_login
             #defini o usuario que 'logou'
             logged = self.username
+            check_login = "logged"
         elif self.username == None or passwordTicket == None:
             ticket = False
         else:
@@ -171,7 +186,6 @@ class Dog():
             firebaseResult = TransformationRequest(FRdogsid)
             #utiliza o metodo json
             obj = json.loads(firebaseResult)
-           
             #variavel que armazena, em lista, os dados [nome, idade, raca, peso] do cao
             dogsdata = [obj['Dog_Name'], obj['Age'], obj['Breed'], obj['Weight']]
             #quando os sensores estiverem prontos
@@ -179,6 +193,22 @@ class Dog():
             
             result = dogsdata
             
+        return result
+
+    #metodo para editar dog
+    def EditDog(self):
+        print("ENTREI NO METODO")
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
+        #defini os dados a serem editados
+        data = {
+            'Dog_Name': self.dogname,
+            'Age': self.age,
+            'Weight': self.weight,
+            'Breed': self.breed
+        }
+        firebase.put('Users/'+logged+'/Dogs', self.dogname, data)
+        result = "ok"
         return result
 
 

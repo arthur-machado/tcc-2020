@@ -91,17 +91,17 @@
             </div>
             -->
             <div class="form-group">
-                {{ form.username(class="form-control", placeholder="Usuário", disabled="", value=user_data[0]) }}
+                {{ form.username(class="form-control", placeholder="Usuário", disabled="") }}
                 <!--<input type="text" class="form-control" placeholder="Nome" required="required">-->
             </div>
             
             <div class="form-group">
-                {{ form.email(class="form-control", placeholder="E-mail", disabled="", value=user_data[1]) }}
+                {{ form.email(class="form-control", placeholder="E-mail", disabled="") }}
                 <!--<input type="text" class="form-control" placeholder="Email" required="required">-->
             </div>
 
             <div class="form-group">
-                {{ form.password(class="form-control", placeholder="Senha", disabled="", value=user_data[2]) }}
+                {{ form.password(class="form-control", placeholder="Senha", disabled="") }}
                 <!--<input type="password" class="form-control" placeholder="Senha" required="required">-->
             </div>
 
@@ -115,7 +115,7 @@
             
             <div class="form-group">
                 <!--Aqui encaminha de volta pro login somente como exemplo, na prática tem que encerrar sessão-->
-                <button href ="{{ url_for('login') }}" class="btn btn-danger btn-block">Sair da conta</button> 
+                <button type="submit" class="btn btn-danger btn-block">Sair da conta</button> 
             </div>
         </form> 
         

@@ -23,11 +23,3 @@ class RegisterDogForm(FlaskForm):
     weight = StringField("weight", validators=[DataRequired()])
     breed = SelectField("breed", choices=[('SRD', 'Sem Raça Definida'), ('Pastor Alemão','Pastor Alemão'), ('Salsicha', 'Salsicha'), ('Golden Retriever', 'Golden Retriever'), ('Labrador', 'Labrador'), ('Outro', 'Outro')])
     #adicionar sensor
-
-class EditDogForm(FlaskForm):
-    #adicionar foto
-    dogname = StringField("dogname")
-    age = StringField("age")
-    weight = StringField("weight")
-    #breed = SelectField("breed", choices=[('SRD', 'Sem Raça Definida'), ('Pastor Alemão','Pastor Alemão'), ('Salsicha', 'Salsicha'), ('Golden Retriever', 'Golden Retriever'), ('Labrador', 'Labrador'), ('Outro', 'Outro')])
-    #adicionar sensor
