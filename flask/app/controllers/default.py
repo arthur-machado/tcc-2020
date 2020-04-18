@@ -2,7 +2,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from app import app
 
-from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm
+from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm, EditDogForm
 from app.controllers.firebase import User, Dog
 
 #defini rotas e seus respetivos acontecimentos
@@ -54,6 +54,7 @@ def login():
 def meuperfil():
     #'chama' a classe User
     user = User()
+
     #'chama' o metodo ReadUser
     credentials = user.CheckLogin()
     if credentials == "access denied":
@@ -159,41 +160,38 @@ def acompanhamento():
 
 @app.route("/editarpet/<string:dog_id>", methods=["GET", "POST"])
 def editarpet(dog_id):
-    #'chama' o formulário
-    form = RegisterDogForm()
-    #'chama' a classe Dog
-    dog = Dog()
-    #defini qual cao a ser pesquisado
-    dog.dogname = dog_id
-    #'chama' o metodo SearchDog
-    dog_data = dog.SearchDog()
-#    if dog_id == None:
-#        print("NÃO EXISTE ESSE CACHORRO")
-#    else:
-    form.dogname.data = dog_data[0]
-    form.age.data = dog_data[1]
-    form.weight.data = dog_data[3]
-
-    if form.validate_on_submit():
+    #'chama' a classe User
+    user = User()
+    #'chama' o metodo ReadUser
+    credentials = user.CheckLogin()
+    if credentials == "access denied":
+        return redirect(url_for('login'))
+    elif credentials == "logged":
+        #'chama' o formulário
+        form = EditDogForm()
         #'chama' a classe Dog
         dog = Dog()
-        #pega os dados informados pelo usuario
-        dog.dogname = form.dogname.data
-        dog.age = form.age.data
-        dog.weight = form.weight.data
-        dog.breed = "racaqualquer"
-        print("AGE: %d \nWEIGHT: %d" % (dog.age, dog.weight))
-        #'chama' o metodo InsertDog 
-        if dog.EditDog() == "ok":
-            print("FUI")
-            return redirect(url_for('meuspets'))
-    return render_template('editarpet.html', form=form)
+        #defini qual cao a ser pesquisado
+        dog.dogname = dog_id
+        #'chama' o metodo SearchDog
+        dog_data = dog.SearchDog()        
+        #testa se ocorreu algum problema ao encontrar dados do cao
+        if dog_data == None:
+            flash('Dados do cão não encontrados')
+        else:
+            form.dogname.data = dog_data[0]
+            form.age.data = dog_data[1]
+            form.weight.data = dog_data[3]
+        if form.validate_on_submit():
+            dog.DeleteDog()
+            return redirect(url_for('meuspets'))            
+        #print(form.errors)
+        return render_template('editarpet.html', form=form)
 
 @app.route("/historico/<string:dog_id>")
 def historico(dog_id):
     #'chama' a classe User
     user = User()
-    print("AAAAAAAAAQ: %s" % (dog_id))
     #'chama' o metodo ReadUser
     credentials = user.CheckLogin()
     if credentials == "access denied":

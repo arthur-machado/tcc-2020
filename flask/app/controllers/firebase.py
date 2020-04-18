@@ -197,7 +197,6 @@ class Dog():
 
     #metodo para editar dog
     def EditDog(self):
-        print("ENTREI NO METODO")
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
         #defini os dados a serem editados
@@ -209,6 +208,16 @@ class Dog():
         }
         firebase.put('Users/'+logged+'/Dogs', self.dogname, data)
         result = "ok"
+        return result
+
+    #metodo para editar dog
+    def DeleteDog(self):
+        print("ENTREI NO METODO")
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
+        #defini os dados a serem editados
+        firebase.delete('Users/'+logged+'/Dogs', self.dogname)
+        result = "deleted"
         return result
 
 
