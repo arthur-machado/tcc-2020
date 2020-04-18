@@ -120,13 +120,13 @@
                 </div>
 
                 <div class="form-group">
-                    <a href="{{ url_for('historico') }}">
+                    <a href="{{ url_for('historico', dog_id=dog_data[dogs][0]) }}">
                         <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
                     </a>
                 </div>
 
                 <div class="form-group">
-                    <a href="{{ url_for('avisos') }}">
+                    <a href="{{ url_for('avisos', dog_id=dog_data[dogs][0]) }}">
                         <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
                     </a>
                 </div>
@@ -168,13 +168,13 @@
                     </div>
                     
                     <div class="form-group">
-                        <a href="{{ url_for('historico') }}">
+                        <a href="{{ url_for('historico', dog_id=dog_data[dogs][0]) }}">
                             <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
                         </a>
                     </div>
     
                     <div class="form-group">
-                        <a href="{{ url_for('avisos') }}">
+                        <a href="{{ url_for('avisos', dog_id=dog_data[dogs][0]) }}">
                             <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
                         </a>
                     </div>
@@ -198,10 +198,6 @@
     {% endfor %}
     {% endif %}
     
-</div>
-
-    
-
-
+</div>  
 </body>
 </html>

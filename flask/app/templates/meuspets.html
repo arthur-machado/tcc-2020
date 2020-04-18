@@ -81,17 +81,15 @@
             {% endif %}
         {% endwith %}
         
-        
-<!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
 {% if dog_data != 0 %}
 {% for dogs in range(dogs_in_list) %}
-    <div class="divPet">
+    <div class="divPet"  onclick="Acompanhamento()"><!-- DEIXAR MELHOR A VISUALIZAO DE QUE PODE SER CLICADO -->
         
         <div class="fotoPet">
             <img src="/static/img/petIcon.png" alt="">  
         </div>
 
-        <div class="infoPet" ><!-- onclick="location.href = 'acompanhamento.html'; " -->
+        <div class="infoPet">
             <h4>{{ dog_data[dogs][0] }}</h4>
             <p> 
                 <label>Idade:</label> {{ dog_data[dogs][1] }}<br>
@@ -117,7 +115,13 @@
     </div> 
 </div>
 
-    
+<script>
+//funcao que redirecionar para a pagina acompanhamento
+function Acompanhamento()
+{
+location.href= "{{ url_for('acompanhamento') }}"
+}
+</script>  
 
 
 </body>

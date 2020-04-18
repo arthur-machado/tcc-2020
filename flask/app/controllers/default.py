@@ -189,19 +189,20 @@ def editarpet(dog_id):
             return redirect(url_for('meuspets'))
     return render_template('editarpet.html', form=form)
 
-@app.route("/historico/")
-def historico():
+@app.route("/historico/<string:dog_id>")
+def historico(dog_id):
     #'chama' a classe User
     user = User()
+    print("AAAAAAAAAQ: %s" % (dog_id))
     #'chama' o metodo ReadUser
     credentials = user.CheckLogin()
     if credentials == "access denied":
         return redirect(url_for('login'))
     elif credentials == "logged":
-        return render_template('historico.html')
+        return render_template('historico.html', dog_name=dog_id)
 
-@app.route("/avisos/")
-def avisos():
+@app.route("/avisos/<string:dog_id>")
+def avisos(dog_id):
     #'chama' a classe User
     user = User()
     #'chama' o metodo ReadUser
@@ -209,6 +210,7 @@ def avisos():
     if credentials == "access denied":
         return redirect(url_for('login'))
     elif credentials == "logged":
-        return render_template('avisos.html')
+        print("AQQQ: %s" % (dog_id))
+        return render_template('avisos.html', dog_name=dog_id)
 
 
