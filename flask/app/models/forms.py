@@ -29,5 +29,5 @@ class EditDogForm(FlaskForm):
     dogname = StringField("dogname")
     age = StringField("age")
     weight = StringField("weight")
-    #breed = SelectField("breed", choices=[('SRD', 'Sem Raça Definida'), ('Pastor Alemão','Pastor Alemão'), ('Salsicha', 'Salsicha'), ('Golden Retriever', 'Golden Retriever'), ('Labrador', 'Labrador'), ('Outro', 'Outro')])
+    breed = SelectField("breed", choices=[('SRD', 'Sem Raça Definida'), ('Pastor Alemão','Pastor Alemão'), ('Salsicha', 'Salsicha'), ('Golden Retriever', 'Golden Retriever'), ('Labrador', 'Labrador'), ('Outro', 'Outro')])
     #adicionar sensor

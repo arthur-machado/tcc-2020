@@ -179,11 +179,17 @@ def editarpet(dog_id):
         if dog_data == None:
             flash('Dados do cão não encontrados')
         else:
-            form.dogname.data = dog_data[0]
-            form.age.data = dog_data[1]
-            form.weight.data = dog_data[3]
+            #passa os valores recebidos para os campos
+            form=EditDogForm(dogname=dog_data[0], age=dog_data[1], breed=dog_data[2], weight=dog_data[3])
         if form.validate_on_submit():
-            dog.DeleteDog()
+            #dog.DeleteDog()
+
+            #pega os dados informados pelo usuario
+            dog.dogname = form.dogname.data
+            dog.age = form.age.data
+            dog.weight = form.weight.data
+            dog.breed = form.breed.data
+            dog.EditDog()
             return redirect(url_for('meuspets'))            
         #print(form.errors)
         return render_template('editarpet.html', form=form)

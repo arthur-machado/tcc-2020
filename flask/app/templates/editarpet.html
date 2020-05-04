@@ -13,11 +13,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <!-- Fim Bootstrap-->
+    <!-- JavaScript-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <!-- Fim do JavaScript-->
     <!-- 'Link' arquivo CSS-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/cadastroPetcss.css') }}" >
     <!-- Fim 'link' arquivo CSS-->
 </head>
-<body>
+<body onload="definiSelecionado()">
 
     <!--header comum a todas as pages-->
     <header class="logo">
@@ -98,19 +101,19 @@
                 </div>
                 
                 <div class="form-group">
-                    {{ form.age(class="form-control", type="number", placeholder="Idade", disabled="") }}
+                    {{ form.age(class="form-control", type="number", placeholder="Idade") }}
                     <!--<input type="number" class="form-control" placeholder="Idade (em meses)" name="idade-pet" required="required">-->
                 </div>
     
                 <div class="form-group">
-                    {{ form.weight(class="form-control", type="number", placeholder="Peso", disabled="") }}
+                    {{ form.weight(class="form-control", type="number", placeholder="Peso") }}
                     <!--<input type="number" step="0.1" min="0" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">-->
                 </div>
     
 
-            <!--Select para a raça DESCOBRIR COMO SELECIONA O QUE VEM DO BANCO
             <div class="form-group">
-                <select class="form-control custom-select custom-select-lg mb-3" name="raca">
+                {{ form.breed(class="form-control custom-select custom-select-lg mb-3") }}
+                <!--<select class="form-control custom-select custom-select-lg mb-3" name="raca">
                     <option selected value="raca">Raça</option>
                     <option value="vira-lata">Vira-Lata</option>
                     <option value="pastor">Pastor Alemão</option>
@@ -118,17 +121,18 @@
                     <option value="golden">Golden Retriever</option>
                     <option value="labrador">Labrador</option>
                     <option value="outro">Outro</option>
-                </select>
-            </div>-->
-            
-            <div class="form-group">
-                <button type="submit" class="btn btn-danger btn-block">Excluir cão cadastrado</button>
+                </select>-->
             </div>
+            
             <!--
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger btn-block">Excluir cão</button>
+            </div>
+            -->
             <div class="form-group">
                 <button type="submit" class="btn btn-success btn-block">Salvar</button>
             </div>
-            -->
+        
            
 
             <hr>
@@ -140,8 +144,9 @@
         
     </div> 
     
-    <!--script pra adicionar preview foto de usuário A FAZER
     <script>
+
+        /*script pra adicionar preview foto de usuário A FAZER
         const inputFile = document.getElementById("inputFile")
         const addFoto = document.getElementsByClassName("addFoto")
         const fotoPreview = document.querySelector(".btn-inputFoto")
@@ -167,7 +172,8 @@
                 fileReader.readAsDataURL(arquivo)
             }
         })
-
-    </script>-->
+        */
+        
+    </script>
 </body>
 </html>

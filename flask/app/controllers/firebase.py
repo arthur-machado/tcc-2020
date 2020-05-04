@@ -212,7 +212,6 @@ class Dog():
 
     #metodo para editar dog
     def DeleteDog(self):
-        print("ENTREI NO METODO")
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
         #defini os dados a serem editados
