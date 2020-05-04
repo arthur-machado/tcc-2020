@@ -53,7 +53,7 @@ class User():
             #    result = "E-mail já cadastrado"
         elif usernameTicket == None:
             #envia os dados para o firebase
-            result = firebase.put('Users/', self.username, data)
+            result = firebase.put('Users/'+self.username, 'User_Data', data)
         else:
             result = "Erro"
         return result
@@ -63,8 +63,8 @@ class User():
         #defini o 'validador'
         ticket = False
         #faz a consulta dos dados na base
-        usernameTicket = firebase.get('/Users/', self.username+'/Username')
-        passwordTicket = firebase.get('/Users/', self.username+'/Password')
+        usernameTicket = firebase.get('/Users/'+self.username, 'User_Data/Username')
+        passwordTicket = firebase.get('/Users/'+self.username, 'User_Data/Password')
         #defini as condições entre os dados digitados e os encontrados na base de dados
         if self.username == usernameTicket and self.username != None and self.password == passwordTicket and self.password != None:
             ticket = True
@@ -84,9 +84,9 @@ class User():
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
         #faz a consulta dos dados na base
-        FRusername = firebase.get('/Users/', logged+'/Username')
-        FRemail = firebase.get('/Users/', logged+'/Email')
-        FRpassword = firebase.get('/Users/', logged+'/Password')
+        FRusername = firebase.get('/Users/'+logged, 'User_Data/Username')
+        FRemail = firebase.get('/Users/'+logged, 'User_Data/Email')
+        FRpassword = firebase.get('/Users/'+logged, 'User_Data/Password')
         #registra os dados lidos na base na lista
         user_data_received = [FRusername, FRemail, FRpassword]
         return user_data_received
@@ -101,7 +101,7 @@ class User():
             'Email': self.email,
             'Password': self.password
         }
-        firebase.put('Users/', logged, data)
+        firebase.put('Users/'+logged, 'User_Data', data)
         result = "ok"
         return result
         

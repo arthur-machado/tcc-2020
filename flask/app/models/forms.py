@@ -12,6 +12,13 @@ class LoginForm(FlaskForm):
     password = PasswordField("password", validators=[DataRequired()])
 
 class ProfileForm(FlaskForm):
+    #adicionar foto
+    username = StringField("username", validators=[DataRequired()])
+    email = StringField("email", validators=[DataRequired()])
+    password = StringField("password", validators=[DataRequired()])
+
+class EditProfileForm(FlaskForm):
+    #adicionar foto
     username = StringField("username", validators=[DataRequired()])
     email = StringField("email", validators=[DataRequired()])
     password = StringField("password", validators=[DataRequired()])

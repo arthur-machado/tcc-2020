@@ -2,7 +2,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from app import app
 
-from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm, EditDogForm
+from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm, EditDogForm, EditProfileForm
 from app.controllers.firebase import User, Dog
 
 #defini rotas e seus respetivos acontecimentos
@@ -54,7 +54,6 @@ def login():
 def meuperfil():
     #'chama' a classe User
     user = User()
-
     #'chama' o metodo ReadUser
     credentials = user.CheckLogin()
     if credentials == "access denied":
@@ -70,14 +69,43 @@ def meuperfil():
         if user_data == None:
             flash('Dados do usuário não encontrados')
         else:
-            form.username.data = user_data[0]
-            form.email.data = user_data[1]
-            form.password.data = user_data[2]
+            form=ProfileForm(username=user_data[0], email=user_data[1], password=user_data[2])
         if form.validate_on_submit():
-            user.Logout()
+            if 'edit' in request.form:
+                return redirect(url_for('editarmeuperfil', user_id=user_data[0]))
+            elif "exit" in request.form:
+                user.Logout()
             return redirect(url_for('login'))
 
         return render_template('meuperfil.html', form=form)
+
+@app.route("/editarmeuperfil/<string:user_id>", methods=["GET", "POST"])
+def editarmeuperfil(user_id):
+    #'chama' a classe User
+    user = User()
+    #'chama' o metodo ReadUser
+    credentials = user.CheckLogin()
+    if credentials == "access denied":
+        return redirect(url_for('login'))
+    elif credentials == "logged":
+        #'chama' o formulário
+        form = EditProfileForm()
+        #'chama' a classe Dog
+        user = User()
+        #'chama' o metodo ReadUser
+        user_data = user.ReadUser()
+        #passa os valores recebidos para os campos
+        form=EditProfileForm(username=user_data[0], email=user_data[1], password=user_data[2])
+        if form.validate_on_submit():
+            #pega os dados informados pelo usuario
+            user.email = form.email.data
+            user.password = form.password.data
+            if user.EditUser() == "ok":
+                return redirect(url_for('meuperfil'))
+            else:
+                flash('Não foi possível realizar a edição')
+        return render_template('editarmeuperfil.html', form=form)
+
 
 @app.route("/cadastropet/", methods=["GET", "POST"])
 def cadastropet():

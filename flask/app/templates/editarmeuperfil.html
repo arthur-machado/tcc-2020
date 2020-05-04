@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cusco - Cadastrar Pet</title>
+    <title>Cusco - Meu Perfil</title>
     
     <!--Link para fontes Google-->
     <link href="https://fonts.googleapis.com/css?family=Yellowtail&display=swap" rel="stylesheet"> 
@@ -13,9 +13,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <!-- Fim Bootstrap-->
+    
     <!-- 'Link' arquivo CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/cadastroPetcss.css') }}" >
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/meuperfilcss.css') }}" >
     <!-- Fim 'link' arquivo CSS-->
+
 </head>
 <body>
 
@@ -33,7 +35,7 @@
                 <li>
                     <div class="btnMeusPets">
                         <a id="meusPets" href="{{ url_for('meuspets') }}"> 
-                            <img class="iconNavbar" src="/static/img/petIconBlue.png" alt="">Meus Pets
+                            <img class="iconNavbar" src="/static/img/petIconGray.png" alt="">Meus Pets
                         </a>
                     </div>
                 </li>
@@ -49,7 +51,7 @@
                 <li>
                     <div class="btnMeusPets">
                         <a id="meuperfil" href="{{ url_for('meuperfil') }}">
-                            <img class="iconNavbar" id="userIcon" src="/static/img/userIcon.png">
+                            <img class="iconNavbar" id="userIcon" src="/static/img/userIconBlue.png">
                             Meu Perfil
                             
                         </a>
@@ -61,15 +63,13 @@
         <!--Fim da nav-->
 
     <div class="login-form">
-
-        <form class="md-form" action="" method="POST" enctype="multipart/form-data">
-            
+        
+        <form class="md-form" action="" method="POST">
             <!-- campo de seguraça -->
             {{ form.csrf_token }}
-
-            <h2 class="text-left">Novo Pet</h2>       
-             
-            <!-- Se houver, carrega mensagens do flash-->
+            <h2 class="text-left">Meu perfil</h2>       
+            
+             <!-- Se houver, carrega mensagens do flash-->
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     <div class="alert alert-warning">
@@ -82,61 +82,45 @@
                 {% endif %}
             {% endwith %}
 
-            <!--Input para add foto do pet A SER FEITO
-           
+            <!--Falta adicionar o botão para foto do usuário ARRUMAR
             <div class="addFoto">
                 <input type="file" id="inputFile" style="display: none;">
+                
                 <img src="icons/iconAddFoto.png" class="btn-inputFoto" alt="" onclick="document.getElementById('inputFile').click();">
                 <label id="textoPreview" for="btn-inputFoto" onclick="document.getElementById('inputFile').click();">+ Adicionar foto</label>
             </div>
             -->
-            
-        
             <div class="form-group">
-                {{ form.dogname(class="form-control", type="text", placeholder="Nome do cão") }}
-                <!--<input type="text" class="form-control" placeholder="Nome" name="nome-pet" required="required">-->
+                {{ form.username(class="form-control", placeholder="Usuário", disabled="") }}
+                <!--<input type="text" class="form-control" placeholder="Nome" required="required">-->
             </div>
             
             <div class="form-group">
-                {{ form.age(class="form-control", type="number", placeholder="Idade") }}
-                <!--<input type="number" class="form-control" placeholder="Idade" name="idade-pet" required="required">-->
+                {{ form.email(class="form-control", placeholder="E-mail") }}
+                <!--<input type="text" class="form-control" placeholder="Email" required="required">-->
             </div>
 
             <div class="form-group">
-                {{ form.weight(class="form-control", type="number", placeholder="Peso") }}
-                <!--<input type="number" class="form-control" placeholder="Peso (em Kg)" name="peso-pet" required="required">-->
+                {{ form.password(class="form-control", placeholder="Senha") }}
+                <!--<input type="password" class="form-control" placeholder="Senha" required="required">-->
             </div>
 
-            <!--Select para a raça-->
             <div class="form-group">
-                {{ form.breed(class="form-control custom-select custom-select-lg mb-3") }}
-                <!--<select class="form-control custom-select custom-select-lg mb-3" name="raca">
-                    <option selected value="raca">Raça</option>
-                    <option value="vira-lata">Vira-Lata</option>
-                    <option value="pastor">Pastor Alemão</option>
-                    <option value="salsicha">Salsicha</option>
-                    <option value="golden">Golden Retriever</option>
-                    <option value="labrador">Labrador</option>
-                    <option value="outro">Outro</option>
-                </select>-->
+                <button type="submit" class="btn btn-success btn-block" name="edit">Confirmar edição</button>
             </div>
             
-            <div class="form-group">
-                <button type="submit" class="btn btn-success btn-block">Salvar</button>
-            </div>
-           
-
             <hr>
-        <div class="text-center">
-            <a href="{{ url_for('meuspets') }}" class="btn"> < Voltar</a>      
-        </div>
-         
-        </form>
+            
+            <div class="text-center">
+                <a href="{{ url_for('meuperfil') }}" class="btn"> < Voltar</a>      
+            </div>
+        </form> 
+        
         
     </div> 
     
-    <!--script pra adicionar preview foto de usuário-->
-    <!--<script>
+    <!--script pra adicionar preview foto de usuário
+    <script>
         const inputFile = document.getElementById("inputFile")
         const addFoto = document.getElementsByClassName("addFoto")
         const fotoPreview = document.querySelector(".btn-inputFoto")
@@ -151,7 +135,6 @@
                 textoPreview.style.left = "52px"
                 textoPreview.textContent = "* Alterar a foto"
                 fotoPreview.style.left = "140px"
-                
                 
                 fileReader.addEventListener("load", function(){
                     
