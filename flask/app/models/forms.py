@@ -12,7 +12,7 @@ class LoginForm(FlaskForm):
     password = PasswordField("password", validators=[DataRequired()])
 
 class ProfileForm(FlaskForm):
-    #adicionar foto
+    #userphoto = FileField("userphoto", validators=[FileRequired()])
     username = StringField("username", validators=[DataRequired()])
     email = StringField("email", validators=[DataRequired()])
     password = StringField("password", validators=[DataRequired()])
@@ -24,7 +24,7 @@ class EditProfileForm(FlaskForm):
     password = StringField("password", validators=[DataRequired()])
 
 class RegisterDogForm(FlaskForm):
-    #adicionar foto
+    #dogphoto = FileField("dogphoto", validators=[FileRequired(), FileAllowed(images, 'Somente imagens!')])
     dogname = StringField("dogname", validators=[DataRequired()])
     age = StringField("age", validators=[DataRequired()])
     weight = StringField("weight", validators=[DataRequired()])
