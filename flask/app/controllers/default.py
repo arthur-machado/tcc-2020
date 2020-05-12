@@ -242,7 +242,14 @@ def avisos(dog_id):
     if credentials == "access denied":
         return redirect(url_for('login'))
     elif credentials == "logged":
-        print("AQQQ: %s" % (dog_id))
+        #'chama' a classe Dog
+        dog = Dog()
+        #'chama' o metodo ReadDogWarnings
+        warnings_data = dog.ReadDogWarnings()
+        #pega o numero de warnings na lista
+        warnings_in_list=len(warnings_data)
+    
+        return render_template('acompanhamento.html', warnings_in_list=warnings_in_list, warnings_data=warnings_data)
         return render_template('avisos.html', dog_name=dog_id)
 
 

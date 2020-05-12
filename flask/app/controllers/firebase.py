@@ -2,7 +2,7 @@
 from firebase import firebase
 import json
 
-from app.models.functions import TransformationRequest
+from app.models.functions import TransformationRequest, CurrentDate
 
 
 #configuracao do firebase
@@ -167,9 +167,30 @@ class Dog():
                 #quando os sensores estiverem prontos
                 #dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight'], obj[dogs]['Status']]
                 dogsinf.append(dogsdata)
-                
             result = dogsinf
-            
+        return result
+
+    def ReadDogWarnings(self):
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
+        #faz a consulta dos dados na base
+        FRdogsWarnings = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/Warnings'+CurrentDate)
+        #trata o dict com o metodo
+        firebaseResult = TransformationRequest(FRdogsWarnings)
+        #utiliza o metodo json
+        obj = json.loads(firebaseResult)
+        #lista que armazena os horarios de cada dicionario aninhado
+        hours = []
+        #for que pega os horarios de cada warning
+        for hours in obj.values():
+            hours.append(hours['Hour'])
+        #cria lista que armazena os dados de cada horario
+        hoursinf = []
+        #for que pega os dados [data, frequencia, frequencia_status, hora] de cada hora e salva na lista
+        for hours in hours:
+            hoursdata = [obj[hours]['Date'], obj[hours]['Frequency'], obj[hours]['Frequency_Status'], obj[hours]['Hour']]
+            hoursinf.append(hoursdata)
+        result = hoursinf
         return result
 
     def SearchDog(self):
@@ -179,6 +200,18 @@ class Dog():
         dognameTicket = firebase.get('/Users/', logged+'/Dogs/'+self.dogname)
         if dognameTicket == None:
             result = None
+            #faz a consulta dos dados na base
+            FRdogsid = firebase.get('/Users/', logged+'/Dogs/'+self.dogname)            
+            #trata o dict com o metodo
+            firebaseResult = TransformationRequest(FRdogsid)
+            #utiliza o metodo json
+            obj = json.loads(firebaseResult)
+            #variavel que armazena, em lista, os dados [nome, idade, raca, peso] do cao
+            dogsdata = [obj['Dog_Name'], obj['Age'], obj['Breed'], obj['Weight']]
+            #quando os sensores estiverem prontos
+            #dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight'], obj[dogs]['Status']]
+            result = dogsdata
+
         elif dognameTicket != None:
             #faz a consulta dos dados na base
             FRdogsid = firebase.get('/Users/', logged+'/Dogs/'+self.dogname)            
