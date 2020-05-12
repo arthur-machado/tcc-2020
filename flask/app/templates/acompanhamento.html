@@ -136,12 +136,10 @@
             
             <hr>
         
-        <!-- ARRUMAR O DOG_ID -->    
         <div class="text-center">
             <a href="{{ url_for('editarpet', dog_id=dog_data[dogs][0]) }}" class="btn">Editar informações</a>      
         </div>
         </div>
-        <!-- AQUI TERMINA-->
         {% elif dog_status == "notok"  %}
 
         <div class="login-form">
@@ -188,10 +186,58 @@
             <div class="text-center">
                 <a href="{{ url_for('editarpet', dog_id=dog_data[dogs][0]) }}" class="btn">Editar informações</a>      
             </div>
-            <!--TERMINA AQUI-->
             
         </div>
         </div>
+        
+        {% else  %}
+
+        <div class="login-form">
+            <div class="box"  style="background: linear-gradient(180deg, #9E9B9B -70.41%, rgb(255, 255, 255) 87%);">
+      
+        
+            <!--Aqui temos que criar um script pra mostrar essa div somente se houver pet registrado-->
+                <div class="dog1">
+                    <div class="fotoDog">
+                        <img src="/static/img/petIcon.png" alt="">
+                        <h5>{{ dog_data[dogs][0] }}</h5>
+                    </div>
+    
+                    <div class="estado" style="color:#000000;">
+                        <h1>-- BPM</h1>
+                        <hr id="separador">
+                        <img src="/static/img/iconDogCorrendo.png" alt="" class="atividade">
+                        <label for="img">indisponível</label>
+                        
+                        <!--Arrumar a centralização dessa mensagem-->>
+                        <div class="estado-mensagem">
+                            <p>Frequência cardíaca indisponível no momento</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <a href="{{ url_for('historico', dog_id=dog_data[dogs][0]) }}">
+                            <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
+                        </a>
+                    </div>
+    
+                    <div class="form-group">
+                        <a href="{{ url_for('avisos', dog_id=dog_data[dogs][0]) }}">
+                            <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
+                        </a>
+                    </div>
+                   
+                </div>
+                
+                <hr>
+    
+            <div class="text-center">
+                <a href="{{ url_for('editarpet', dog_id=dog_data[dogs][0]) }}" class="btn">Editar informações</a>      
+            </div>
+            
+        </div>
+        </div>
+
         {% endif %}
     </div>
     
