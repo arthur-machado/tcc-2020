@@ -170,6 +170,7 @@ class Dog():
             result = dogsinf
         return result
 
+    #metodo para ler warnings do cao
     def ReadDogWarnings(self):
         #defini o valor inicial do resultado
         result = ''
