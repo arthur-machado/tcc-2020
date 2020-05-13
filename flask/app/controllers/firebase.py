@@ -2,7 +2,7 @@
 from firebase import firebase
 import json
 
-from app.models.functions import TransformationRequest, CurrentDate
+from app.models.functions import TransformationRequest, CurrentDate, TransformationHour
 
 
 #configuracao do firebase
@@ -171,10 +171,12 @@ class Dog():
         return result
 
     def ReadDogWarnings(self):
+        print("ENTREIII")
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
         #faz a consulta dos dados na base
-        FRdogsWarnings = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/Warnings'+CurrentDate)
+        #FRdogsWarnings = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/Warnings'+CurrentDate())
+        FRdogsWarnings = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/Warnings/12_05_2020')
         #trata o dict com o metodo
         firebaseResult = TransformationRequest(FRdogsWarnings)
         #utiliza o metodo json
@@ -182,14 +184,18 @@ class Dog():
         #lista que armazena os horarios de cada dicionario aninhado
         hours = []
         #for que pega os horarios de cada warning
-        for hours in obj.values():
-            hours.append(hours['Hour'])
-        #cria lista que armazena os dados de cada horario
+        for hour in obj.values():
+            HourKey = TransformationHour(hour['Hour'])
+            hours.append(HourKey)
+        #cria lista que armazena os dados de cada horario de um warning
         hoursinf = []
-        #for que pega os dados [data, frequencia, frequencia_status, hora] de cada hora e salva na lista
-        for hours in hours:
-            hoursdata = [obj[hours]['Date'], obj[hours]['Frequency'], obj[hours]['Frequency_Status'], obj[hours]['Hour']]
-            hoursinf.append(hoursdata)
+        #for que pega os dados [data, frequencia, frequencia_status, hora] de cada hora e salva na lista, ignorando os avisos onde a frequencia esta normal
+        for hour in hours:
+            if obj[hour]['Frequency_Status'] == "Alterada":
+                hoursdata = [obj[hour]['Date'], obj[hour]['Frequency'], obj[hour]['Frequency_Status'], obj[hour]['Hour']]
+                hoursinf.append(hoursdata)
+            else: 
+                pass
         result = hoursinf
         return result
 

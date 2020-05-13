@@ -10,6 +10,15 @@ def TransformationRequest(request):
     #retorna o resultado
     return result
 
+#troca dois pontos por underline, possibilitando assim reconhecer a 'chave primária'
+def TransformationHour(hour):
+    #passa os dois pontos para underline
+    result = hour.replace(":", '_')
+    #retorna o resultado
+    return result
+
+
+
 #pega o data atual
 def CurrentDate():
     #registra a data atual

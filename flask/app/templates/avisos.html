@@ -72,6 +72,8 @@
                     <img src="/static/img/petIcon.png" alt="">
                     <h5>{{ dog_name }}</h5>
                 </div>
+        
+        {% for warnings in range(warnings_in_list) %}  
 
         <div class="divPet">
             
@@ -80,15 +82,18 @@
             </div>
 
             <div class="infoPet">
-                <h4>23/03/2020</h4>
+                <h4>{{ warnings_data[warnings][0] }}</h4>
                 <p> 
-                    <label>Frequência:</label> 95 BPM <br>
-                    <label>Atividade:</label> Parado <br>
-                    <label>Hora:</label> 17:25 <br>
-                    <label>Frequência normalizada</label> 
+                    <label>Frequência:</label> {{ warnings_data[warnings][1] }} BPM<br>
+                    <label>Hora:</label> {{ warnings_data[warnings][3] }} <br>
+                    <label>Frequência {{ warnings_data[warnings][2] }}</label> 
                 </p>
             </div>
         </div>
+
+        <br>
+        {% endfor %}
+
 
         <hr>
         <div class="text-center">
