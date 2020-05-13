@@ -64,6 +64,7 @@
     </nav>
     <!--Fim da nav-->
 
+
     <div class="login-form">
         
         <div class="box">
@@ -73,6 +74,22 @@
                     <h5>{{ dog_name }}</h5>
                 </div>
         
+    
+        <!-- Se houver, carrega mensagens do flash-->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                    <div class="alert alert-warning">
+                        <ul class=flashes>
+                            {% for category, message in messages %}
+                                <li class="{{ category }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div> 
+            {% endif %}
+        {% endwith %}
+
+
+        {% if warnings_in_list != 0 %}
         {% for warnings in range(warnings_in_list) %}  
 
         <div class="divPet">
@@ -93,7 +110,7 @@
 
         <br>
         {% endfor %}
-
+        {% endif %}
 
         <hr>
         <div class="text-center">

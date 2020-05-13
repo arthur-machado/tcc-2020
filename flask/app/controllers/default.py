@@ -248,11 +248,14 @@ def avisos(dog_id):
         dog.dogname = dog_id
         #'chama' o metodo ReadDogWarnings
         warnings_data = dog.ReadDogWarnings()
-        print(warnings_data)
-        #pega o numero de warnings na lista
-        warnings_in_list=len(warnings_data)
-    
-        return render_template('avisos.html', dog_name=dog_id, warnings_in_list=warnings_in_list, warnings_data=warnings_data)
+        #verifica se existe algum aviso
+        if warnings_data == None:
+            flash('Nenhum aviso no momento')
+            return render_template('avisos.html', warnings_in_list=0, dog_name=dog_id)
+        else:
+            #pega o numero de warnings na lista
+            warnings_in_list=len(warnings_data)
+            return render_template('avisos.html', dog_name=dog_id, warnings_in_list=warnings_in_list, warnings_data=warnings_data)
 
 
 
