@@ -75,15 +75,48 @@
                     <h5>{{ dog_name }}</h5>
                 </div>
 
+             
+            <!-- Se houver, carrega mensagens do flash-->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="alert alert-warning">
+                        <ul class=flashes>
+                            {% for category, message in messages %}
+                                <li class="{{ category }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div> 
+                {% endif %}
+            {% endwith %}
+
                 <div class="infoMedia">
                     <h5>Média diária</h5>
                     <h3>55 BPM</h3>
                 </div>
         
-                <!--Aqui embaixo vai um gráfico para médias, provavelmente iremos usar pandas do python-->
+                <!--Aqui embaixo vai um gráfico para médias, provavelmente iremos usar pandas do python (dos dias seria interessante)-->
                 <div class="grafico">
                     
                 </div>
+                <hr>
+                
+                <!--
+                <div class="form-group">
+                </div>
+                -->
+                
+        {% if averages_in_list != 0 %}
+        {% for averages in range(averages_in_list) %}  
+        
+        <div class="infoMedia">
+            <h5>{{history_data[averages][0]}}</h5>
+            <h3>Média de {{history_data[averages][1]}}</h3>
+        </div>
+        <hr>
+        {% endfor %}
+        {% endif %}
+
+
 
                 <hr>
             <div class="text-center">

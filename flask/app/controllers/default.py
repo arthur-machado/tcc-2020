@@ -2,7 +2,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from app import app
 
-from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm, EditDogForm, EditProfileForm
+from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm, EditDogForm, EditProfileForm, HistoryDate
 from app.controllers.firebase import User, Dog
 
 #defini rotas e seus respetivos acontecimentos
@@ -231,7 +231,22 @@ def historico(dog_id):
     if credentials == "access denied":
         return redirect(url_for('login'))
     elif credentials == "logged":
-        return render_template('historico.html', dog_name=dog_id)
+        #'chama' o formulário
+        ##form = HistoryDate(datelimit="LW")
+        #'chama' a classe Dog
+        dog = Dog()
+        #defini o cachorro a pesquisado
+        dog.dogname = dog_id
+        #'chama' o metodo ReadDogHistory
+        history_data = dog.ReadDogBPMHistory()
+        if history_data == None:
+            flash('Histórico indisponível')
+            return render_template('historico.html', dog_name=dog_id, averages_in_list=0)
+        else:
+            #pega o numero de warnings na lista
+            averages_in_list=len(history_data)
+            #return render_template('historico.html', dog_name=dog_id, form=form)
+            return render_template('historico.html', dog_name=dog_id, averages_in_list=averages_in_list, history_data=history_data)
 
 @app.route("/avisos/<string:dog_id>")
 def avisos(dog_id):

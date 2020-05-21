@@ -17,7 +17,12 @@ def TransformationHour(hour):
     #retorna o resultado
     return result
 
-
+#troca as barras por underline, possibilitando assim reconhecer a 'chave primária'
+def TransformationDate(date):
+    #passa as barras para underline
+    result = date.replace("/", '_')
+    #retorna o resultado
+    return result
 
 #pega o data atual
 def CurrentDate():

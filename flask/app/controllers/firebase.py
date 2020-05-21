@@ -2,7 +2,7 @@
 from firebase import firebase
 import json
 
-from app.models.functions import TransformationRequest, CurrentDate, TransformationHour
+from app.models.functions import TransformationRequest, CurrentDate, TransformationHour, TransformationDate
 
 
 #configuracao do firebase
@@ -177,6 +177,10 @@ class Dog():
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
         #faz a consulta dos dados na base
+        
+        ##codigo para teste
+        ##FRdogsWarnings = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/Warnings/12_05_2020')
+        
         FRdogsWarnings = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/Warnings'+CurrentDate())
         if FRdogsWarnings == None:
             result = None
@@ -191,7 +195,7 @@ class Dog():
             for hour in obj.values():
                 HourKey = TransformationHour(hour['Hour'])
                 hours.append(HourKey)
-            #cria lista que armazena os dados de cada horario de um warning
+            #cria lista que armazena os dados de cada horario de um aviso
             hoursinf = []
             #for que pega os dados [data, frequencia, frequencia_status, hora] de cada hora e salva na lista, ignorando os avisos onde a frequencia esta normal
             for hour in hours:
@@ -203,6 +207,37 @@ class Dog():
             result = hoursinf
         return result
 
+    #metodo para ler determinados bpms registrados
+    def ReadDogBPMHistory(self):
+        #defini o valor inicial do resultado
+        result = ''
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
+        #faz a consulta dos dados na base
+        FRBPMHistory = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/BPM_History')
+        if FRBPMHistory == None:
+            result = None
+        else:
+            #trata o dict com o metodo
+            firebaseResult = TransformationRequest(FRBPMHistory)
+            #utiliza o metodo json
+            obj = json.loads(firebaseResult)
+            #lista que armazena os dias de cada dicionario aninhado
+            dates = []
+            #for que pega as datas de cada media
+            for date in obj.values():
+                DateKey = TransformationDate(date['Date'])
+                dates.append(DateKey)
+            #cria lista que armazena os dados de cada data de um media
+            averagesinf = []
+            #for que pega os dados [media_diaria, data] de cada data e salva na lista
+            for date in dates:
+                averagedata = [obj[date]['Date'], obj[date]['Daily_Average']]
+                averagesinf.append(averagedata)
+            result = averagesinf
+        return result
+
+    #metodo para ler dados do cao
     def SearchDog(self):
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
