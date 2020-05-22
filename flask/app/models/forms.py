@@ -46,6 +46,6 @@ class EditDogForm(FlaskForm):
     #adicionar sensor
 
 #formulario de selecao de data para pesquisa no historico de media de BPM do cao
-class HistoryDate(FlaskForm):
+#class HistoryDate(FlaskForm):
     #LW = Last Week | LM = Last Month | LY = Last Year
-    datelimit = SelectField("breed", choices=[('LW', 'Últimos 7 dias'), ('LM','Último mês'), ('LY', 'Último ano')])
+    #datelimit = SelectField("breed", choices=[('LW', 'Últimos 7 dias'), ('LM','Último mês'), ('LY', 'Último ano')])

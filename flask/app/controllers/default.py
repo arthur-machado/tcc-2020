@@ -2,7 +2,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from app import app
 
-from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm, EditDogForm, EditProfileForm, HistoryDate
+from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm, EditDogForm, EditProfileForm
 from app.controllers.firebase import User, Dog
 
 #defini rotas e seus respetivos acontecimentos
@@ -232,7 +232,7 @@ def historico(dog_id):
         return redirect(url_for('login'))
     elif credentials == "logged":
         #'chama' o formulário
-        ##form = HistoryDate(datelimit="LW")
+        #form = HistoryDate(datelimit="LW")
         #'chama' a classe Dog
         dog = Dog()
         #defini o cachorro a pesquisado
@@ -243,9 +243,11 @@ def historico(dog_id):
             flash('Histórico indisponível')
             return render_template('historico.html', dog_name=dog_id, averages_in_list=0)
         else:
-            #pega o numero de warnings na lista
-            averages_in_list=len(history_data)
-            #return render_template('historico.html', dog_name=dog_id, form=form)
+            #pega os ultimos 7 de registros na lista, equivalente a ultima semana 
+            if len(history_data) < 7:
+                averages_in_list=len(history_data)
+            else:
+                averages_in_list = 7
             return render_template('historico.html', dog_name=dog_id, averages_in_list=averages_in_list, history_data=history_data)
 
 @app.route("/avisos/<string:dog_id>")

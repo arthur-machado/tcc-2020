@@ -228,6 +228,8 @@ class Dog():
             for date in obj.values():
                 DateKey = TransformationDate(date['Date'])
                 dates.append(DateKey)
+            #inverte a lista para que ela comece com o resultado mais recente
+            dates.sort(reverse=True)
             #cria lista que armazena os dados de cada data de um media
             averagesinf = []
             #for que pega os dados [media_diaria, data] de cada data e salva na lista

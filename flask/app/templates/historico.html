@@ -19,9 +19,7 @@
 </head>
 
 <body>
-     <!--
-        Header e nav provém da página base, depois de configurado o link correto com o Flask, apagar para teste.
-    -->
+     
 
     <div class="container-fluid">
     
@@ -68,6 +66,7 @@
 
     <div class="login-form">
         
+
         <div class="box">
             <div class="dog1">
                 <div class="fotoDog">
@@ -75,19 +74,6 @@
                     <h5>{{ dog_name }}</h5>
                 </div>
 
-             
-            <!-- Se houver, carrega mensagens do flash-->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <div class="alert alert-warning">
-                        <ul class=flashes>
-                            {% for category, message in messages %}
-                                <li class="{{ category }}">{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div> 
-                {% endif %}
-            {% endwith %}
 
                 <div class="infoMedia">
                     <h5>Média diária</h5>
@@ -100,17 +86,31 @@
                 </div>
                 <hr>
                 
-                <!--
-                <div class="form-group">
+                <div class="infoMedia">
+                    <h2>Histórico</h2>
                 </div>
-                -->
-                
+                <hr>
+
+                 <!-- Se houver, carrega mensagens do flash-->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-warning">
+                    <ul class=flashes>
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div> 
+            {% endif %}
+            {% endwith %}
+
+
         {% if averages_in_list != 0 %}
         {% for averages in range(averages_in_list) %}  
         
         <div class="infoMedia">
             <h5>{{history_data[averages][0]}}</h5>
-            <h3>Média de {{history_data[averages][1]}}</h3>
+            <h4>Média de {{history_data[averages][1]}}</h4>
         </div>
         <hr>
         {% endfor %}
