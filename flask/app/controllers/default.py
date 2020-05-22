@@ -98,6 +98,7 @@ def editarmeuperfil(user_id):
         form=EditProfileForm(username=user_data[0], email=user_data[1], password=user_data[2])
         if form.validate_on_submit():
             #pega os dados informados pelo usuario
+            #print(form.userphoto.data)
             user.email = form.email.data
             user.password = form.password.data
             if user.EditUser() == "ok":
@@ -273,6 +274,3 @@ def avisos(dog_id):
             #pega o numero de warnings na lista
             warnings_in_list=len(warnings_data)
             return render_template('avisos.html', dog_name=dog_id, warnings_in_list=warnings_in_list, warnings_data=warnings_data)
-
-
-

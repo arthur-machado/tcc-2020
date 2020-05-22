@@ -1,5 +1,5 @@
 from flask_wtf  import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SelectField
+from wtforms import StringField, PasswordField, BooleanField, SelectField, FileField
 from wtforms.validators import DataRequired
 
 #formulario de registro de usuarios 
@@ -15,14 +15,14 @@ class LoginForm(FlaskForm):
 
 #formulario de visualizacao de perfil usuario
 class ProfileForm(FlaskForm):
-    #userphoto = FileField("userphoto", validators=[FileRequired()])
+    #userphoto = FileField("userphoto")
     username = StringField("username", validators=[DataRequired()])
     email = StringField("email", validators=[DataRequired()])
     password = StringField("password", validators=[DataRequired()])
 
 #formulario de edicao de perfil de usuario
 class EditProfileForm(FlaskForm):
-    #adicionar foto
+    #userphoto = FileField("userphoto")
     username = StringField("username", validators=[DataRequired()])
     email = StringField("email", validators=[DataRequired()])
     password = StringField("password", validators=[DataRequired()])
@@ -49,3 +49,4 @@ class EditDogForm(FlaskForm):
 #class HistoryDate(FlaskForm):
     #LW = Last Week | LM = Last Month | LY = Last Year
     #datelimit = SelectField("breed", choices=[('LW', 'Últimos 7 dias'), ('LM','Último mês'), ('LY', 'Último ano')])
+

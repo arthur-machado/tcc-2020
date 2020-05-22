@@ -6,6 +6,7 @@ from app.models.functions import TransformationRequest, CurrentDate, Transformat
 
 
 #configuracao do firebase
+    #realtime database
 firebase =  firebase.FirebaseApplication("https://tcc2020-78c46.firebaseio.com/", None)
 
 #'guarda' o usuário logado
