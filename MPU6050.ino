@@ -19,22 +19,12 @@
 MPU6050 mpu6050(Wire);
 
 //defini as variaveis que receberao os valores
-float AXUM = 0; //eixo X do acelerometro
-float AYUM = 0; //eixo Y do acelerometro
-
 float AX = 0; //eixo X do acelerometro
 float AY = 0; //eixo Y do acelerometro
 float AZ = 0; //eixo Z do acelerometro
 float GX = 0; //eixo X do giroscopio
 float GY = 0; //eixo Y do giroscopio
 float GZ = 0; //eixo Z do giroscopio
-float AAX = 0; //angulo X do acelerometro
-float AAY = 0; //angulo Y do acelerometro
-float GAX = 0; //angulo X do giroscopio
-float GAY = 0; //angulo Y do giroscopio
-float GAZ = 0; //angulo Z do giroscopio
-float TEMP = 0; //temperatura do sensor
-
 //defini o numero de pontos para o filtro de media movel
 #define n 50
 
@@ -75,12 +65,6 @@ void setup() {
   GX = 0;
   GY = 0;
   GZ = 0;
-  AAX = 0;
-  AAY = 0;
-  GAX = 0;
-  GAY = 0;
-  GAZ = 0;
-  TEMP = 0;
   //calcula a calibracao do giroscopio
   mpu6050.calcGyroOffsets(true);
 }
@@ -98,21 +82,12 @@ void loop() {
   GX = moving_averageGX(mpu6050.getGyroX());
   GY = moving_averageGY(mpu6050.getGyroY());
   GZ = moving_averageGZ(mpu6050.getGyroZ());
-//    //valores dos angulos
-//  AAX = mpu6050.getAccAngleX();
-//  AAY = mpu6050.getAccAngleY();
-//  GAX = mpu6050.getGyroAngleX();
-//  GAY = mpu6050.getGyroAngleY();
-//  GAZ = mpu6050.getGyroAngleZ();
-//    //temperatura
-//  TEMP = moving_averageTEMP(mpu6050.getTemp());
     //aqui pega a hora
   
   //}
   
     //aqui envia para o servidor
 
-  
   //imprime no monitor serial
   Serial.print("AX:");
   Serial.print(AX);
@@ -121,7 +96,7 @@ void loop() {
   Serial.print(AY);
   Serial.print(" / ");
   Serial.print("AZ: ");
-  Serial.println(AZ);
+  Serial.print(AZ);
   Serial.print(" | ");
   
   Serial.print("GX: ");
@@ -132,29 +107,8 @@ void loop() {
   Serial.print(" / ");
   Serial.print("GZ: ");
   Serial.print(GZ);
-  Serial.print(" | ");
+  Serial.println(" | ");
 
-//  Serial.print("AAX:");
-//  Serial.print(AAX);
-//  Serial.print(" / ");
-//  Serial.print("AAY: ");
-//  Serial.print(AAY);
-//  Serial.print(" | ");
-
-//  Serial.print("GAX: ");
-//  Serial.print(GAX);
-//  Serial.print(" / ");
-//  Serial.print("GAY: ");
-//  Serial.print(GAY);
-//  Serial.print(" / ");
-//  Serial.print("GAZ: ");
-//  Serial.print(GAZ);
-//  Serial.print(" | ");
-
-//  Serial.print("TEMP: ");
-//  Serial.print(TEMP);
-//  Serial.println(" ");
-  
   //reseta os valores dos arrays
   AX = 0;
   AY = 0;
@@ -162,13 +116,6 @@ void loop() {
   GX = 0;
   GY = 0;
   GZ = 0;
-//  AAX = 0;
-//  AAY = 0;
-//  GAX = 0;
-//  GAY = 0;
-//  GAZ = 0;
-//  TEMP = 0;
-  
 }
 
 //=====Funcoes=====
