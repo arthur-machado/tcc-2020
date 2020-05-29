@@ -1,9 +1,25 @@
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as mp
+#import numpy as np Não precisamos no momento
+#import matplotlib.pyplot as mp
 
-arquivo = pd.read_csv('mediaGiro.csv', sep=",",  names=['X', 'Y', 'Z'])
-arquivo.convert_dtypes("float")
+#leitura do arquivo, definido como os valores estão separados e os cabeçalhos dentro de 'names' 
+arquivo = pd.read_csv('DogSentado.csv', sep=",", header=None,  names=['AX', 'AY', 'AZ'])
 
-print(arquivo.dtypes)
+#variáveis para armazenar média e mediana dos dados
+media = arquivo.mean()
+mediana = arquivo.median()
 
+#prints para verificar se tudo deu certo
+print("Mediana: ")
+print(mediana)
+
+print("========================")
+
+print("Médias: ")
+print(media)
+
+
+#armazena a mediana em um arquivo csv, senão existir ele cria 
+mediana.to_csv('medianaSentado.csv', sep=',', header=False)  
+
+    
