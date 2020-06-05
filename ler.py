@@ -6,7 +6,7 @@ import csv
 ##3 - Segmentação dos dados | time window - 10s (fixa), Frequência 50Hz* (arc Python) [FEITO]
 ##4 - Feature extraction (estatísticas) (arc Python)
 ##5 - Classificação da atividade (Cadeias ocultas de Markov e Random Forest)
-#*a frequência
+##*a frequencia esta em 40Hz (datasheet pag. 14)
 
 #===============================================================#
 #         LEITURA E SEPARACAO DE DADOS DO ARQUIVO CSV           #
