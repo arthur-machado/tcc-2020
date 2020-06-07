@@ -6,7 +6,7 @@ import csv
 ##3 - Segmentação dos dados | time window - 10s (fixa), Frequência 50Hz* (arc Python) [FEITO]
 ##4 - Feature extraction (estatísticas) (arc Python)
 ##5 - Classificação da atividade (Cadeias ocultas de Markov e Random Forest)
-##*a frequencia esta em 40Hz (datasheet pag. 14)
+#*a frequência
 
 #===============================================================#
 #         LEITURA E SEPARACAO DE DADOS DO ARQUIVO CSV           #
@@ -15,7 +15,7 @@ import csv
 #defini o arquivo .csv a ser lido
 nome_ficheiro = 'DogSentado.csv'
 #defini o arquivo .csv que recebera os dados
-ficheiro_de_gravacao = 'ValoresDogSentado1.csv'
+ficheiro_de_gravacao = 'ValoresDogSentado.csv'
 
 #lista que armazena o conteudo das linhas ['hora', 'x', 'y', 'z']
 linesValues = []
@@ -156,11 +156,25 @@ for value in seconds:
 #                         CALCULOS                              #
 #===============================================================#
 
+#media aritmetica
+listMeArX = []
+MeArX = []
+listMeArY = []
+MeArY = []
+listMeArZ = []
+MeArZ = []
+
+#variancia (amostral)
+listVaCX = []
+VaCX = []
+listVaCY = []
+VaCY = []
+listVaCZ = []
+VaCZ = []
+
 #mediana 
 listmedianX = []
 medianX = []
-listmedianY = []
-medianY = []
 listmedianY = []
 medianY = []
 listmedianZ = []
@@ -175,8 +189,17 @@ listdespZ = []
 despZ = []
 
 
+
 #calcula as medianas e os desvios padroes do eixo X
 for values in x_AxisGroups:
+    #calcula e salva a media aritmetica
+    MeAr = statistics.mean(values)
+    listMeArX.append(MeAr)
+    MeArX.append(listMeArX)
+    #variancia (amostral)
+    VaC = statistics.variance(values)
+    listVaCX.append(VaC)
+    VaCX.append(listVaCX)
     #calcula e salva a mediana
     mediana = statistics.median(values)
     listmedianX.append(mediana)
@@ -186,14 +209,25 @@ for values in x_AxisGroups:
     listdespX.append(desvio_padrao)
     despX.append(listdespX)
     #reseta as listas
+    listMeArX = []
+    listVaCX = []
     listmedianX = []
     listdespX = []
+
 #print(len(x_AxisGroups))
 #print(medianX)
 #print(hoursGroups)
 
 #calcula as medianas e os desvios padroes do eixo Y
 for values in y_AxisGroups:
+    #calcula e salva a media aritmetica
+    MeAr = statistics.mean(values)
+    listMeArY.append(MeAr)
+    MeArY.append(listMeArY)
+    #variancia (amostral)
+    VaC = statistics.variance(values)
+    listVaCY.append(VaC)
+    VaCY.append(listVaCY)
     #calcula e salva a mediana
     mediana = statistics.median(values)
     listmedianY.append(mediana)
@@ -203,12 +237,22 @@ for values in y_AxisGroups:
     listdespY.append(desvio_padrao)
     despY.append(listdespY)
     #reseta as listas
+    listMeArY = []
+    listVaCY = []
     listmedianY = []
     listdespY= []
 
 
 #calcula as medianas e os desvios padroes do eixo Z
 for values in z_AxisGroups:
+    #calcula e salva a media aritmetica
+    MeAr = statistics.mean(values)
+    listMeArZ.append(MeAr)
+    MeArZ.append(listMeArZ)
+    #variancia (amostral)
+    VaC = statistics.variance(values)
+    listVaCZ.append(VaC)
+    VaCZ.append(listVaCZ)
     #calcula e salva a mediana
     mediana = statistics.median(values)
     listmedianZ.append(mediana)
@@ -218,8 +262,11 @@ for values in z_AxisGroups:
     listdespZ.append(desvio_padrao)
     despZ.append(listdespZ)
     #reseta as listas
+    listMeArZ = []
+    listVaCZ = []
     listmedianZ = []
     listdespZ = []
+
 
 #===============================================================#
 #                   GRAVA ARQUIVO NO CSV                        #
@@ -229,10 +276,10 @@ with open(ficheiro_de_gravacao, 'w') as ficheiro:
     writer = csv.writer(ficheiro)
     try:
         #defini a linha de 'nomes' da tabela
-        writer.writerow( ('Desvio padrao de X', 'Desvio padrao de Y', 'Desvio padrao de Z', 'Mediana de X', 'Mediana de Y', 'Mediana de Z') )
-        #le cada linha das listas
+        writer.writerow( ('Media Aritmetica de X', 'Media Aritmetica de Y', 'Media Aritmetica de Z', 'Variancia amostral de X', 'Variancia amostral de Y', 'Variancia amostral de Z', 'Desvio padrao de X', 'Desvio padrao de Y', 'Desvio padrao de Z', 'Mediana de X', 'Mediana de Y', 'Mediana de Z') )
+        #le cada valor das listas
         for value in range (len(medianX)):
-            writer.writerow( (despX[value], despY[value], despZ[value], medianX[value], medianY[value], medianZ[value]) )
+            writer.writerow( (MeArX[value], MeArY[value], MeArZ[value], VaCX[value], VaCY[value], VaCZ[value], despX[value], despY[value], despZ[value], medianX[value], medianY[value], medianZ[value]) )
 
     except csv.Error as e:
         print('ficheiro %s, linha %d: %s' % (ficheiro_de_gravacao, writer.line_num, e))
