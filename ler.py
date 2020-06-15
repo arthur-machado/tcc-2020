@@ -1,5 +1,6 @@
-import statistics
 import csv
+import pandas as pd
+import numpy as np
 
 ##1 - Capturar dados brutos do sensor (Arduino) [FEITO]
 ##2 - Pré-processamento | filtro (arc Python (ARDUINO POR ENQUANTO)) [FEITO]
@@ -15,7 +16,7 @@ import csv
 #defini o arquivo .csv a ser lido
 nome_ficheiro = 'DogSentado.csv'
 #defini o arquivo .csv que recebera os dados
-ficheiro_de_gravacao = 'ValoresDogSentado.csv'
+ficheiro_de_gravacao = 'ValoresDogSentadoO.csv'
 
 #lista que armazena o conteudo das linhas ['hora', 'x', 'y', 'z']
 linesValues = []
@@ -70,15 +71,6 @@ with open(nome_ficheiro, 'r') as ficheiro:
     try:
         #le cada linha do arquivo
         for linha in reader:
-            #o valor lido na lista linha posicao 0 é algo como: '18:55:08.000 -> -0.10'
-            #para tanto, precisamos separa o tempo e o valor do eixo x em uma posicao da lista cada
-            value = linha[0].split(" -> ")
-            #remove o valor antigo da lista linha
-            linha.remove(linha[0])
-            #adiciona o tempo na lista linha posicao 0 
-            linha.insert(0, value[0])
-            #adiciona o valor do eixo x na lista linha posicao 1
-            linha.insert(1, value[1])
             #salva o valor da linha em uma lista
             linesValues.append(linha)
 
@@ -138,6 +130,7 @@ for value in seconds:
     x_Axis.append(float(linesValues[hours_axes_cont][1]))
     y_Axis.append(float(linesValues[hours_axes_cont][2]))
     z_Axis.append(float(linesValues[hours_axes_cont][3]))
+
   #se o valor da lista for diferente do ultimo reconhecido, ele adiciona na lista de grupo e soma mais um ao numero de segundos reconhecidos
   elif value != lastSecond:
     group.append(value)
@@ -155,6 +148,14 @@ for value in seconds:
 #===============================================================#
 #                         CALCULOS                              #
 #===============================================================#
+
+#desvio absoluto medio
+listDAMX = []
+DAMX = []
+listDAMY = []
+DAMY = []
+listDAMZ = []
+DAMZ = []
 
 #media aritmetica
 listMeArX = []
@@ -180,7 +181,7 @@ medianY = []
 listmedianZ = []
 medianZ = []
 
-#desvio padrao
+#desvio padrao (da populacao)
 listdespX = []
 despX = []
 listdespY = []
@@ -188,85 +189,159 @@ despY = []
 listdespZ = []
 despZ = []
 
+#media quadratica
+listRMSX = []
+RMSX = []
+listRMSY = []
+RMSY = []
+listRMSZ = []
+RMSZ = []
 
+#calcula a media quadratica da lista
+def setRootMeanSquare(valuess):
+    power =  []
+    for value in valuess:
+        #pega o valor, eleva a segunda potencia e salva na lista potencia
+        power.append(value**2)
+    #soma a lista que tem os valores elevados a segunda potencia e divide pelo numero de valores
+    sum_division = sum(power) / len(power)
+    #calcula a raiza quadrada nao negativa da 'soma divida'. essa raiz e a media quadratica
+    square_root = np.sqrt(sum_division)
+    return square_root
 
-#calcula as medianas e os desvios padroes do eixo X
+#calculos do eixo X
 for values in x_AxisGroups:
+    #'cria uma lista' no padrao do pandas
+    series = pd.Series(values)
+    
+    #calcula o desvio absoluto medio
+    DAM = series.mad()
+    listDAMX.append(DAM)
+    DAMX.append(listDAMX)
+    #========================================================#
     #calcula e salva a media aritmetica
-    MeAr = statistics.mean(values)
+    MeAr = np.mean(values)
     listMeArX.append(MeAr)
     MeArX.append(listMeArX)
+    #========================================================#
     #variancia (amostral)
-    VaC = statistics.variance(values)
+    VaC = np.var(values)
     listVaCX.append(VaC)
     VaCX.append(listVaCX)
+    #========================================================#
     #calcula e salva a mediana
-    mediana = statistics.median(values)
+    mediana = np.median(values)
     listmedianX.append(mediana)
     medianX.append(listmedianX)
-    #calcula e salva o desvio 
-    desvio_padrao = statistics.stdev(values)
+    #========================================================#
+    #calcula e salva o desvio padrao
+    desvio_padrao = np.std(values)
     listdespX.append(desvio_padrao)
     despX.append(listdespX)
+    #========================================================#
+    #calcula e salva a media quadratica
+    RMS = setRootMeanSquare(values)
+    listRMSX.append(RMS)
+    RMSX.append(listRMSX)
+    #========================================================#
     #reseta as listas
+    listDAMX = []
     listMeArX = []
     listVaCX = []
     listmedianX = []
     listdespX = []
+    listRMSX = []
 
 #print(len(x_AxisGroups))
 #print(medianX)
 #print(hoursGroups)
 
-#calcula as medianas e os desvios padroes do eixo Y
+#calculos do eixo Y
 for values in y_AxisGroups:
+    #'cria uma lista' no padrao do pandas
+    series = pd.Series(values)
+    
+    #calcula o desvio absoluto medio
+    DAM = series.mad()
+    listDAMY.append(DAM)
+    DAMY.append(listDAMY)
+    #========================================================#
     #calcula e salva a media aritmetica
-    MeAr = statistics.mean(values)
+    MeAr = np.mean(values)
     listMeArY.append(MeAr)
     MeArY.append(listMeArY)
+    #========================================================#
     #variancia (amostral)
-    VaC = statistics.variance(values)
+    VaC = np.var(values)
     listVaCY.append(VaC)
     VaCY.append(listVaCY)
+    #========================================================#
     #calcula e salva a mediana
-    mediana = statistics.median(values)
+    mediana = np.median(values)
     listmedianY.append(mediana)
     medianY.append(listmedianY)
+    #========================================================#
     #calcula e salva o desvio padrao
-    desvio_padrao = statistics.stdev(values)
+    desvio_padrao = np.std(values)
     listdespY.append(desvio_padrao)
     despY.append(listdespY)
+    #========================================================#
+    #calcula e salva a media quadratica
+    RMS = setRootMeanSquare(values)
+    listRMSY.append(RMS)
+    RMSY.append(listRMSY)
+    #========================================================#
     #reseta as listas
+    listDAMY = []
     listMeArY = []
     listVaCY = []
     listmedianY = []
     listdespY= []
+    listRMSY = []
 
 
-#calcula as medianas e os desvios padroes do eixo Z
+#calculos do eixo Z
 for values in z_AxisGroups:
+    #'cria uma lista' no padrao do pandas
+    series = pd.Series(values)
+    
+    #calcula o desvio absoluto medio
+    DAM = series.mad()
+    listDAMZ.append(DAM)
+    DAMZ.append(listDAMZ)
+    #========================================================#
     #calcula e salva a media aritmetica
-    MeAr = statistics.mean(values)
+    MeAr = np.mean(values)
     listMeArZ.append(MeAr)
     MeArZ.append(listMeArZ)
+    #========================================================#
     #variancia (amostral)
-    VaC = statistics.variance(values)
+    VaC = np.var(values)
     listVaCZ.append(VaC)
     VaCZ.append(listVaCZ)
+    #========================================================#
     #calcula e salva a mediana
-    mediana = statistics.median(values)
+    mediana = np.median(values)
     listmedianZ.append(mediana)
     medianZ.append(listmedianZ)
+    #========================================================#
     #calcula e salva o desvio padrao
-    desvio_padrao = statistics.stdev(values)
+    desvio_padrao = np.std(values)
     listdespZ.append(desvio_padrao)
     despZ.append(listdespZ)
+    #========================================================#
+    #calcula e salva a media quadratica
+    RMS = setRootMeanSquare(values)
+    listRMSZ.append(RMS)
+    RMSZ.append(listRMSZ)
+    #========================================================#
     #reseta as listas
+    listDAMZ = []
     listMeArZ = []
     listVaCZ = []
     listmedianZ = []
     listdespZ = []
-
+    listRMSZ = []
 
 #===============================================================#
 #                   GRAVA ARQUIVO NO CSV                        #
@@ -276,10 +351,10 @@ with open(ficheiro_de_gravacao, 'w') as ficheiro:
     writer = csv.writer(ficheiro)
     try:
         #defini a linha de 'nomes' da tabela
-        writer.writerow( ('Media Aritmetica de X', 'Media Aritmetica de Y', 'Media Aritmetica de Z', 'Variancia amostral de X', 'Variancia amostral de Y', 'Variancia amostral de Z', 'Desvio padrao de X', 'Desvio padrao de Y', 'Desvio padrao de Z', 'Mediana de X', 'Mediana de Y', 'Mediana de Z') )
+        writer.writerow( ('Media Aritmetica de X', 'Media Aritmetica de Y', 'Media Aritmetica de Z', 'Variancia amostral de X', 'Variancia amostral de Y', 'Variancia amostral de Z', 'Desvio padrao de X', 'Desvio padrao de Y', 'Desvio padrao de Z', 'Mediana de X', 'Mediana de Y', 'Mediana de Z', 'Desvio Absoluto Medio de X', 'Desvio Absoluto Medio de Y', 'Desvio Absoluto Medio de Z', 'Media Quadratica de X', 'Media Quadratica de Y', 'Media Quadratica de Z') )
         #le cada valor das listas
         for value in range (len(medianX)):
-            writer.writerow( (MeArX[value], MeArY[value], MeArZ[value], VaCX[value], VaCY[value], VaCZ[value], despX[value], despY[value], despZ[value], medianX[value], medianY[value], medianZ[value]) )
+            writer.writerow( (MeArX[value], MeArY[value], MeArZ[value], VaCX[value], VaCY[value], VaCZ[value], despX[value], despY[value], despZ[value], medianX[value], medianY[value], medianZ[value], DAMX[value], DAMY[value], DAMZ[value], RMSX[value], RMSY[value], RMSZ[value]) )
 
     except csv.Error as e:
         print('ficheiro %s, linha %d: %s' % (ficheiro_de_gravacao, writer.line_num, e))
