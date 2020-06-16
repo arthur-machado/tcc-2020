@@ -1,4 +1,5 @@
 from datetime import date
+from random import randint
 
 #adiciona aspas duplas
 def TransformationRequest(request):
@@ -31,4 +32,9 @@ def CurrentDate():
     #grava a data, no forma de string, no formato usado na base dados
     current_date = register_date.strftime('%d_%m_%Y')
     return current_date
+
+#gera um id para o cao no formato nome+valor_numerico
+def DogIdGenerator(dog_name):
+    dog_id = dog_name + str(randint(1, 1000))
+    return dog_id
 
