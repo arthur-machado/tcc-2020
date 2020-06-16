@@ -199,14 +199,11 @@ class Dog():
                 firebaseResults = TransformationRequest(FRdogsdata)
                 #utiliza o metodo json
                 dog_dict = json.loads(firebaseResults)
-                print(dog_dict)
                 #pega os dados [nome, idade, raca, peso] de cada cachorro e salva na lista
                 dogsdata = [dog_dict['Dog_Name'], dog_dict['Age'], dog_dict['Breed'], dog_dict['Weight']]
                 #quando os sensores estiverem prontos
                 #dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight'], obj[dogs]['Status']]
                 dogsinf.append(dogsdata)
-                print("==============================")
-                print(dogsdata)
             result = dogsinf
         return result
 
