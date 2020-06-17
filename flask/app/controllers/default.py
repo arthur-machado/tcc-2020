@@ -201,26 +201,34 @@ def editarpet(dog_id):
         #'chama' a classe Dog
         dog = Dog()
         #defini qual cao a ser pesquisado
-        dog.dogname = dog_id
+        dog.dog_id = dog_id
         #'chama' o metodo SearchDog
         dog_data = dog.SearchDog()        
         #testa se ocorreu algum problema ao encontrar dados do cao
         if dog_data == None:
             flash('Dados do cão não encontrados')
         else:
+            #defini o nome do cachorro
+            dog.dogname = dog_data[0]
             #passa os valores recebidos para os campos
             form=EditDogForm(dogname=dog_data[0], age=dog_data[1], breed=dog_data[2], weight=dog_data[3])
         if form.validate_on_submit():
-            #dog.DeleteDog()
+            if 'save' in request.form:
+                #pega os dados informados pelo usuario
+                dog.dog_id = dog_id
+                dog.dogname = form.dogname.data
+                dog.age = form.age.data
+                dog.weight = form.weight.data
+                dog.breed = form.breed.data
+                dog.EditDog()
+                return redirect(url_for('meuspets'))            
+            elif 'delete' in request.form:
+                result = dog.DeleteDog()
+                if result == "deleted":
+                    return redirect(url_for('meuspets'))
+                else:    
+                    flash('Não foi possível executar a ação')
 
-            #pega os dados informados pelo usuario
-            dog.dogname = form.dogname.data
-            dog.age = form.age.data
-            dog.weight = form.weight.data
-            dog.breed = form.breed.data
-            dog.EditDog()
-            return redirect(url_for('meuspets'))            
-        #print(form.errors)
         return render_template('editarpet.html', form=form)
 
 @app.route("/historico/<string:dog_id>")
@@ -236,20 +244,22 @@ def historico(dog_id):
         #form = HistoryDate(datelimit="LW")
         #'chama' a classe Dog
         dog = Dog()
-        #defini o cachorro a pesquisado
-        dog.dogname = dog_id
-        #'chama' o metodo ReadDogHistory
+        #defini o id do cachorro a pesquisado
+        dog.dog_id = dog_id
+        #'chama' o metodo para pegar o nome do cachorro
+        dog_name = dog.GetDogName()
+        #'chama' o metodo ReadDogBPMHistory
         history_data = dog.ReadDogBPMHistory()
         if history_data == None:
             flash('Histórico indisponível')
-            return render_template('historico.html', dog_name=dog_id, averages_in_list=0)
+            return render_template('historico.html', dog_name=dog_name, averages_in_list=0)
         else:
-            #pega os ultimos 7 de registros na lista, equivalente a ultima semana 
+            #pega os ultimos 7 registros na lista, equivalente a ultima semana 
             if len(history_data) < 7:
                 averages_in_list=len(history_data)
             else:
                 averages_in_list = 7
-            return render_template('historico.html', dog_name=dog_id, averages_in_list=averages_in_list, history_data=history_data)
+            return render_template('historico.html', dog_name=dog_name, averages_in_list=averages_in_list, history_data=history_data)
 
 @app.route("/avisos/<string:dog_id>")
 def avisos(dog_id):
@@ -262,15 +272,17 @@ def avisos(dog_id):
     elif credentials == "logged":
         #'chama' a classe Dog
         dog = Dog()
-        #defini o cachorro a pesquisado
-        dog.dogname = dog_id
+        #defini o id do cachorro a pesquisado
+        dog.dog_id = dog_id
+        #'chama' o metodo para pegar o nome do cachorro
+        dog_name = dog.GetDogName()
         #'chama' o metodo ReadDogWarnings
         warnings_data = dog.ReadDogWarnings()
         #verifica se existe algum aviso
         if warnings_data == None:
             flash('Nenhum aviso no momento')
-            return render_template('avisos.html', warnings_in_list=0, dog_name=dog_id)
+            return render_template('avisos.html', warnings_in_list=0, dog_name=dog_name)
         else:
             #pega o numero de warnings na lista
             warnings_in_list=len(warnings_data)
-            return render_template('avisos.html', dog_name=dog_id, warnings_in_list=warnings_in_list, warnings_data=warnings_data)
+            return render_template('avisos.html', dog_name=dog_name, warnings_in_list=warnings_in_list, warnings_data=warnings_data)

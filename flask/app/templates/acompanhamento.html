@@ -211,13 +211,13 @@
                     </div>
                     
                     <div class="form-group">
-                        <a href="{{ url_for('historico', dog_id=dog_data[dogs][0]) }}">
+                        <a href="{{ url_for('historico', dog_id=dog_data[dogs][4]) }}">
                             <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
                         </a>
                     </div>
     
                     <div class="form-group">
-                        <a href="{{ url_for('avisos', dog_id=dog_data[dogs][0]) }}">
+                        <a href="{{ url_for('avisos', dog_id=dog_data[dogs][4]) }}">
                             <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
                         </a>
                     </div>
@@ -227,7 +227,7 @@
                 <hr>
     
             <div class="text-center">
-                <a href="{{ url_for('editarpet', dog_id=dog_data[dogs][0]) }}" class="btn">Editar informações</a>      
+                <a href="{{ url_for('editarpet', dog_id=dog_data[dogs][4]) }}" class="btn">Editar informações</a>      
             </div>
             
         </div>

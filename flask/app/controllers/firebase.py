@@ -199,8 +199,8 @@ class Dog():
                 firebaseResults = TransformationRequest(FRdogsdata)
                 #utiliza o metodo json
                 dog_dict = json.loads(firebaseResults)
-                #pega os dados [nome, idade, raca, peso] de cada cachorro e salva na lista
-                dogsdata = [dog_dict['Dog_Name'], dog_dict['Age'], dog_dict['Breed'], dog_dict['Weight']]
+                #pega os dados [nome, idade, raca, peso, id] de cada cachorro e salva na lista
+                dogsdata = [dog_dict['Dog_Name'], dog_dict['Age'], dog_dict['Breed'], dog_dict['Weight'], dog_dict['Dog_Id']]
                 #quando os sensores estiverem prontos
                 #dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight'], obj[dogs]['Status']]
                 dogsinf.append(dogsdata)
@@ -216,9 +216,10 @@ class Dog():
         #faz a consulta dos dados na base
         
         ##codigo para teste
-        ##FRdogsWarnings = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/Warnings/12_05_2020')
+        FRdogsWarnings = firebase.get('/Dogs/', self.dog_id+'/Warnings/12_05_2020')
         
-        FRdogsWarnings = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/Warnings'+CurrentDate())
+        #FRdogsWarnings = firebase.get('/Dogs/', self.dog_id+'/Warnings/'+CurrentDate())
+        
         if FRdogsWarnings == None:
             result = None
         else:
@@ -242,6 +243,7 @@ class Dog():
                 else: 
                     pass
             result = hoursinf
+            
         return result
 
     #metodo para ler determinados bpms registrados
@@ -251,7 +253,7 @@ class Dog():
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
         #faz a consulta dos dados na base
-        FRBPMHistory = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/BPM_History')
+        FRBPMHistory = firebase.get('Dogs/', self.dog_id+'/BPM_History')
         if FRBPMHistory == None:
             result = None
         else:
@@ -281,49 +283,46 @@ class Dog():
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
         #pesquisa se existe o id do cao informado
-        dognameTicket = firebase.get('/Users/', logged+'/Dogs/'+self.dogname)
+        dognameTicket = firebase.get('/Dogs/', self.dog_id+'/Dog_Data')
         if dognameTicket == None:
             result = None
-            #faz a consulta dos dados na base
-            FRdogsid = firebase.get('/Users/', logged+'/Dogs/'+self.dogname)            
-            #trata o dict com o metodo
-            firebaseResult = TransformationRequest(FRdogsid)
-            #utiliza o metodo json
-            obj = json.loads(firebaseResult)
-            #variavel que armazena, em lista, os dados [nome, idade, raca, peso] do cao
-            dogsdata = [obj['Dog_Name'], obj['Age'], obj['Breed'], obj['Weight']]
-            #quando os sensores estiverem prontos
-            #dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight'], obj[dogs]['Status']]
-            result = dogsdata
-
+            
         elif dognameTicket != None:
-            #faz a consulta dos dados na base
-            FRdogsid = firebase.get('/Users/', logged+'/Dogs/'+self.dogname)            
             #trata o dict com o metodo
-            firebaseResult = TransformationRequest(FRdogsid)
+            firebaseResult = TransformationRequest(dognameTicket)
             #utiliza o metodo json
             obj = json.loads(firebaseResult)
             #variavel que armazena, em lista, os dados [nome, idade, raca, peso] do cao
-            dogsdata = [obj['Dog_Name'], obj['Age'], obj['Breed'], obj['Weight']]
+            dogsdata = [obj['Dog_Name'], obj['Age'], obj['Breed'], obj['Weight'], obj['Dog_Id']]
             #quando os sensores estiverem prontos
-            #dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight'], obj[dogs]['Status']]
+            #dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight'], obj[dogs]['Status'], obj['Dog_Id']]
             
             result = dogsdata
             
         return result
 
+    #metodo para pegar o nome do cachorro
+    def GetDogName(self):
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
+        #pesquisa o nome do cao
+        dogname = firebase.get('Dogs/', self.dog_id+'/Dog_Data/Dog_Name')
+        
+        return dogname
+        
     #metodo para editar dog
     def EditDog(self):
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
         #defini os dados a serem editados
         data = {
+            'Dog_Id': self.dog_id,
             'Dog_Name': self.dogname,
             'Age': self.age,
             'Weight': self.weight,
             'Breed': self.breed
         }
-        firebase.put('Users/'+logged+'/Dogs', self.dogname, data)
+        firebase.put('Dogs/'+self.dog_id, 'Dog_Data', data)
         result = "ok"
         return result
 
@@ -333,6 +332,7 @@ class Dog():
         global logged
         #defini os dados a serem editados
         firebase.delete('Users/'+logged+'/Dogs', self.dogname)
+        firebase.delete('Dogs/', self.dog_id)
         result = "deleted"
         return result
 
