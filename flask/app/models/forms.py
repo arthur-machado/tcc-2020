@@ -22,19 +22,21 @@ class ProfileForm(FlaskForm):
 
 #formulario de edicao de perfil de usuario
 class EditProfileForm(FlaskForm):
-    #userphoto = FileField("userphoto")
     username = StringField("username", validators=[DataRequired()])
     email = StringField("email", validators=[DataRequired()])
     password = StringField("password", validators=[DataRequired()])
 
 #formulario de registro de caes
 class RegisterDogForm(FlaskForm):
-    #dogphoto = FileField("dogphoto", validators=[FileRequired(), FileAllowed(images, 'Somente imagens!')])
     dogname = StringField("dogname", validators=[DataRequired()])
     age = StringField("age", validators=[DataRequired()])
     weight = StringField("weight", validators=[DataRequired()])
     breed = SelectField("breed", choices=[('SRD', 'Sem Raça Definida'), ('Pastor Alemão','Pastor Alemão'), ('Salsicha', 'Salsicha'), ('Golden Retriever', 'Golden Retriever'), ('Labrador', 'Labrador'), ('Outro', 'Outro')])
     #adicionar sensor
+
+#formulario para adicao de cao
+class AddDogForm(FlaskForm):
+    dogid = StringField("dogid", validators=[DataRequired()])
 
 #formulario de edicao de perfil de caes
 class EditDogForm(FlaskForm):

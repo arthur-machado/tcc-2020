@@ -92,6 +92,7 @@
         <div class="infoPet">
             <h4>{{ dog_data[dogs][0] }}</h4>
             <p> 
+                <label>ID:</label> {{ dog_data[dogs][4] }}<br>
                 <label>Idade:</label> {{ dog_data[dogs][1] }}<br>
                 <label>Raça:</label> {{ dog_data[dogs][2] }} <br>
                 <label>Peso:</label> {{ dog_data[dogs][3] }}<br>
@@ -108,7 +109,11 @@
     <hr>
 
         <div class="text-center">
-            <a href="{{ url_for('cadastropet') }}" class="btn">+ Adicionar Pet</a>      
+            <a href="{{ url_for('cadastropet') }}" class="btn">+ Cadastrar Pet</a>      
+        </div>
+
+        <div class="text-center">
+            <a href="{{ url_for('adicionapet') }}" class="btn">+ Adicionar Pet</a>      
         </div>
     </div>
        

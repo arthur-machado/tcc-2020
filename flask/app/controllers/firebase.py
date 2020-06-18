@@ -120,44 +120,37 @@ class Dog():
         global logged
         #defini o 'resultado'
         result = "empty"
-        #pesquisa se já existe um cao com esse nome cadastrado
-        dognameTicket = firebase.get('/Users/', logged+'/Dogs/'+self.dogname+'/Dog_Name')
-        if dognameTicket == self.dogname:
-            result = "Cão já cadastrado"
-        elif dognameTicket == None:
-            #while para geracao e e teste de id
-            while True:        
-                #gera um id
-                generate_dog_id = DogIdGenerator(self.dogname)
-                #verifica se esse id ja foi cadastrado
-                dogIdTicket = firebase.get('/Dogs/', generate_dog_id+'/Dog_Data/Dog_Id')
-                #se o id for valido, defini como o id do cao
-                if dogIdTicket == None:
-                    self.dog_id = generate_dog_id
-                    break
+        #while para geracao e e teste de id
+        while True:        
+            #gera um id
+            generate_dog_id = DogIdGenerator(self.dogname)
+            #verifica se esse id ja foi cadastrado
+            dogIdTicket = firebase.get('/Dogs/', generate_dog_id+'/Dog_Data/Dog_Id')
+            #se o id for valido, defini como o id do cao
+            if dogIdTicket == None:
+                self.dog_id = generate_dog_id
+                break
             
-            #id que ficara no usuario
-            dog_id_data = {
-                    'Dog_Id' : self.dog_id,
-                    'Dog_Name': self.dogname
-            }
-            #salva os dados do cao no usuario
-            firebase.put('Users/'+logged+'/Dogs', self.dogname, dog_id_data)
-            
-            #dados do cao
-            data = {
+        #id que ficara no usuario
+        dog_id_data = {
                 'Dog_Id' : self.dog_id,
-                'Dog_Name': self.dogname,
-                'Age': self.age,
-                'Weight': self.weight,
-                'Breed': self.breed
-            }
-            #salva os dados do cao
-            firebase.put('Dogs/'+self.dog_id, 'Dog_Data', data)
+                'Dog_Name': self.dogname
+        }
+        #salva os dados do cao no usuario
+        firebase.put('Users/'+logged+'/Dogs', self.dog_id, dog_id_data)
             
-            result = "Feito"
-        else:
-            result = "Erro"
+        #dados do cao
+        data = {
+            'Dog_Id' : self.dog_id,
+            'Dog_Name': self.dogname,
+            'Age': self.age,
+            'Weight': self.weight,
+            'Breed': self.breed
+        }
+        #salva os dados do cao
+        firebase.put('Dogs/'+self.dog_id, 'Dog_Data', data)
+            
+        result = "Feito"
         return result
 
     #metodo para pegar dados de todos os caes
@@ -177,17 +170,11 @@ class Dog():
             firebaseResult = TransformationRequest(FRdogsnames)
             #utiliza o metodo json
             obj = json.loads(firebaseResult)
-            #lista que armazena os nomes de cada dicionario aninhado
-            dogs_names = []
-            #for que pega os nomes dos caes cadastrados no usuario
-            for dogs in obj.values():
-                dogs_names.append(dogs['Dog_Name'])
             #cria lista que armazena os ids de cada cao
             dogssearch = []
             #for que pega o id de cada cao 
-            for dogs in dogs_names:
-                dogsearch = obj[dogs]['Dog_Id']
-                dogssearch.append(dogsearch)
+            for dogs in obj.values():
+                dogssearch.append(dogs['Dog_Id'])
 
             #lista que salva os dados dos caes
             dogsinf = []
@@ -216,9 +203,9 @@ class Dog():
         #faz a consulta dos dados na base
         
         ##codigo para teste
-        FRdogsWarnings = firebase.get('/Dogs/', self.dog_id+'/Warnings/12_05_2020')
+        #FRdogsWarnings = firebase.get('/Dogs/', self.dog_id+'/Warnings/17_06_2020')
         
-        #FRdogsWarnings = firebase.get('/Dogs/', self.dog_id+'/Warnings/'+CurrentDate())
+        FRdogsWarnings = firebase.get('/Dogs/', self.dog_id+'/Warnings/'+CurrentDate())
         
         if FRdogsWarnings == None:
             result = None
@@ -278,6 +265,74 @@ class Dog():
             result = averagesinf
         return result
 
+    #metodo para adicionar cao
+    def AddDog(self):
+        #verifica o id informado corresponde a um cao cadastrado
+        dogIDTicket = firebase.get('/Dogs/', self.dog_id+'/Dog_Data/Dog_Id')
+        if dogIDTicket == None:
+            result = None
+        elif dogIDTicket == self.dog_id:
+            #'puxa' a variavel global para ser usada dentro do metodo
+            global logged
+            #'pega' o nome do cao
+            self.dogname = firebase.get('/Dogs/', self.dog_id+'/Dog_Data/Dog_Name')
+            #defini os dados para o cadastro
+            dog_id_data = {
+                    'Dog_Id' : self.dog_id,
+                    'Dog_Name': self.dogname
+            }
+            #adiciona o cao ao perfil do usuario logado
+            firebase.put('Users/'+logged+'/Dogs', self.dog_id, dog_id_data)
+            result = "ok"
+        else:
+            result = "erro"
+        return result
+
+    #metodo para desvincular cao da conta
+    def UnlinkDog(self):
+         #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
+        #defini os dados a serem editados
+        firebase.delete('Users/'+logged+'/Dogs', self.dog_id)
+        result = "unlinked"
+        return result
+
+    #metodo para verificar se o cao ainda esta cadastrado
+    def DogVerify(self):
+        #'puxa' a variavel global para ser usada dentro do metodo
+        global logged
+        #faz a consulta dos nomes na base de dados
+        FRdogsnames = firebase.get('/Users/', logged+'/Dogs')
+        if FRdogsnames == None:
+            pass
+        else:
+            #trata o dict com o metodo
+            firebaseResult = TransformationRequest(FRdogsnames)
+            #utiliza o metodo json
+            obj = json.loads(firebaseResult)
+            #cria lista que armazena os ids de cada cao
+            dogssearch = []
+            #for que pega o id de cada cao 
+            for dogs in obj.values():
+                dogssearch.append(dogs['Dog_Id'])
+            
+            #faz consulta dos caes
+            for dog in dogssearch:
+                #pesquisa se os caes que o usuario tem em seu perfil ainda existem
+                FRdogsdata = firebase.get('Dogs/', dog)
+                if FRdogsdata == None:
+                    #se nao existem, os caes sao excluidos do perfil
+                    self.dog_id = dog
+                    firebase.delete('Users/'+logged+'/Dogs', self.dog_id)
+                else:
+                    pass
+
+        result = "ok"
+        return result
+
+
+        
+
     #metodo para ler dados do cao
     def SearchDog(self):
         #'puxa' a variavel global para ser usada dentro do metodo
@@ -331,7 +386,7 @@ class Dog():
         #'puxa' a variavel global para ser usada dentro do metodo
         global logged
         #defini os dados a serem editados
-        firebase.delete('Users/'+logged+'/Dogs', self.dogname)
+        firebase.delete('Users/'+logged+'/Dogs', self.dog_id)
         firebase.delete('Dogs/', self.dog_id)
         result = "deleted"
         return result

@@ -2,7 +2,7 @@
 from flask import render_template, redirect, url_for, flash, request
 from app import app
 
-from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm, EditDogForm, EditProfileForm
+from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm, EditDogForm, EditProfileForm, AddDogForm
 from app.controllers.firebase import User, Dog
 
 #defini rotas e seus respetivos acontecimentos
@@ -137,6 +137,34 @@ def cadastropet():
                 return redirect(url_for('meuspets'))
         return render_template('cadastroPet.html', form=form)
 
+@app.route("/adicionapet/", methods=["GET", "POST"])
+def adicionapet():
+    #'chama' a classe User
+    user = User()
+    #'chama' o metodo ReadUser
+    credentials = user.CheckLogin()
+    if credentials == "access denied":
+        return redirect(url_for('login'))
+    elif credentials == "logged":
+        #'chama' o formulário
+        form = AddDogForm()
+        if form.validate_on_submit():
+            #'chama' a classe Dog
+            dog = Dog()
+            #pega os dados informados pelo usuario
+            dog.dog_id = form.dogid.data
+            #'chama' o metodo AddDog
+            validacao = dog.AddDog()
+            if validacao == None:
+                flash('Cão não encontrado, verifique o ID informado')
+            elif validacao == "Erro":
+                flash('Erro na operação')
+            elif validacao == "ok":
+                return redirect(url_for('meuspets'))
+
+        return render_template('adicionaPet.html', form=form)
+
+
 @app.route("/meuspets/")
 def meuspets():
     #'chama' a classe User
@@ -148,6 +176,10 @@ def meuspets():
     elif credentials == "logged":
         #'chama' a classe Dog
         dog = Dog()
+
+        #verifica e, se necessario, atualiza os caes
+        dog.DogVerify()
+
         #'chama' o metodo ReadDog
         dog_data = dog.ReadDog()
         #testa se ocorreu algum problema ao encontrar dados do usuário
@@ -227,6 +259,12 @@ def editarpet(dog_id):
                 if result == "deleted":
                     return redirect(url_for('meuspets'))
                 else:    
+                    flash('Não foi possível executar a ação')
+            elif 'unlink' in request.form:
+                result = dog.UnlinkDog()
+                if result == "unlinked":
+                    return redirect(url_for('meuspets'))
+                else:
                     flash('Não foi possível executar a ação')
 
         return render_template('editarpet.html', form=form)
