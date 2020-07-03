@@ -4,10 +4,9 @@ import numpy as np
 
 ##1 - Capturar dados brutos do sensor (Arduino) [FEITO]
 ##2 - Pré-processamento | filtro (arc Python (ARDUINO POR ENQUANTO)) [FEITO]
-##3 - Segmentação dos dados | time window - 10s (fixa), Frequência 50Hz* (arc Python) [FEITO]
+##3 - Segmentação dos dados | time window - 10s (fixa), Frequência 50Hz (arc Python) [FEITO]
 ##4 - Feature extraction (estatísticas) (arc Python) [FEITO]
 ##5 - Classificação da atividade (Cadeias ocultas de Markov e Random Forest)
-#*a frequência esta em 40Hz
 
 #===============================================================#
 #         LEITURA E SEPARACAO DE DADOS DO ARQUIVO CSV           #
