@@ -5,18 +5,18 @@ import numpy as np
 ##1 - Capturar dados brutos do sensor (Arduino) [FEITO]
 ##2 - Pré-processamento | filtro (arc Python (ARDUINO POR ENQUANTO)) [FEITO]
 ##3 - Segmentação dos dados | time window - 10s (fixa), Frequência 50Hz* (arc Python) [FEITO]
-##4 - Feature extraction (estatísticas) (arc Python)
+##4 - Feature extraction (estatísticas) (arc Python) [FEITO]
 ##5 - Classificação da atividade (Cadeias ocultas de Markov e Random Forest)
-#*a frequência
+#*a frequência esta em 40Hz
 
 #===============================================================#
 #         LEITURA E SEPARACAO DE DADOS DO ARQUIVO CSV           #
 #===============================================================#
 
 #defini o arquivo .csv a ser lido
-nome_ficheiro = 'DogSentado.csv'
+nome_ficheiro = 'DadosCao.csv'
 #defini o arquivo .csv que recebera os dados
-ficheiro_de_gravacao = 'ValoresDogSentadoO.csv'
+ficheiro_de_gravacao = 'ValoresDog.csv'
 
 #lista que armazena o conteudo das linhas ['hora', 'x', 'y', 'z']
 linesValues = []
