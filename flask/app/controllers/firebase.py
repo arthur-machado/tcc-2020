@@ -391,6 +391,54 @@ class Dog():
         result = "deleted"
         return result
 
+#classe para os dados brutos
+class RawData():
+
+    #variáveis para receber os valores do JSON
+    sensor = ""
+    petID = ""
+    time = ""
+    girX = ""
+    girY = ""
+    girZ = ""
+    accX = ""
+    accY = ""
+
+    #método que recebe o JSON enviado para a URL 
+    def receiveJSON(self, postData):
+      
+      self.postData = postData
+
+      #extrai os valores recebidos
+      self.sensor = self.postData['sensor']
+      self.petID = self.postData['petID']
+      self.time = self.postData['time']
+      self.girX = self.postData['girX']
+      self.girY = self.postData['girY']
+      self.girZ = self.postData['girZ']
+      self.accX = self.postData['accX']
+      self.accY = self.postData['accY']
+
+      return True
+    
+     
+    
+    #método para salvar dados no firebase  
+    def saveRawData(self):
+        firebase.put('RawData/', 'sensor', self.sensor)
+        firebase.put('RawData/', 'petID', self.petID)
+        firebase.put('RawData/', 'time', self.time)
+        firebase.put('RawData/', 'girX', self.girX)
+        firebase.put('RawData/', 'girY', self.girY)
+        firebase.put('RawData/', 'girZ', self.girZ)
+        firebase.put('RawData/', 'accX', self.accX)
+        firebase.put('RawData/', 'accY', self.accY)
+       
+
+       
+
+   
+ 
 
 
     
