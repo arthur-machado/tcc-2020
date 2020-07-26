@@ -2,7 +2,7 @@
 from firebase import firebase
 import json
 
-from app.models.functions import TransformationRequest, CurrentDate, TransformationHour, TransformationDate, DogIdGenerator
+from app.models.functions import TransformationRequest, CurrentDate, CurrentHour, TransformationHour, TransformationDate, DogIdGenerator
 
 
 #configuracao do firebase
@@ -412,7 +412,8 @@ class RawData():
       #extrai os valores recebidos
       self.sensor = self.postData['sensor']
       self.petID = self.postData['petID']
-      self.time = self.postData['time']
+      #self.time = self.postData['time']
+      self.time = CurrentHour()
       self.girX = self.postData['girX']
       self.girY = self.postData['girY']
       self.girZ = self.postData['girZ']
@@ -425,14 +426,14 @@ class RawData():
     
     #método para salvar dados no firebase  
     def saveRawData(self):
-        firebase.put('RawData/', 'sensor', self.sensor)
-        firebase.put('RawData/', 'petID', self.petID)
-        firebase.put('RawData/', 'time', self.time)
-        firebase.put('RawData/', 'girX', self.girX)
-        firebase.put('RawData/', 'girY', self.girY)
-        firebase.put('RawData/', 'girZ', self.girZ)
-        firebase.put('RawData/', 'accX', self.accX)
-        firebase.put('RawData/', 'accY', self.accY)
+        firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'sensor', self.sensor)
+        firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'petID', self.petID)
+        firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'time', self.time)
+        firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'girX', self.girX)
+        firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'girY', self.girY)
+        firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'girZ', self.girZ)
+        firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'accX', self.accX)
+        firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'accY', self.accY)
        
 
        

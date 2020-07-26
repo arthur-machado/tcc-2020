@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from random import randint
 
 #adiciona aspas duplas
@@ -32,6 +32,14 @@ def CurrentDate():
     #grava a data, no forma de string, no formato usado na base dados
     current_date = register_date.strftime('%d_%m_%Y')
     return current_date
+
+#pega a hora atual
+def CurrentHour():
+    #registra a hora atual
+    register_hour = datetime.now().time()
+    #grava a hora, no forma de string, no formato usado na base dados
+    current_hour = register_hour.strftime('%H_%M_%S')
+    return current_hour
 
 #gera um id para o cao no formato nome+valor_numerico
 def DogIdGenerator(dog_name):
