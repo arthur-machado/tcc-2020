@@ -1,3 +1,4 @@
+
 /*
  WiFiEsp example: WebClient
  This sketch connects to google website using an ESP8266 module to
@@ -6,6 +7,9 @@
 */
 
 #include "WiFiEsp.h"
+#include <Wire.h>
+#include <MPU6050_tockn.h> //biblioteca para tratamento de dados do acelerometro/giroscopio
+
 
 // Emulate Serial1 on pins 6/7 if not present
 #ifndef HAVE_HWSERIAL1
@@ -13,23 +17,31 @@
 SoftwareSerial Serial1(6, 7); // RX, TX
 #endif
 
-char ssid[] = "CLEANNET-LUCIANA";// your network SSID (name)
-char pass[] = "12345678";        // your network password
+MPU6050 mpu6050(Wire);
+
+float accX, accY, girX, girY, girZ; //variáveis para os eixos
+
+char ssid[] = "GUSTAVO-LEOVIN-FIBER";//SSID 
+char pass[] = "35297907";        // Password
 int status = WL_IDLE_STATUS;     // the Wifi radio's status
 
-char server[] = "192.168.0.104";
 
 // Initialize the Ethernet client object
 WiFiEspClient client;
 
+
 void setup()
 {
   // initialize serial for debugging
-  Serial.begin(115200);
+  Serial.begin(9600);
   // initialize serial for ESP module
   Serial1.begin(9600);
   // initialize ESP module
   WiFi.init(&Serial1);
+
+  Wire.begin();
+  //inicia o MPU6050
+  mpu6050.begin();
 
   // check for the presence of the shield
   if (WiFi.status() == WL_NO_SHIELD) {
@@ -40,37 +52,36 @@ void setup()
 
   // attempt to connect to WiFi network
   while ( status != WL_CONNECTED) {
-    Serial.print("Attempting to connect to WPA SSID: ");
+    Serial.print("Tentando conectar à rede ");
     Serial.println(ssid);
     // Connect to WPA/WPA2 network
     status = WiFi.begin(ssid, pass);
   }
 
   // you're connected now, so print out the data
-  Serial.println("You're connected to the network");
+  Serial.println("Conectado!");
 
+  //informações da conexão
   printWifiStatus();
 
+  //calcula a calibracao do giroscopio
+  mpu6050.calcGyroOffsets(true);
+
   Serial.println();
-  Serial.println("Starting connection to server...");
-  // if you get a connection, report back via serial
-  if (client.connect(server, 5000)) {
-    Serial.println("Connected to server");
-    // Make a HTTP request
-    String content = "{\"sensor\":\"gir/acc\",\"petID\":\"jurandir\",\"time\":\"1234\",\"girX\":\"1.30\",\"girY\":\"0.00\",\"girZ\":\"0.00\",\"accX\":\"0.00\",\"accY\":\"0.00\" }";
-    client.println("POST /rawData/ HTTP/1.1");
-    client.println("Host: 192.168.0.104:5000");
-    client.println("Accept: */*");
-    client.println("Connection: keep-alive");
-    client.println("Content-Length: " + String(content.length()));
-    client.println("Content-Type: application/json; charset=utf-8;");
-    client.println();
-    client.println(content);
-  }
+  
 }
 
 void loop()
 {
+   mpu6050.update();
+
+   //pega todos os valores de eixo
+   accX = mpu6050.getAccX();
+   accY = mpu6050.getAccY();
+   girX = mpu6050.getGyroX();
+   girY = mpu6050.getGyroY();
+   girZ = mpu6050.getGyroZ();
+ 
   // if there are incoming bytes available
   // from the server, read them and print them
   while (client.available()) {
@@ -78,17 +89,37 @@ void loop()
     Serial.write(c);
   }
 
-  // if the server's disconnected, stop the client
-  if (!client.connected()) {
-    Serial.println();
-    Serial.println("Disconnecting from server...");
-    client.stop();
+  if(client.connect(server, 5000)){
+    Serial.println("Conectado ao servidor");
+    
+    sendPostRequest();
+  
+    
 
-    // do nothing forevermore
-    while (true);
-  }
+    Serial.println("Dados enviados");
+
+    }
+    
 }
 
+void sendPostRequest(){
+    Serial.println("Enviando dados...");
+  
+   // cria o json
+    String content = "{\"sensor\":\"gir/acc\",\"petID\":\"tuco\",\"time\":\"1234\",\"girX\":"+ String(girX) +",\"girY\":"+ String(girY) + ",\"girZ\":"+ String(girZ) + ",\"accX\":"+ String(accX) + ",\"accY\":" + String(accY)+"}";
+
+    //envia a requisição
+    client.println("POST /rawData/ HTTP/1.1");
+    client.println("Host: 192.168.100.187:5000");
+    client.println("Accept: */*");
+    //client.println("Connection: close"); comentado devido a bad requests
+    client.println("Content-Length: " + String(content.length()));
+    client.println("Content-Type: application/json; charset=utf-8;");
+    client.println();
+    client.println(content);
+    client.stop();
+ 
+}
 
 void printWifiStatus()
 {
