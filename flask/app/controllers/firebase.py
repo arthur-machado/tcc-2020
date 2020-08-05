@@ -395,6 +395,7 @@ class Dog():
 class RawData():
 
     #variáveis para receber os valores do JSON
+    raw_data = ""
     sensor = ""
     petID = ""
     time = ""
@@ -403,37 +404,55 @@ class RawData():
     girZ = ""
     accX = ""
     accY = ""
+    accZ = ""
 
     #método que recebe o JSON enviado para a URL 
     def receiveJSON(self, postData):
       
-      self.postData = postData
+        self.postData = postData
 
-      #extrai os valores recebidos
-      self.sensor = self.postData['sensor']
-      self.petID = self.postData['petID']
-      #self.time = self.postData['time']
-      self.time = CurrentHour()
-      self.girX = self.postData['girX']
-      self.girY = self.postData['girY']
-      self.girZ = self.postData['girZ']
-      self.accX = self.postData['accX']
-      self.accY = self.postData['accY']
+        #extrai os valores recebidos
+        self.sensor = self.postData['sensor']
+        self.petID = self.postData['petID']
+        #self.time = self.postData['time']
+        self.time = CurrentHour()
+        self.girX = self.postData['girX']
+        self.girY = self.postData['girY']
+        self.girZ = self.postData['girZ']
+        #self.accX = self.postData['accX']
+        #self.accY = self.postData['accY']
+        #self.accY = self.postData['accZ']
 
-      return True
+        '''self.raw_data = {
+            'Sensor': self.sensor,
+            'petID': self.petID,
+            'time': self.time,
+            'girX': self.girX,
+            'girY': self.girY,
+            'girZ': self.girZ,
+            'accX': self.accX,
+            'accY': self.accY,
+            'accZ': self.accZ 
+        }'''
+
+        return True
     
      
     
     #método para salvar dados no firebase  
     def saveRawData(self):
+        #adiciona os dados brutos recebidos do sensor ao servidor
+        #firebase.put('RawData2/'+CurrentDate(), self.time, self.raw_data)
         firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'sensor', self.sensor)
         firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'petID', self.petID)
         firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'time', self.time)
         firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'girX', self.girX)
         firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'girY', self.girY)
         firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'girZ', self.girZ)
-        firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'accX', self.accX)
-        firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'accY', self.accY)
+        #firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'accX', self.accX)
+        #firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'accY', self.accY)
+        #firebase.put('RawData2/'+CurrentDate()+'/'+self.time, 'accZ', self.accZ)
+
        
 
        
