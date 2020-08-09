@@ -38,7 +38,7 @@ def CurrentHour():
     #registra a hora atual
     register_hour = datetime.now().time()
     #grava a hora, no forma de string, no formato usado na base dados
-    current_hour = register_hour.strftime('%H_%M_%S')
+    current_hour = register_hour.strftime('%H:%M:%S')
     return current_hour
 
 #gera um id para o cao no formato nome+valor_numerico

@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, flash, request
 from app import app
 
 from app.models.forms import RegisterUserForm, RegisterDogForm, LoginForm, ProfileForm, EditDogForm, EditProfileForm, AddDogForm
-from app.controllers.firebase import User, Dog, RawData
+from app.controllers.firebase import User, Dog, RawData, ReadRawData
 
 #defini rotas e seus respetivos acontecimentos
 @app.route("/registro/", methods=["GET", "POST"])
@@ -345,7 +345,17 @@ def receiveJSON():
         return "200 OK"
     else:
         return "Bad request - dados não formatados"
+
+@app.route("/readRawData/", methods=["GET", "POST"])
+def readRawData():
+    #chama a classe RawData
+    readRD = ReadRawData()
+    #pega os dados do firebase
+    result = readRD.Read()
     
+    return result
+    
+   
     
 
     
