@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from random import randint
 
+
 #adiciona aspas duplas
 def TransformationRequest(request):
     #para selecinar dados no JSON, o dicionário vindo do firebase precisa estar em aspas duplas
@@ -45,4 +46,3 @@ def CurrentHour():
 def DogIdGenerator(dog_name):
     dog_id = dog_name + str(randint(1, 1000))
     return dog_id
-

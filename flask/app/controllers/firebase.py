@@ -2,8 +2,8 @@
 from firebase import firebase
 import json
 #importa bibliotecas
-import pandas as pd
-import numpy as np
+#import pandas as pd
+#import numpy as np
 
 from app.models.functions import TransformationRequest, CurrentDate, CurrentHour, TransformationHour, TransformationDate, DogIdGenerator
 
@@ -15,6 +15,11 @@ firebase =  firebase.FirebaseApplication("https://tcc2020-78c46.firebaseio.com/"
 #'guarda' o usuário logado
 logged = ""
 check_login = "access denied"
+
+#'guarda' os ids das listas de dados brutos recebidos da placa arduino
+data_id_block = []
+#guarda a lista 'temporaria' de dados brutos recebidos da placa arduino
+block = []
 
 #defini classes, metodos
 class User():
@@ -429,7 +434,7 @@ class RawData():
         self.accZ = self.postData['accZ']
         self.HR = self.postData['HR']
     
-    #antes de mandar para o firebase, verifica se tem todos os valores
+    #antes de mandar para o firebase, verifica se o dicionario tem todos os valores
         self.raw_data = {
             'Sensor': self.sensor,
             'petID': self.petID,
@@ -439,14 +444,31 @@ class RawData():
             'girZ': self.girZ,
             'accX': self.accX,
             'accY': self.accY,
-            'accZ': self.accZ 
+            'accZ': self.accZ, 
+            'HR': self.HR
         }
+        
+        return "The package has been assembled!"
 
-        return True
-
-    
-    #método para salvar dados no firebase  
+    #metodo para salvar dados no firebase  
     def saveRawData(self):
+        #'chama' a variavel que guarda os ids da lista de dados brutos
+        global block
+        global data_id_block
+        
+        #monta a chave do json
+        Key = TransformationHour(self.time)
+        
         #adiciona os dados brutos recebidos do sensor ao servidor
-        firebase.put('RawDog/'+CurrentDate(), TransformationHour(self.time), self.raw_data)
+        firebase.put('RawDog/'+CurrentDate(), Key, self.raw_data)
+
+        #monta os blocos de listas de dados brutos
+        if len(block) < 10:
+            block.append(Key)
+            print(block)
+        else:
+            data_id_block.append(str(block))
+            print(data_id_block)
+            block.clear()
+            block.append(Key)
 
