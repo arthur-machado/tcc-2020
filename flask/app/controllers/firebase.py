@@ -16,9 +16,9 @@ firebase =  firebase.FirebaseApplication("https://tcc2020-78c46.firebaseio.com/"
 logged = ""
 check_login = "access denied"
 
-#'guarda' os ids das listas de dados brutos recebidos da placa arduino
+#'guarda' os ids das dicionarios de dados brutos recebidos da placa arduino
 data_id_block = []
-#'guarda' a lista 'temporaria' de dados brutos recebidos da placa arduino
+#'guarda' a dicionarios 'temporaria' de dados brutos recebidos da placa arduino
 block = []
 #'guarda' o numero de amostras (em segundos)
 sample_window = 10
@@ -436,7 +436,7 @@ class RawData():
         self.accZ = self.postData['accZ']
         self.HR = self.postData['HR']
     
-    #antes de mandar para o firebase, verifica se o dicionario tem todos os valores
+    #junta o dicionario
         self.raw_data = {
             'Sensor': self.sensor,
             'petID': self.petID,
@@ -449,33 +449,38 @@ class RawData():
             'accZ': self.accZ, 
             'HR': self.HR
         }
+
         
         return "The package has been assembled!"
 
     #metodo para salvar dados no firebase  
     def saveRawData(self):
-        #'chama' a variavel que guarda os ids da lista de dados brutos
+        #'chama' a variavel que guarda os ids da dicionarios de dados brutos
         global block
         global data_id_block
         global sample_window
         
-        #monta a chave do json
-        Key = TransformationHour(self.time)
-        
-        #adiciona os dados brutos recebidos do sensor ao servidor
-        firebase.put('RawDog/'+CurrentDate(), Key, self.raw_data)
+        ##monta a chave do json
+        ##Key = TransformationHour(self.time)
+        ##monta os dicionarios
+        ##obj = {Key:self.raw_data}
 
-        #monta os blocos de listas de dados brutos
+
+
+        #monta os blocos de dicionarios
         if len(block) < sample_window:
-            block.append(Key)
+            block.append(self.raw_data)
         else:
-            #copia a lista de ids temporarios para a lista a ser enviada para analise
+            #copia a dicionarios de ids temporarios para a dicionarios a ser enviada para analise
             data_id_block.extend(block)
-            ReadRawData.Read()
+            print(f"\n\n\nAQUI >>> {data_id_block}\n\n\n")
+            #ReadRawData.Read()
             block.clear()
-            block.append(Key)
+            block.append(self.raw_data)
 
+'''
 class ReadRawData():
+
     ##1 - Capturar dados brutos do sensor (Arduino) [FEITO]
     ##2 - Pré-processamento | filtro (arc Python (ARDUINO POR ENQUANTO)) [FEITO]
     ##3 - Segmentação dos dados | time window - 10s (fixa), Frequência 50Hz (arc Python) [FEITO]
@@ -485,55 +490,34 @@ class ReadRawData():
     #===============================================================#
     #       LEITURA E SEPARACAO DE DADOS VINDOS DO FIREBASE         #
     #===============================================================#
-    
-    #defini as variaveis a receberem os valores
-    sensor = ""
-    petID = ""
-    time = ""
-    girX = ""
-    girY = ""
-    girZ = ""
-    accX = ""
-    accY = ""
-    accZ = ""
 
     def Read():
-        #importas as variaveis globais
+        print(f"\n\n\nFUNCAO READ INICIADA!\n\n\n")  
+        #importa a variavel global
         global data_id_block
-        print(data_id_block)
-        #cria lista que armazena o tempo de cada dicionario
-        raw_data_hour = []
 
+        #cria lista que guarda os dicionarios
+        obj = []
 
-        #PROBLEMA DA MEIA NOITE >> pesquisa de janelas com dias diferentes
-
-        #pega os dados do firebase
-        for data in data_id_block:
-            SensorRawData = firebase.get('RawDog/', CurrentDate()+'/'+data)
-            ##codigo para teste
-            #SensorRawData = firebase.get('RawData2/', "09_08_2020")
-
-            #trata o dict com o metodo
-            firebaseResult = TransformationRequest(SensorRawData)
-            #utiliza o metodo json
-            obj = json.loads(firebaseResult)
-            
-            #pega somente o tempo de cada dicionario
-            raw_data_hour.append(obj['time'])
-
-            #print(f"\n\n\n\nAQUIIIIIIIIII \n {obj} \n\n\n\n")
-            data_id_block.clear()
-        print(raw_data_hour)
-        '''    
+        #copia o dicionario 'data_id_block' para 'obj'
+        obj.extend(data_id_block)
+        #'reseta' o dicionario 'data_id_block'
+        data_id_block.clear()
+        
+        #print(f"\n\n\nAQUI >>> {obj}\n\n\n")    
+        
         #cria lista que armazena cada dado do sensor ['hora', 'x', 'y', 'z']
         linesValues = []
         #for que pega os dados do sensor e armazena na lista
-        ##ESSE REPLACE É SÓ PRO TESTE
-        for values in raw_data_hour:
-            sensor_data = [obj[values]['time'].replace("_", ':'), obj[values]['girX'], obj[values]['girY'], obj[values]['girZ']]
+        for values in obj:
+            sensor_data = [values['time'], values['girX'], values['girY'], values['girZ']]
             linesValues.append(sensor_data)
+        
+        #'reseta' a lista 'obj'
+        obj.clear()
+        print(f"\n\n\nLISTA OBJ RESETADA\n\n\n")  
 
-        #print(linesValues)
+        #print(f"\n\n\nAQUI >>> {linesValues}\n\n\n")
         
         #cria as listas e valores
         position = 0
@@ -564,7 +548,7 @@ class ReadRawData():
 
         lastSecond = '0'
 
-
+        print(f"\n\n\nINICIO DO FILTRO\n\n\n")  
         #funcao para 'pegar' os segundos
         def getSeconds(time):  
             #separa o tempo em ['hora', 'minuto', 'segundos e milesimos']
@@ -578,6 +562,7 @@ class ReadRawData():
             return second
 
         #print(linesValues)
+        
 
 
         #pega e guarda em um lista os segundos de cada linha
@@ -587,12 +572,14 @@ class ReadRawData():
             seconds.append(second)
             #print(f"Segundos: {seconds}")
 
+        #print(f"\n\n\nSEGUNDOS {seconds}\n\n\n")
         #pega os grupos de segundos, horas (H:M:S.m), valores dos eixos X, Y, Z e guarda em uma lista 
         for value in seconds:
             #o contador soma 1 a cada segundo registrado, ou seja, a lista ['05', '05', '06'] teria dois segundos armazenados. embora tenha 3 registros armazenados, as posicoes 0 e 1 correspondem ao mesmo segundo.
             #com isso, a cada 10 segundos reconhecidos, ele registra esses como um grupo na lista de grupos
             #o mesmo se aplica as horas e valores de eixos reconhecidos
             if cont == 10:
+                print(f"\n\n\nDENTRO\n\n\n")
                 #print(group)
                 #registra na lista
                 secondsGroups.insert(position, group)
@@ -642,9 +629,10 @@ class ReadRawData():
 
             vezes = vezes + 1
             hours_axes_cont = hours_axes_cont + 1
-
+        print(f"\n\n\nFIM DO FILTRO\n\n\n")  
             #print(f"O valor é {value}, o ultimo segundo é {lastSecond}, o laço rodou {vezes} vezes e {cont} segundos já foram reconhecidos nesse grupo\n")
 
+        print(f"\n\n\nCALCULOS INICIADOS!\n\n\n")  
         #===============================================================#
         #                         CALCULOS                              #
         #===============================================================#
@@ -708,7 +696,7 @@ class ReadRawData():
             #calcula a raiz quadrada nao negativa da 'soma divida'. essa raiz e a media quadratica
             square_root = np.sqrt(sum_division)
             return square_root
-
+        #print(f"\n\n\nGRUPOS DE X {x_AxisGroups}\n\n\n")
         #calculos do eixo X
         for values in x_AxisGroups:
             #'cria uma lista' no padrao do pandas
@@ -756,6 +744,7 @@ class ReadRawData():
         #print(medianX)
         #print(hoursGroups)
 
+        #print(f"\n\n\nX CALCULADO\n\n\n")
         #calculos do eixo Y
         for values in y_AxisGroups:
             #'cria uma lista' no padrao do pandas
@@ -799,7 +788,7 @@ class ReadRawData():
             listdespY= []
             listRMSY = []
 
-
+        #print(f"\n\n\nY CALCULADO\n\n\n")
         #calculos do eixo Z
         for values in z_AxisGroups:
             #'cria uma lista' no padrao do pandas
@@ -842,53 +831,46 @@ class ReadRawData():
             listmedianZ = []
             listdespZ = []
             listRMSZ = []
-
+        #print(f"\n\n\nZ CALCULADO\n")
+        #print(f"\n\n\nAQUI >>> {RMSX}\n\n\n")
         #===============================================================#
         #                   PRINTA DADOS (POR AGORA)                    #
         #===============================================================#
-        #contador para saber o numero de grupos
-        count = 1
 
+        print(f"\n\n\nINICIO DO ENVIO\n\n\n")  
         for value in range (len(medianX)):
-            print("==-==-==-==-==-==-==-==-==-==-==")
-            print(f" BEGIN OF THE {count} GROUP")
-            print("==-==-==-==-==-==-==-==-==-==-==")
-            print("MEDIA ARITMETICA")
-            print(MeArX[value])
-            print(MeArY[value]) 
-            print(MeArZ[value]) 
-            print("==-==-==-==-==-==-==-==-==-==-==")
-            print("VARIANCIA")
-            print(VaCX[value])
-            print(VaCY[value])
-            print(VaCZ[value])
-            print("==-==-==-==-==-==-==-==-==-==-==")
-            print("DESVIO PADRAO") 
-            print(despX[value]) 
-            print(despY[value]) 
-            print(despZ[value])
-            print("==-==-==-==-==-==-==-==-==-==-==")
-            print("MEDIANA") 
-            print(medianX[value]) 
-            print(medianY[value]) 
-            print(medianZ[value]) 
-            print("==-==-==-==-==-==-==-==-==-==-==")
-            print("DESVIO ABSOLUTO") 
-            print(DAMX[value]) 
-            print(DAMY[value]) 
-            print(DAMZ[value]) 
-            print("==-==-==-==-==-==-==-==-==-==-==")
-            print("MEDIA QUADRATICA") 
-            print(RMSX[value]) 
-            print(RMSY[value]) 
-            print(RMSZ[value])
-            print("==-==-==-==-==-==-==-==-==-==-==")
-            print(f" END OF THE {count} GROUP ")
-            print("==-==-==-==-==-==-==-==-==-==-==")
-            count += 1
-        return SensorRawData
+            #print(f"ENVIANDO...")
+            data = {
+            'girX':{
+                'media_aritmetica': MeArX[value],
+                'variancia': VaCX[value],
+                'desvio_padrao': despX[value],
+                'mediana': medianX[value],
+                'desvio_absoluto': DAMX[value],
+                'media_quadratica': RMSX[value]
+            },
+            'girY':{
+                'media_aritmetica': MeArY[value],
+                'variancia': VaCY[value],
+                'desvio_padrao': despY[value],
+                'mediana': medianY[value],
+                'desvio_absoluto': DAMY[value],
+                'media_quadratica': RMSY[value]
+            },
+            'girZ':{
+                'media_aritmetica': MeArZ[value],
+                'variancia': VaCZ[value],
+                'desvio_padrao': despZ[value],
+                'mediana': medianZ[value],
+                'desvio_absoluto': DAMZ[value],
+                'media_quadratica': RMSZ[value]
+            }
+            }
+            #print(f"ENVIANDO...")
+            firebase.put('RawDog/'+CurrentDate(), TransformationHour(CurrentHour()), data)
+        return "ok"
 
-
+        
         with open(ficheiro_de_gravacao, 'w') as ficheiro:
             #'cria' a escrita no arquivo
             writer = csv.writer(ficheiro)

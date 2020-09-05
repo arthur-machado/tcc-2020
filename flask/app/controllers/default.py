@@ -338,7 +338,7 @@ def receiveJSON():
         #envia para a o método de recebimento o JSON recebido
         postData = rawData.receiveJSON(receive)
 
-        #se o método retorna verdadeiro, chama o método p/ salvar no firebase
+        #se o método retorna verdadeiro, chama o método p/ salvar 
         if postData:
             rawData.saveRawData()
 
