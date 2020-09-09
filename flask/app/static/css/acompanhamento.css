@@ -17,18 +17,17 @@
     height: 100%;
     margin: 50px auto;
     top: 10px;
-    padding-top: 5px;
+    padding-top: -22px;
     z-index: 2;
 }
 .login-form .box {
-    margin-bottom: 125px;
     background: #ffffff;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-    padding: 30px;
-    padding-left: 37px;
-    padding-top: 12px;
+    padding: 20px;
+    padding-left: 20px;
+    padding-top: 14px;
     border-radius: 20px;
-    
+    margin-bottom: 100px; 
    
 }
 
@@ -195,10 +194,13 @@ body{
 
 }
 
+.dog1 .fotoDog h6 {
+    margin-left: -3%; 
+}
 .estado {
    
     position: relative;
-    left: 14px;
+    left: 35px;
     margin: 0px;
     padding-top: 4%;
     padding-right: 0%;
@@ -238,6 +240,8 @@ body{
 
 .estado-mensagem {
     padding: 12px;
+    margin-left: -54%;
+    text-align: center;
 }
 
 .estado-mensagem #iconOk{

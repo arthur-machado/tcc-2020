@@ -143,7 +143,7 @@ body{
 
 .divPet {
     width: 90%;
-    height: 100px;
+    height: 114px;
     position: relative;
     left: 14px;
     
@@ -155,7 +155,7 @@ body{
 /*Aqui é pra mexer na foto do cachorro que vai ficar do lado dele*/
 .fotoPet {
     position: relative;
-    height: 100px;
+    height: 110px;
     width: 32%;
     border-right: 0.3px solid black;
 }
@@ -170,11 +170,11 @@ body{
 
 .infoPet {
     position: fixed;
-    font-size: 12px;
+    font-size: 11px;
     height: 87px;
     width: 64%;
-    left: 36%;
-    bottom: 100%;
+    left: 34%;
+    bottom: 96%;
 }
 
 .divPet .infoPet {
@@ -183,7 +183,7 @@ body{
 }
 
 .infoPet label {
-    line-height: 6px;
+    line-height: 8px;
     
 }
 .infoPet h4 {
