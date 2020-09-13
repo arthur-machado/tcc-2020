@@ -466,7 +466,7 @@ class RawData():
         ##obj = {Key:self.raw_data}
 
         #salva os dados brutos no firebase
-        firebase.put('RawData/'+CurrentDate(), TransformationHour(self.time), self.raw_data)
+        firebase.put('RawDataExemplo/'+CurrentDate(), TransformationHour(self.time), self.raw_data)
 
         #monta os blocos de dicionarios
         if len(block) < sample_window:
@@ -511,6 +511,7 @@ class ReadRawData():
         linesValues = []
         #for que pega os dados do sensor e armazena na lista
         for values in obj:
+            #sensor_data = [values['time'], values['girX'], values['girY'], values['girZ'], values['accX'], values['accY'], values['accZ'], values['HR']]
             sensor_data = [values['time'], values['girX'], values['girY'], values['girZ'], values['accX'], values['accY'], values['accZ']]
             linesValues.append(sensor_data)
         
@@ -557,6 +558,10 @@ class ReadRawData():
 
         z_AxisAcc = []
         z_AxisGroupsAcc = []
+
+        #HR
+        #hr_Values = []
+        #hr_Groups = []
 
         lastSecond = '0'
 
@@ -612,6 +617,8 @@ class ReadRawData():
                 x_AxisAcc.append(float(linesValues[hours_axes_cont][4]))
                 y_AxisAcc.append(float(linesValues[hours_axes_cont][5]))
                 z_AxisAcc.append(float(linesValues[hours_axes_cont][6]))
+
+                #hr_Values.append(float(linesValues[hours_axes_cont][7]))
                 
             #se o valor da lista for diferente do ultimo reconhecido, ele adiciona na lista de grupo e soma mais um ao numero de segundos reconhecidos
             elif value != lastSecond:
@@ -626,6 +633,7 @@ class ReadRawData():
                 y_AxisAcc.append(float(linesValues[hours_axes_cont][5]))
                 z_AxisAcc.append(float(linesValues[hours_axes_cont][6]))
                 
+                #hr_Values.append(float(linesValues[hours_axes_cont][7]))
                 cont += 1
 
             #print(f"\n\n\nCONTADOR >>> {cont}\n\n\n")
@@ -643,6 +651,8 @@ class ReadRawData():
                 x_AxisGroupsAcc.insert(position, x_AxisAcc)
                 y_AxisGroupsAcc.insert(position, y_AxisAcc)
                 z_AxisGroupsAcc.insert(position, z_AxisAcc)
+
+                #hr_Groups.insert(position, hr_Values)
                 
                 #reinicia a lista de segundos reconhecidos
                 group = []
@@ -657,6 +667,8 @@ class ReadRawData():
                 y_AxisAcc = []
                 z_AxisAcc = [] 
                 
+                #hr_Values = []
+
                 #a variavel 'posicao' registra a posicao na qual o grupo de 10 segundos deve ser adicionado a lista de grupos. apos adicionar, soma-se um a posicao atual
                 position += 1
                 #a variavel 'vezes' registra o numero de vezes que o laco ja foi executado
@@ -668,14 +680,15 @@ class ReadRawData():
             hours_axes_cont += 1
 
         #print(f"\n\n\nFIM DO FILTRO\n\n\n")  
-        print(f"\n\n\nVALORES DE X GIR>>> {x_AxisGroupsGir}")  
+        '''print(f"\n\n\nVALORES DE X GIR>>> {x_AxisGroupsGir}")  
         print(f"VALORES DE Y GIR>>> {y_AxisGroupsGir}")
         print(f"VALORES DE Z GIR>>> {z_AxisGroupsGir} \n\n\n")  
         
         print(f"\n\n\nVALORES DE X ACC>>> {x_AxisGroupsAcc}")  
         print(f"VALORES DE Y ACC>>> {y_AxisGroupsAcc}")
-        print(f"VALORES DE Z ACC>>> {z_AxisGroupsAcc} \n\n\n")
-        
+        print(f"VALORES DE Z ACC>>> {z_AxisGroupsAcc} \n\n\n")'''
+
+        #print(f"VALORES DE Z ACC>>> {hr_Groups} \n\n\n")
         
         #print(f"O valor é {value}, o ultimo segundo é {lastSecond}, o laço rodou {vezes} vezes e {cont} segundos já foram reconhecidos nesse grupo\n")
 
@@ -1055,6 +1068,20 @@ class ReadRawData():
             listdespZAcc = []
             listRMSZAcc = []
 
+        '''
+        for values in hr_Groups:
+            #'cria uma lista' no padrao do pandas
+            series = pd.Series(values)
+           
+            #calcula o desvio absoluto medio
+            DAM = series.mad()
+            listDAMZAcc.append(DAM)
+            DAMZAcc.append(listDAMZAcc)
+            #========================================================#
+            #reseta a lista
+            listDAMZAcc = []
+        '''
+
         #print(f"\n\n\nZ CALCULADO\n")
         #print(f"\n\n\nAQUI >>> {RMSX}\n\n\n")
         #===============================================================#
@@ -1113,6 +1140,6 @@ class ReadRawData():
             }
         }
         #print(f"ENVIANDO...")
-        firebase.put('FeExtDog/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
+        firebase.put('FeExtDogExemplo/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
 
         return "ok"  
