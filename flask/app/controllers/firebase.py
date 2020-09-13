@@ -2,7 +2,7 @@
 from firebase import firebase
 import json
 #importa bibliotecas
-#import pandas as pd
+import pandas as pd
 import numpy as np
 
 from app.models.functions import TransformationRequest, CurrentDate, CurrentHour, TransformationHour, TransformationDate, DogIdGenerator
@@ -684,66 +684,96 @@ class ReadRawData():
         #                         CALCULOS                              #
         #===============================================================#
 
-        '''
+        
         #desvio absoluto medio
-        listDAMX = []
-        DAMX = []
-        listDAMY = []
-        DAMY = []
-        listDAMZ = []
-        DAMZ = []
+        listDAMXGir = []
+        DAMXGir = [] #
+        listDAMYGir = []
+        DAMYGir = [] #
+        listDAMZGir = []
+        DAMZGir = [] #
+        ###
+        listDAMXAcc = []
+        DAMXAcc = [] #
+        listDAMYAcc = []
+        DAMYAcc = [] #
+        listDAMZAcc = []
+        DAMZAcc = [] #
 
         #media aritmetica
-        listMeArX = []
-        MeArX = []
-        listMeArY = []
-        MeArY = []
-        listMeArZ = []
-        MeArZ = []
+        listMeArXGir = []
+        MeArXGir = [] #
+        listMeArYGir = []
+        MeArYGir = [] #
+        listMeArZGir = []
+        MeArZGir = [] #
+        ###
+        listMeArXAcc = []
+        MeArXAcc = [] #
+        listMeArYAcc = []
+        MeArYAcc = [] #
+        listMeArZAcc = []
+        MeArZAcc = [] #
 
         #variancia (amostral)
-        listVaCX = []
-        VaCX = []
-        listVaCY = []
-        VaCY = []
-        listVaCZ = []
-        VaCZ = []
+        listVaCXGir = []
+        VaCXGir = [] #
+        listVaCYGir = []
+        VaCYGir = [] #
+        listVaCZGir = []
+        VaCZGir = [] #
+        ###
+        listVaCXAcc = []
+        VaCXAcc = [] #
+        listVaCYAcc = []
+        VaCYAcc = [] #
+        listVaCZAcc = []
+        VaCZAcc = [] #
 
         #mediana 
-        listmedianX = []
-        medianX = []
-        listmedianY = []
-        medianY = []
-        listmedianZ = []
-        medianZ = []
+        listmedianXGir = []
+        medianXGir = [] #
+        listmedianYGir = []
+        medianYGir = [] #
+        listmedianZGir = []
+        medianZGir = [] #
+        ###
+        listmedianXAcc = []
+        medianXAcc = [] #
+        listmedianYAcc = []
+        medianYAcc = [] #
+        listmedianZAcc = []
+        medianZAcc = [] #
 
         #desvio padrao (da populacao)
-        listdespX = []
-        despX = []
-        listdespY = []
-        despY = []
-        listdespZ = []
-        despZ = []
-        '''
+        listdespXGir = []
+        despXGir = [] #
+        listdespYGir = []
+        despYGir = [] #
+        listdespZGir = []
+        despZGir = [] #
+        ###
+        listdespXAcc = []
+        despXAcc = [] #
+        listdespYAcc = []
+        despYAcc = [] #
+        listdespZAcc = []
+        despZAcc = [] #
 
         #media quadratica
         listRMSXGir = []
-        RMSXGir = []
-        #
+        RMSXGir = [] #
         listRMSYGir = []
-        RMSYGir = []
-        #
+        RMSYGir = [] #
         listRMSZGir = []
-        RMSZGir = []
+        RMSZGir = [] #
         ###
         listRMSXAcc = []
-        RMSXAcc = []
-        #
+        RMSXAcc = [] #
         listRMSYAcc = []
-        RMSYAcc = []
-        #
+        RMSYAcc = [] #
         listRMSZAcc = []
-        RMSZAcc = []
+        RMSZAcc = [] #
 
         #calcula a media quadratica da lista
         def setRootMeanSquare(valuess):
@@ -762,8 +792,32 @@ class ReadRawData():
         #calculos do eixo X
         for values in x_AxisGroupsGir:
             #'cria uma lista' no padrao do pandas
-            #series = pd.Series(values)
+            series = pd.Series(values)
             
+            #calcula o desvio absoluto medio
+            DAM = series.mad()
+            listDAMXGir.append(DAM)
+            DAMXGir.append(listDAMXGir)
+            #========================================================#
+            #calcula e salva a media aritmetica
+            MeAr = np.mean(values)
+            listMeArXGir.append(MeAr)
+            MeArXGir.append(listMeArXGir)
+            #========================================================#
+            #variancia (amostral)
+            VaC = np.var(values)
+            listVaCXGir.append(VaC)
+            VaCXGir.append(listVaCXGir)
+            #========================================================#
+            #calcula e salva a mediana
+            mediana = np.median(values)
+            listmedianXGir.append(mediana)
+            medianXGir.append(listmedianXGir)
+            #========================================================#
+            #calcula e salva o desvio padrao
+            desvio_padrao = np.std(values)
+            listdespXGir.append(desvio_padrao)
+            despXGir.append(listdespXGir)
             #========================================================#
             #calcula e salva a media quadratica
             RMSGir = setRootMeanSquare(values)
@@ -771,7 +825,11 @@ class ReadRawData():
             RMSXGir.append(listRMSXGir)
             #========================================================#
             #reseta as listas
-           
+            listDAMXGir = []
+            listMeArXGir = []
+            listVaCXGir = []
+            listmedianXGir = []
+            listdespXGir = []
             listRMSXGir = []
 
         #print(len(x_AxisGroups))
@@ -782,23 +840,75 @@ class ReadRawData():
         #calculos do eixo Y
         for values in y_AxisGroupsGir:
             #'cria uma lista' no padrao do pandas
-            #series = pd.Series(values)
+            series = pd.Series(values)
+
+            #calcula o desvio absoluto medio
+            DAM = series.mad()
+            listDAMYGir.append(DAM)
+            DAMYGir.append(listDAMYGir)
+            #========================================================#
+            #calcula e salva a media aritmetica
+            MeAr = np.mean(values)
+            listMeArYGir.append(MeAr)
+            MeArYGir.append(listMeArYGir)
+            #========================================================#
+            #variancia (amostral)
+            VaC = np.var(values)
+            listVaCYGir.append(VaC)
+            VaCYGir.append(listVaCYGir)
+            #========================================================#
+            #calcula e salva a mediana
+            mediana = np.median(values)
+            listmedianYGir.append(mediana)
+            medianYGir.append(listmedianYGir)
+            #========================================================#
+            #calcula e salva o desvio padrao
+            desvio_padrao = np.std(values)
+            listdespYGir.append(desvio_padrao)
+            despYGir.append(listdespYGir)
             #========================================================#
             #calcula e salva a media quadratica
             RMSGir = setRootMeanSquare(values)
             listRMSYGir.append(RMSGir)
             RMSYGir.append(listRMSYGir)
-            
             #========================================================#
             #reseta as listas
-        
+            listDAMYGir = []
+            listMeArYGir = []
+            listVaCYGir = []
+            listmedianYGir = []
+            listdespYGir = []
             listRMSYGir = []
 
         #calculos do eixo Z
         for values in z_AxisGroupsGir:
             #'cria uma lista' no padrao do pandas
-            #series = pd.Series(values)
+            series = pd.Series(values)
            
+            #calcula o desvio absoluto medio
+            DAM = series.mad()
+            listDAMZGir.append(DAM)
+            DAMZGir.append(listDAMZGir)
+            #========================================================#
+            #calcula e salva a media aritmetica
+            MeAr = np.mean(values)
+            listMeArZGir.append(MeAr)
+            MeArZGir.append(listMeArZGir)
+            #========================================================#
+            #variancia (amostral)
+            VaC = np.var(values)
+            listVaCZGir.append(VaC)
+            VaCZGir.append(listVaCZGir)
+            #========================================================#
+            #calcula e salva a mediana
+            mediana = np.median(values)
+            listmedianZGir.append(mediana)
+            medianZGir.append(listmedianZGir)
+            #========================================================#
+            #calcula e salva o desvio padrao
+            desvio_padrao = np.std(values)
+            listdespZGir.append(desvio_padrao)
+            despZGir.append(listdespZGir)
             #========================================================#
             #calcula e salva a media quadratica
             RMSGir = setRootMeanSquare(values)
@@ -806,7 +916,11 @@ class ReadRawData():
             RMSZGir.append(listRMSZGir)
             #========================================================#
             #reseta as listas
-            
+            listDAMZGir = []
+            listMeArZGir = []
+            listVaCZGir = []
+            listmedianZGir = []
+            listdespZGir = []
             listRMSZGir = []
 
 
@@ -814,8 +928,32 @@ class ReadRawData():
 
         for values in x_AxisGroupsAcc:
             #'cria uma lista' no padrao do pandas
-            #series = pd.Series(values)
+            series = pd.Series(values)
             
+            #calcula o desvio absoluto medio
+            DAM = series.mad()
+            listDAMXAcc.append(DAM)
+            DAMXAcc.append(listDAMXAcc)
+            #========================================================#
+            #calcula e salva a media aritmetica
+            MeAr = np.mean(values)
+            listMeArXAcc.append(MeAr)
+            MeArXAcc.append(listMeArXAcc)
+            #========================================================#
+            #variancia (amostral)
+            VaC = np.var(values)
+            listVaCXAcc.append(VaC)
+            VaCXAcc.append(listVaCXAcc)
+            #========================================================#
+            #calcula e salva a mediana
+            mediana = np.median(values)
+            listmedianXAcc.append(mediana)
+            medianXAcc.append(listmedianXAcc)
+            #========================================================#
+            #calcula e salva o desvio padrao
+            desvio_padrao = np.std(values)
+            listdespXAcc.append(desvio_padrao)
+            despXAcc.append(listdespXAcc)
             #========================================================#
             #calcula e salva a media quadratica
             RMSAcc = setRootMeanSquare(values)
@@ -823,13 +961,43 @@ class ReadRawData():
             RMSXAcc.append(listRMSXAcc)
             #========================================================#
             #reseta as listas
-           
+            listDAMXAcc = []
+            listMeArXAcc = []
+            listVaCXAcc = []
+            listmedianXAcc = []
+            listdespXAcc = []
             listRMSXAcc = []
 
         #calculos do eixo Y
         for values in y_AxisGroupsAcc:
             #'cria uma lista' no padrao do pandas
-            #series = pd.Series(values)
+            series = pd.Series(values)
+            
+            
+            #calcula o desvio absoluto medio
+            DAM = series.mad()
+            listDAMYAcc.append(DAM)
+            DAMYAcc.append(listDAMYAcc)
+            #========================================================#
+            #calcula e salva a media aritmetica
+            MeAr = np.mean(values)
+            listMeArYAcc.append(MeAr)
+            MeArYAcc.append(listMeArYAcc)
+            #========================================================#
+            #variancia (amostral)
+            VaC = np.var(values)
+            listVaCYAcc.append(VaC)
+            VaCYAcc.append(listVaCYAcc)
+            #========================================================#
+            #calcula e salva a mediana
+            mediana = np.median(values)
+            listmedianYAcc.append(mediana)
+            medianYAcc.append(listmedianYAcc)
+            #========================================================#
+            #calcula e salva o desvio padrao
+            desvio_padrao = np.std(values)
+            listdespYAcc.append(desvio_padrao)
+            despYAcc.append(listdespYAcc)
             #========================================================#
             #calcula e salva a media quadratica 
             RMSAcc = setRootMeanSquare(values)
@@ -837,14 +1005,42 @@ class ReadRawData():
             RMSYAcc.append(listRMSYAcc)
             #========================================================#
             #reseta as listas
-        
+            listDAMYAcc = []
+            listMeArYAcc = []
+            listVaCYAcc = []
+            listmedianYAcc = []
+            listdespYAcc = []
             listRMSYAcc = []
 
         #calculos do eixo Z
         for values in z_AxisGroupsAcc:
             #'cria uma lista' no padrao do pandas
-            #series = pd.Series(values)
+            series = pd.Series(values)
            
+            #calcula o desvio absoluto medio
+            DAM = series.mad()
+            listDAMZAcc.append(DAM)
+            DAMZAcc.append(listDAMZAcc)
+            #========================================================#
+            #calcula e salva a media aritmetica
+            MeAr = np.mean(values)
+            listMeArZAcc.append(MeAr)
+            MeArZAcc.append(listMeArZAcc)
+            #========================================================#
+            #variancia (amostral)
+            VaC = np.var(values)
+            listVaCZAcc.append(VaC)
+            VaCZAcc.append(listVaCZAcc)
+            #========================================================#
+            #calcula e salva a mediana
+            mediana = np.median(values)
+            listmedianZAcc.append(mediana)
+            medianZAcc.append(listmedianZAcc)
+            #========================================================#
+            #calcula e salva o desvio padrao
+            desvio_padrao = np.std(values)
+            listdespZAcc.append(desvio_padrao)
+            despZAcc.append(listdespZAcc)
             #========================================================#
             #calcula e salva a media quadratica
             RMSAcc = setRootMeanSquare(values)
@@ -852,7 +1048,11 @@ class ReadRawData():
             RMSZAcc.append(listRMSZAcc)
             #========================================================#
             #reseta as listas
-            
+            listDAMZAcc = []
+            listMeArZAcc = []
+            listVaCZAcc = []
+            listmedianZAcc = []
+            listdespZAcc = []
             listRMSZAcc = []
 
         #print(f"\n\n\nZ CALCULADO\n")
@@ -862,15 +1062,57 @@ class ReadRawData():
         #===============================================================#
 
         print(f"\n\n\nINICIO DO ENVIO\n\n\n")  
-        RMS_data = {
-            'girX': RMSXGir[0],
-            'girY': RMSYGir[0],
-            'girZ': RMSZGir[0],
-            'accX': RMSXAcc[0],
-            'accY': RMSYAcc[0],
-            'accZ': RMSZAcc[0]
+        FeExt_data = {
+            'girX':{
+                'media_aritmetica': MeArXGir[0],
+                'variancia': VaCXGir[0],
+                'desvio_padrao': despXGir[0],
+                'mediana': medianXGir[0],
+                'desvio_absoluto': DAMXGir[0],
+                'media_quadratica': RMSXGir[0]
+            },
+            'girY':{
+                'media_aritmetica': MeArYGir[0],
+                'variancia': VaCYGir[0],
+                'desvio_padrao': despYGir[0],
+                'mediana': medianYGir[0],
+                'desvio_absoluto': DAMYGir[0],
+                'media_quadratica': RMSYGir[0]
+            },
+            'girZ':{
+                'media_aritmetica': MeArZGir[0],
+                'variancia': VaCZGir[0],
+                'desvio_padrao': despZGir[0],
+                'mediana': medianZGir[0],
+                'desvio_absoluto': DAMZGir[0],
+                'media_quadratica': RMSZGir[0]
+            },
+            'accX':{
+                'media_aritmetica': MeArXAcc[0],
+                'variancia': VaCXAcc[0],
+                'desvio_padrao': despXAcc[0],
+                'mediana': medianXAcc[0],
+                'desvio_absoluto': DAMXAcc[0],
+                'media_quadratica': RMSXAcc[0]
+            },
+            'accY':{
+                'media_aritmetica': MeArYAcc[0],
+                'variancia': VaCYAcc[0],
+                'desvio_padrao': despYAcc[0],
+                'mediana': medianYAcc[0],
+                'desvio_absoluto': DAMYAcc[0],
+                'media_quadratica': RMSYAcc[0]
+            },
+            'accZ':{
+                'media_aritmetica': MeArZAcc[0],
+                'variancia': VaCZAcc[0],
+                'desvio_padrao': despZAcc[0],
+                'mediana': medianZAcc[0],
+                'desvio_absoluto': DAMZAcc[0],
+                'media_quadratica': RMSZAcc[0]
+            }
         }
         #print(f"ENVIANDO...")
-        firebase.put('FeExtDog/'+CurrentDate(), TransformationHour(CurrentHour()), RMS_data)
+        firebase.put('FeExtDog/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
 
         return "ok"  
