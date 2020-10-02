@@ -493,7 +493,6 @@ class ReadRawData():
     #===============================================================#
 
     def Read():
-        print(f"\n\n\nFUNCAO READ INICIADA!\n\n\n")  
         #importa a variavel global
         global data_id_block
 
@@ -527,8 +526,8 @@ class ReadRawData():
         seconds = []
 
         #contadores
-        cont = 1
-        vezes = 0
+        cont = 0
+        vezes = 1
         position = 0
         hours_axes_cont = 0
 
@@ -592,23 +591,24 @@ class ReadRawData():
 
         #print(f"\n\n\nSEGUNDOS >>> {seconds}\n\n\n")
         #pega os grupos de segundos, horas (H:M:S.m), valores dos eixos X, Y, Z e guarda em uma lista 
-        for value in seconds:
+        for value in range(len(seconds)):
             #o contador soma 1 a cada segundo registrado, ou seja, a lista ['05', '05', '06'] teria dois segundos armazenados. embora tenha 3 registros armazenados, as posicoes 0 e 1 correspondem ao mesmo segundo.
             #com isso, a cada 10 segundos reconhecidos, ele registra esses como um grupo na lista de grupos
             #o mesmo se aplica as horas e valores de eixos reconhecidos
             
             #se for a primeira vez que o laco 'roda', o ultimo segundo registrado e igual ao valor inicial
-            if vezes == 0:
-                lastSecond = value
+            if cont == 0:
+                lastSecond = seconds[value]
+                cont = 1
             #se nao for a primeira vez que o laco 'roda', o ultimo segundo registrado e igual ao valor anterior da lista
             else:
-                lastSecond = group[vezes-1]
-                #print(f"LAST SECOND = {lastSecond}")
+                lastSecond = group[vezes-2]
 
+            #print(f"\n\n\n seconds[value] >>> {seconds[value]} \n LASTSECOND >>> {lastSecond} \n VEZES >>> {vezes}\n\n\n")
             #se o valor da lista for o mesmo, ou seja, o ultimo reconhecido, ele somente adiciona na lista de grupo
-            if value == lastSecond:
-                #print("\n\n\nENTREI 1\n\n\n")
-                group.append(value)
+            if seconds[value] == lastSecond:
+                #print(f"\n\n\nENTREI 1 CONT >>> {cont}\n\n\n")
+                group.append(seconds[value])
                 hours.append(linesValues[hours_axes_cont][0])
                 x_AxisGir.append(float(linesValues[hours_axes_cont][1]))
                 y_AxisGir.append(float(linesValues[hours_axes_cont][2]))
@@ -621,9 +621,9 @@ class ReadRawData():
                 #hr_Values.append(float(linesValues[hours_axes_cont][7]))
                 
             #se o valor da lista for diferente do ultimo reconhecido, ele adiciona na lista de grupo e soma mais um ao numero de segundos reconhecidos
-            elif value != lastSecond:
-                #print("\n\n\nENTREI 2\n\n\n"
-                group.append(value)
+            elif seconds[value] != lastSecond:
+                #print(f"\n\n\nENTREI 2 CONT >>> {cont}\n\n\n")
+                group.append(seconds[value])
                 hours.append(linesValues[hours_axes_cont][0])
                 x_AxisGir.append(float(linesValues[hours_axes_cont][1]))
                 y_AxisGir.append(float(linesValues[hours_axes_cont][2]))
@@ -634,12 +634,18 @@ class ReadRawData():
                 z_AxisAcc.append(float(linesValues[hours_axes_cont][6]))
                 
                 #hr_Values.append(float(linesValues[hours_axes_cont][7]))
+
                 cont += 1
 
             #print(f"\n\n\nCONTADOR >>> {cont}\n\n\n")
 
+            #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
             #DEBUG = ESSE TESTE ESTAVA NO COMECO ANTES, mas agora a janela so possui 10 elementos
-            if cont == 10:
+            
+            #if cont >= 10:
+            #    print(f"\n\n\nLEN >>> {len(seconds)} \n CONT >>> {cont} seconds[vezes] >>> {seconds[vezes]} \n seconds[value] >>> {seconds[value]}\n\n\n")
+
+            if cont >= 10 and vezes < len(seconds) and seconds[vezes] != seconds[value]:
                 #print(group)
                 #registra na lista
                 secondsGroups.insert(position, group)
@@ -671,27 +677,64 @@ class ReadRawData():
 
                 #a variavel 'posicao' registra a posicao na qual o grupo de 10 segundos deve ser adicionado a lista de grupos. apos adicionar, soma-se um a posicao atual
                 position += 1
-                #a variavel 'vezes' registra o numero de vezes que o laco ja foi executado
-                vezes -= vezes
                 #a variavel 'cont' regista os segundos reconhecidos
-                cont -= cont - 1
+                cont -= cont 
+            
+            ###################################################
+
+            elif cont >= 10 and vezes == len(seconds):
+                #print(group)
+                #registra na lista
+                secondsGroups.insert(position, group)
+                hoursGroups.insert(position, hours)
+                x_AxisGroupsGir.insert(position, x_AxisGir)
+                y_AxisGroupsGir.insert(position, y_AxisGir)
+                z_AxisGroupsGir.insert(position, z_AxisGir)
+                
+                x_AxisGroupsAcc.insert(position, x_AxisAcc)
+                y_AxisGroupsAcc.insert(position, y_AxisAcc)
+                z_AxisGroupsAcc.insert(position, z_AxisAcc)
+
+                #hr_Groups.insert(position, hr_Values)
+                
+                #reinicia a lista de segundos reconhecidos
+                group = []
+                #reinicia a lista de horas reconhecidas
+                hours = []
+                #reinicia os listas de eixos conhecidos
+                x_AxisGir = []
+                y_AxisGir = []
+                z_AxisGir = []
+                
+                x_AxisAcc = []
+                y_AxisAcc = []
+                z_AxisAcc = [] 
+                
+                #hr_Values = []
+
+                #a variavel 'posicao' registra a posicao na qual o grupo de 10 segundos deve ser adicionado a lista de grupos. apos adicionar, soma-se um a posicao atual
+                position += 1
+                #a variavel 'cont' regista os segundos reconhecidos
+                cont -= cont 
+
+            #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
             vezes += 1
             hours_axes_cont += 1
 
         #print(f"\n\n\nFIM DO FILTRO\n\n\n")  
-        '''print(f"\n\n\nVALORES DE X GIR>>> {x_AxisGroupsGir}")  
+        print(f"\n\n\nVALORES DE X GIR>>> {x_AxisGroupsGir}")  
         print(f"VALORES DE Y GIR>>> {y_AxisGroupsGir}")
         print(f"VALORES DE Z GIR>>> {z_AxisGroupsGir} \n\n\n")  
         
         print(f"\n\n\nVALORES DE X ACC>>> {x_AxisGroupsAcc}")  
         print(f"VALORES DE Y ACC>>> {y_AxisGroupsAcc}")
-        print(f"VALORES DE Z ACC>>> {z_AxisGroupsAcc} \n\n\n")'''
+        print(f"VALORES DE Z ACC>>> {z_AxisGroupsAcc} \n\n\n")
 
         #print(f"VALORES DE Z ACC>>> {hr_Groups} \n\n\n")
         
         #print(f"O valor é {value}, o ultimo segundo é {lastSecond}, o laço rodou {vezes} vezes e {cont} segundos já foram reconhecidos nesse grupo\n")
-
+        
         #print(f"\n\n\nCALCULOS INICIADOS!\n\n\n")  
         #===============================================================#
         #                         CALCULOS                              #
@@ -1087,8 +1130,6 @@ class ReadRawData():
         #===============================================================#
         #                 ENVIA OS DADOS PARA O FIREBASE                #
         #===============================================================#
-
-        print(f"\n\n\nINICIO DO ENVIO\n\n\n")  
         FeExt_data = {
             'girX':{
                 'media_aritmetica': MeArXGir[0],
