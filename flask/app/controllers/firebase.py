@@ -466,7 +466,7 @@ class RawData():
         ##obj = {Key:self.raw_data}
 
         #salva os dados brutos no firebase
-        firebase.put('RawDataExemplo/'+CurrentDate(), TransformationHour(self.time), self.raw_data)
+        firebase.put('RawData/'+CurrentDate(), TransformationHour(self.time), self.raw_data)
 
         #monta os blocos de dicionarios
         if len(block) < sample_window:
@@ -1186,6 +1186,6 @@ class ReadRawData():
             }
         }
         #print(f"ENVIANDO...")
-        firebase.put('FeExtDogExemplo/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
+        firebase.put('FeExtDog/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
 
         return "ok"  
