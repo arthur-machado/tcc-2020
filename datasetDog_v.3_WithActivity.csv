@@ -1,4 +1,4 @@
-time+AF8-window,device,absolute+AF8-deviation,standard+AF8-deviation,arithmetic+AF8-average,RMS,median,variance,activit
+time+AF8-window,device,absolute+AF8-deviation,standard+AF8-deviation,arithmetic+AF8-average,RMS,median,variance,activity
 14:36:38,accX,0.10400000000000001,0.12403628501370073,65,0.1400357097314824,0.09,0.015385,stopped
 14:36:38,accY,0.028200000000000003,0.036069377593742874,+AC0-0.007000000000000001,0.03674234614174767,+AC0-0.02,0.0013010000000000003,stopped
 14:36:38,accZ,0.03199999999999999,0.043416586692184816,925,0.9260183583493364,0.93,0.001885,stopped
