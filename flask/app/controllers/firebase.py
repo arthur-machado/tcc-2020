@@ -1186,6 +1186,6 @@ class ReadRawData():
             }
         }
         #print(f"ENVIANDO...")
-        firebase.put('FeExtDog/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
+        firebase.put('FeExtDogTwo/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
 
         return "ok"  
