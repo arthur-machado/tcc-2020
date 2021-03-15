@@ -1,5 +1,8 @@
 #importa os metodos
 from firebase import firebase
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 import json
 #importa bibliotecas
 import pandas as pd
@@ -486,7 +489,7 @@ class ReadRawData():
     ##2 - Pré-processamento | filtro (arc Python (ARDUINO POR ENQUANTO)) [FEITO]
     ##3 - Segmentação dos dados | time window - 10s (fixa), Frequência 50Hz (arc Python) [FEITO]
     ##4 - Feature extraction (estatísticas) (arc Python) [FEITO]
-    ##5 - Classificação da atividade (Cadeias ocultas de Markov e Random Forest)
+    ##5 - Classificação da atividade (Random Forest) [FEITO]
 
     #===============================================================#
     #       LEITURA E SEPARACAO DE DADOS VINDOS DO FIREBASE         #
@@ -1189,3 +1192,12 @@ class ReadRawData():
         firebase.put('FeExtDogTwo/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
 
         return "ok"  
+#====================================================================#
+# Classificação da atividade com Random Forest
+# [Name: scikit-learn Version: 0.24.1]
+
+#carrega o dataset de treino
+df = pd.read_csv("datasetDog2_v.1_WithActivity.csv")
+
+#defini o mapeamento
+map_activity = {'sitting':0, 'running':1, 'walking':2, 'jumping':3, 'lying_down':4, 'stopped':5}
