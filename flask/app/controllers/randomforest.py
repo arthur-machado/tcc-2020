@@ -1,18 +1,22 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
+from sklearn import preprocessing
+from sklearn import utils
 import pandas as pd
 import numpy as np
+from pathlib import Path
 
 # Classificação da atividade com Random Forest
 # [Name: scikit-learn Version: 0.24.1]
 
-def WhichActivityIs(sensorData):
+#funcao que prediz a acao do cao
+def WhichActivityIs(sensorData_Package):
 
-    activity = "indefinite"
+    activity = "undefined"
 
     #carrega o dataset de treino
-    df = pd.read_csv("datasetDog2_v.1_WithActivity.csv")
+    df = pd.read_csv(Path('c:\\Projetos\\TCC\\tcc-2020\\flask\\app\\controllers\\datasetdog.csv'))
 
     #defini o mapeamento
     map_activity = {'sitting':0, 'running':1, 'walking':2, 'jumping':3, 'lying_down':4, 'stopped':5}
@@ -26,9 +30,37 @@ def WhichActivityIs(sensorData):
     #Defini a variavel a ser prevista
     feat_predicted = ['activity']
 
+    print("cheguei aqui")
+
     #Cria os objetos
     X = df[features].values
-    Y = sensorData
+    Y = sensorData_Package
+
+    print(X, "\n\n\n\n\n", Y ,"\n")
+
+    Y = Y.reshape(1, -1)
+
+    print("cheguei aqui2")
+
+    print(X, "\n\n\n\n\n", Y,"\n")
+
+    #Inverte a lista, para que o sistema considere o mesmo numero de colunas [6]
+    #X = X.transpose()
+
+    #Converte os valores em float para int, dessa forma o sistema aceita a entrada
+    #lab_enc = preprocessing.LabelEncoder()
+    #Y = lab_enc.fit_transform(Y)
+
+    print("cheguei aqui3")
+
+
+    #Converte a matriz de 6-d para 1d
+    #X = X.reshape(1, -1)
+    #Y = Y.reshape(1, -1)
+
+    print("cheguei aqui4")
+
+    print(X, "\n\n\n\n\n", Y)
 
     #Defini o tamanho da base de teste (split)
     split_test_size = 0.20
@@ -66,3 +98,5 @@ def WhichActivityIs(sensorData):
         activity = "lying_down"
     elif result == [5]:
         activity = "stopped"
+
+    return activity

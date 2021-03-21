@@ -1,15 +1,12 @@
 #importa os metodos
 from firebase import firebase
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.impute import SimpleImputer
 import json
 #importa bibliotecas
 import pandas as pd
 import numpy as np
 
 from app.models.functions import TransformationRequest, CurrentDate, CurrentHour, TransformationHour, TransformationDate, DogIdGenerator
-
+from app.controllers.randomforest import WhichActivityIs
 
 #configuracao do firebase
     #realtime database
@@ -726,13 +723,13 @@ class ReadRawData():
             hours_axes_cont += 1
 
         #print(f"\n\n\nFIM DO FILTRO\n\n\n")  
-        print(f"\n\n\nVALORES DE X GIR>>> {x_AxisGroupsGir}")  
-        print(f"VALORES DE Y GIR>>> {y_AxisGroupsGir}")
-        print(f"VALORES DE Z GIR>>> {z_AxisGroupsGir} \n\n\n")  
+        #print(f"\n\n\nVALORES DE X GIR>>> {x_AxisGroupsGir}")  
+        #print(f"VALORES DE Y GIR>>> {y_AxisGroupsGir}")
+        #print(f"VALORES DE Z GIR>>> {z_AxisGroupsGir} \n\n\n")  
         
-        print(f"\n\n\nVALORES DE X ACC>>> {x_AxisGroupsAcc}")  
-        print(f"VALORES DE Y ACC>>> {y_AxisGroupsAcc}")
-        print(f"VALORES DE Z ACC>>> {z_AxisGroupsAcc} \n\n\n")
+        #print(f"\n\n\nVALORES DE X ACC>>> {x_AxisGroupsAcc}")  
+        #print(f"VALORES DE Y ACC>>> {y_AxisGroupsAcc}")
+        #print(f"VALORES DE Z ACC>>> {z_AxisGroupsAcc} \n\n\n")
 
         #print(f"VALORES DE Z ACC>>> {hr_Groups} \n\n\n")
         
@@ -1188,16 +1185,23 @@ class ReadRawData():
                 'media_quadratica': RMSZAcc[0][0]
             }
         }
-        #print(f"ENVIANDO...")
-        firebase.put('FeExtDogTwo/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
+
+        #salva os dados brutos no firebase
+        firebase.put('FeExtDogThree/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
+
+        #monta o pacote com os dados brutos reconhecidos nos sensores
+        sensorData_Package = [[DAMXGir[0][0], despXGir[0][0], MeArXGir[0][0], RMSXGir[0][0], medianXGir[0][0], VaCXGir[0][0]],
+                              [DAMYGir[0][0], despYGir[0][0], MeArYGir[0][0], RMSYGir[0][0], medianYGir[0][0], VaCYGir[0][0]],
+                              [DAMZGir[0][0], despZGir[0][0], MeArZGir[0][0], RMSZGir[0][0], medianZGir[0][0], VaCZGir[0][0]],
+                              [DAMXAcc[0][0], despXAcc[0][0], MeArXAcc[0][0], RMSXAcc[0][0], medianXAcc[0][0], VaCXAcc[0][0]],
+                              [DAMYAcc[0][0], despYAcc[0][0], MeArYAcc[0][0], RMSYAcc[0][0], medianYAcc[0][0], VaCYAcc[0][0]],
+                              [DAMZAcc[0][0], despZAcc[0][0], MeArZAcc[0][0], RMSZAcc[0][0], medianZAcc[0][0], VaCZAcc[0][0]]]
+
+        activity = WhichActivityIs(sensorData_Package)
+        print("Proxima atividade >>", activity, "\n")
 
         return "ok"  
 #====================================================================#
 # Classificação da atividade com Random Forest
 # [Name: scikit-learn Version: 0.24.1]
 
-#carrega o dataset de treino
-df = pd.read_csv("datasetDog2_v.1_WithActivity.csv")
-
-#defini o mapeamento
-map_activity = {'sitting':0, 'running':1, 'walking':2, 'jumping':3, 'lying_down':4, 'stopped':5}

@@ -193,6 +193,7 @@ def meuspets():
 
         return render_template('meuspets.html')
 
+
 @app.route("/acompanhamento/")
 def acompanhamento():
     #'chama' a classe User
