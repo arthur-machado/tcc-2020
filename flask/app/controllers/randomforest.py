@@ -30,58 +30,90 @@ def WhichActivityIs(sensorData_Package):
     #Defini a variavel a ser prevista
     feat_predicted = ['activity']
 
-    print("cheguei aqui")
+    #print("\ncheguei aqui\n")
 
-    #Cria os objetos
-    X = df[features].values
-    Y = sensorData_Package
+    #passa a lista para o formato array do numpay
+    sensorData = np.array(sensorData_Package)
 
-    print(X, "\n\n\n\n\n", Y ,"\n")
-
-    Y = Y.reshape(1, -1)
-
-    print("cheguei aqui2")
-
-    print(X, "\n\n\n\n\n", Y,"\n")
-
-    #Inverte a lista, para que o sistema considere o mesmo numero de colunas [6]
-    #X = X.transpose()
+    #print("\n\n sensorData >>>> ", sensorData, "\n\n")
 
     #Converte os valores em float para int, dessa forma o sistema aceita a entrada
-    #lab_enc = preprocessing.LabelEncoder()
-    #Y = lab_enc.fit_transform(Y)
+    lab_enc = preprocessing.LabelEncoder()
+    Y = lab_enc.fit_transform(sensorData)
 
-    print("cheguei aqui3")
+    #print("\nconvertido pra int\n")
 
+    #print("\n\n Y >>>> ", Y, "\n\n")
+
+    #Cria o objeto
+    X = df[features].values
 
     #Converte a matriz de 6-d para 1d
+    Y = sensorData.reshape(6, -1)
     #X = X.reshape(1, -1)
-    #Y = Y.reshape(1, -1)
 
-    print("cheguei aqui4")
+    #print("\nmatriz Y em casas de 6>> \n")
 
-    print(X, "\n\n\n\n\n", Y)
+    #print("\n\n X >>>> ", X)
+    #print("\n\n Y >>>> ", Y, "\n\n")
+
+
+    #Inverte a lista, para que o sistema considere o mesmo numero de colunas [6]
+    X = X.transpose()
+
+    #print("\nX em casa de 6: \n")
+
+    #print("\n\n X >>>> ", X)
+    #print("\n\n Y >>>> ", Y, "\n\n")    
 
     #Defini o tamanho da base de teste (split)
     split_test_size = 0.20
-
     #Criando dados de treino e de teste
-    X_training, X_test, Y_training, Y_test = train_test_split(X,Y, test_size = split_test_size, random_state=42)
+    X_training, X_test, Y_training, Y_test = train_test_split(X,Y, test_size = split_test_size, random_state=42) 
 
     #Criando objeto de substituicao
-    exchange_Zero = SimpleImputer(missing_values = 0, strategy = "mean")
+    #exchange_Zero = SimpleImputer(missing_values = 0, strategy = "mean")
 
     #Substituindo os valores iguais a zero pela media dos dados
-    X_training = exchange_Zero.fit_transform(X_training)
-    X_test = exchange_Zero.fit_transform(X_test)
+    #X_training = exchange_Zero.fit_transform(X_training)
+    #X_test = exchange_Zero.fit_transform(X_test)
 
-    Y_training = exchange_Zero.fit_transform(Y_training)
-    Y_test = exchange_Zero.fit_transform(Y_test)
+    #Y_training = exchange_Zero.fit_transform(Y_training)
+    #Y_test = exchange_Zero.fit_transform(Y_test)
+   
+    #Converte a matriz de 6-d para 1d
+    Y_training = Y_training.reshape(1, -1)
+
+    print("\nConjuntos montados \n")
+
+    print("\n\n X >>>> ", X_training)
+    print("\n\n Y >>>> ", Y_training, "\n\n")
+
+    #Converte os valores em float para int, dessa forma o sistema aceita a entrada
+    lab_enc = preprocessing.LabelEncoder()
+    Y_training = Y_training[0]
+    X_training = X_training[0]
+
+    print("\nConjuntos editado \n")
+    print("\n\n X >>>> ", X_training)
+    print("\n\n Y >>>> ", Y_training, "\n\n")
+
+    Y_training = lab_enc.fit_transform(Y_training)
+
+    #Converte a matriz de 1d para 6-d
+    X_training = X_training.reshape(6, 4)
+    Y_training = Y_training.reshape(6, -1)
+
+    #Inverte a lista, para que o sistema considere o mesmo numero de colunas [6]
+    X_training = X_training.transpose()
+
+    print("\nConjuntos avalicao \n")
+    print("\n\n X >>>> ", X_training)
+    print("\n\n Y >>>> ", Y_training, "\n\n")
 
     #Defini o modelo de RandomForest (classificador)
     clf = RandomForestClassifier(max_depth=50, min_samples_leaf=5, min_samples_split=10, n_estimators=40, random_state=42)
     clf.fit(X_training, Y_training)
-
     #Calcula a acuracia e captura o id da atividade prevista
     result = clf.predict(Y_test[-1:])
 
