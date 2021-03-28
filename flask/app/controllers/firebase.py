@@ -1204,4 +1204,5 @@ class ReadRawData():
 #====================================================================#
 # Classificação da atividade com Random Forest
 # [Name: scikit-learn Version: 0.24.1]
+# [Name: scipy        Version: 1.6.0 ]
 

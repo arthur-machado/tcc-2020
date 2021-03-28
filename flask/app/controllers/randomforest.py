@@ -1,14 +1,15 @@
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.impute import SimpleImputer
-from sklearn import preprocessing
-from sklearn import utils
-import pandas as pd
-import numpy as np
-from pathlib import Path
+import pandas                   as pd
+import numpy                    as np
+from sklearn.ensemble           import RandomForestClassifier
+from sklearn.model_selection    import train_test_split
+from sklearn.impute             import SimpleImputer
+from sklearn                    import preprocessing
+from sklearn                    import utils
+from pathlib                    import Path
 
 # Classificação da atividade com Random Forest
 # [Name: scikit-learn Version: 0.24.1]
+# [Name: scipy        Version: 1.6.0 ]
 
 #funcao que prediz a acao do cao
 def WhichActivityIs(sensorData_Package):
@@ -35,7 +36,7 @@ def WhichActivityIs(sensorData_Package):
     Y = df[feat_predicted].values
 
     #passa a lista para o formato array do numpay
-    sensorData = np.array(sensorData_Package)
+    #sensorData = np.array(sensorData_Package)
 
     #Converte os valores em float para int, dessa forma o sistema aceita a entrada
     #lab_enc = preprocessing.LabelEncoder()
