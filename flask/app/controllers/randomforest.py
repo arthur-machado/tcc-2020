@@ -17,13 +17,13 @@ def WhichActivityIs(sensorData_Package):
     activity = "undefined"
 
     #carrega o dataset de treino
-    df = pd.read_csv(Path('c:\\Projetos\\TCC\\tcc-2020\\flask\\app\\controllers\\datasetdog.csv'))
+    dfTreino = pd.read_csv(Path('c:\\Projetos\\TCC\\tcc-2020\\flask\\app\\controllers\\datasetdog.csv'))
 
     #defini o mapeamento
     map_activity = {'sitting':0, 'running':1, 'walking':2, 'jumping':3, 'lying_down':4, 'stopped':5}
 
     #aplica o mapeamento ao dataset
-    df['activity'] = df['activity'].map(map_activity)
+    dfTreino['activity'] = dfTreino['activity'].map(map_activity)
 
     #Seleciona as variaveis
     features = ['absolute_deviation', 'standard_deviation', 'arithmetic_average', 'RMS', 'median', 'variance']
@@ -32,16 +32,19 @@ def WhichActivityIs(sensorData_Package):
     feat_predicted = ['activity']
 
     #Cria o objeto
-    X = df[features].values
-    Y = df[feat_predicted].values
+    X = dfTreino[features].values
+    Y = dfTreino[feat_predicted].values
 
     #passa a lista para o formato array do numpay
-    #sensorData = np.array(sensorData_Package)
+    sensorData = np.array(sensorData_Package)
+    
+    print("\nValores de X => ", X, "\n")
+    print("Valores Recebidos => ", sensorData, "\n")
 
-    #Converte os valores em float para int, dessa forma o sistema aceita a entrada
+    ######################################################
+    #Codifica rotulos de destino entre 0 e n_classes-1
     #lab_enc = preprocessing.LabelEncoder()
     #sensorData = lab_enc.fit_transform(sensorData)
-
 
     #Converte a matriz de 6-d para 1d
     #sensorData = sensorData.reshape(-1, 1)
@@ -52,6 +55,7 @@ def WhichActivityIs(sensorData_Package):
     #Inverte a lista, para que o sistema considere o mesmo numero de colunas [24]
     #X = X.transpose()
     #sensorData = sensorData.transpose()
+    ######################################################
 
     #Defini o tamanho da base de teste (split)
     split_test_size = 0.20
@@ -71,12 +75,17 @@ def WhichActivityIs(sensorData_Package):
    
     #'''
 
+    #Codifica rotulos de destino entre 0 e n_classes-1
+    lab_enc = preprocessing.LabelEncoder()
+    Y_trainingEnc = lab_enc.fit_transform(Y_training)
+
     #Defini o modelo de RandomForest (classificador)
     clf = RandomForestClassifier(max_depth=50, min_samples_leaf=5, min_samples_split=10, n_estimators=40, random_state=42)
-    clf.fit(X_training, Y_training.ravel())
+    clf.fit(X_training, Y_trainingEnc.ravel())
 
     #Calcula a acuracia e captura o id da atividade prevista
-    result = clf.predict(Y_test[-1:])
+    #result = clf.predict(X_test[-1:])
+    result = clf.predict(sensorData[-1:])
 
     #Defini a atividade prevista
     if result == [0]:

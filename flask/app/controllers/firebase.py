@@ -1190,12 +1190,12 @@ class ReadRawData():
         firebase.put('FeExtDogThree/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
 
         #monta o pacote com os dados brutos reconhecidos nos sensores
-        sensorData_Package = [DAMXGir[0][0], despXGir[0][0], MeArXGir[0][0], RMSXGir[0][0], medianXGir[0][0], VaCXGir[0][0],
-                              DAMYGir[0][0], despYGir[0][0], MeArYGir[0][0], RMSYGir[0][0], medianYGir[0][0], VaCYGir[0][0],
-                              DAMZGir[0][0], despZGir[0][0], MeArZGir[0][0], RMSZGir[0][0], medianZGir[0][0], VaCZGir[0][0],
-                              DAMXAcc[0][0], despXAcc[0][0], MeArXAcc[0][0], RMSXAcc[0][0], medianXAcc[0][0], VaCXAcc[0][0],
-                              DAMYAcc[0][0], despYAcc[0][0], MeArYAcc[0][0], RMSYAcc[0][0], medianYAcc[0][0], VaCYAcc[0][0],
-                              DAMZAcc[0][0], despZAcc[0][0], MeArZAcc[0][0], RMSZAcc[0][0], medianZAcc[0][0], VaCZAcc[0][0]]
+        sensorData_Package = [[DAMXGir[0][0], despXGir[0][0], MeArXGir[0][0], RMSXGir[0][0], medianXGir[0][0], VaCXGir[0][0]],
+                              [DAMYGir[0][0], despYGir[0][0], MeArYGir[0][0], RMSYGir[0][0], medianYGir[0][0], VaCYGir[0][0]],
+                              [DAMZGir[0][0], despZGir[0][0], MeArZGir[0][0], RMSZGir[0][0], medianZGir[0][0], VaCZGir[0][0]],
+                              [DAMXAcc[0][0], despXAcc[0][0], MeArXAcc[0][0], RMSXAcc[0][0], medianXAcc[0][0], VaCXAcc[0][0]],
+                              [DAMYAcc[0][0], despYAcc[0][0], MeArYAcc[0][0], RMSYAcc[0][0], medianYAcc[0][0], VaCYAcc[0][0]],
+                              [DAMZAcc[0][0], despZAcc[0][0], MeArZAcc[0][0], RMSZAcc[0][0], medianZAcc[0][0], VaCZAcc[0][0]]]
 
         activity = WhichActivityIs(sensorData_Package)
         print("Proxima atividade >>", activity, "\n")
