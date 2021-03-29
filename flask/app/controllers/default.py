@@ -193,7 +193,6 @@ def meuspets():
 
         return render_template('meuspets.html')
 
-
 @app.route("/acompanhamento/")
 def acompanhamento():
     #'chama' a classe User
@@ -240,6 +239,7 @@ def editarpet(dog_id):
         #testa se ocorreu algum problema ao encontrar dados do cao
         if dog_data == None:
             flash('Dados do cão não encontrados')
+            return redirect(url_for('acompanhamento'))
         else:
             #defini o nome do cachorro
             dog.dogname = dog_data[0]

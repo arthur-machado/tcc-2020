@@ -63,51 +63,43 @@
     </div>
     </nav>
     <!--Fim da nav-->
-
-  
      
-    <!-- Se houver, carrega mensagens do flash-->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <div class="login-form">
-        <div class="box">
-            <div class="alert alert-warning">
-                <ul class=flashes>
-                    {% for category, message in messages %}
-                        <li class="{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            </div> 
-        </div>
-        </div>
-        {% endif %}
-    {% endwith %}
         
- 
-    
-
-
     {% if dog_data != 0 %}
     {% for dogs in range(dogs_in_list) %}  
 
     <div class="login-form">
        
+    <!-- Se houver, carrega mensagens do flash-->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="alert alert-warning">
+            <ul class=flashes>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div> 
+    {% endif %}
+    {% endwith %}
+
         {% if dog_status == "ok"  %}
         <!--Essa cor aqui varia conforme a condição do cão-->
-        <div class="box" style="background: linear-gradient(180deg, #9E9B9B -80.41%, rgb(255, 255, 255) 57%);">            
+        <div class="box" style="background: linear-gradient(180deg, #53CB1A -80.41%, rgb(255, 255, 255) 57%);">            
               
 
                 <div class="dog1">
                 <div class="fotoDog">
                     <img src="/static/img/petIcon.png" alt="">
                     <h5>{{ dog_data[dogs][0] }}</h5>
+                    <h6>{{ dog_data[dogs][4] }}</h6>
                 </div>
 
-                <div class="estado" style="color:#53CB1A;">
-                    <h1>55 BPM</h1>
+                <div class="estado" style="color:#43a317;">
+                    <h1>-- BPM</h1>
                     <hr id="separador">
                     <img src="/static/img/iconDogCaminhaBem.png" alt="" class="atividade">
-                    <label for="img">Caminhada</label>
+                    <label for="img">{{ dog_data[dogs][5] }}</label>
 
                     <div class="estado-mensagem">
                         <img src="/static/img/iconOK.png" alt="" id="iconOk">
@@ -116,13 +108,13 @@
                 </div>
 
                 <div class="form-group">
-                    <a href="{{ url_for('historico', dog_id=dog_data[dogs][0]) }}">
+                    <a href="{{ url_for('historico', dog_id=dog_data[dogs][4]) }}">
                         <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
                     </a>
                 </div>
 
                 <div class="form-group">
-                    <a href="{{ url_for('avisos', dog_id=dog_data[dogs][0]) }}">
+                    <a href="{{ url_for('avisos', dog_id=dog_data[dogs][4]) }}">
                         <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
                     </a>
                 </div>
@@ -132,9 +124,9 @@
             
             <hr>
         
-        <div class="text-center">
-            <a href="{{ url_for('editarpet', dog_id=dog_data[dogs][0]) }}" class="btn">Editar informações</a>      
-        </div>
+            <div class="text-center">
+                <a href="{{ url_for('editarpet', dog_id=dog_data[dogs][4]) }}" class="btn">Editar informações</a>      
+            </div>
         </div>
         {% elif dog_status == "notok"  %}
 
@@ -146,13 +138,14 @@
                     <div class="fotoDog">
                         <img src="/static/img/petIcon.png" alt="">
                         <h5>{{ dog_data[dogs][0] }}</h5>
+                        <h6>{{ dog_data[dogs][4] }}</h6>
                     </div>
     
                     <div class="estado" style="color:#D01E1E;">
-                        <h1>55 BPM</h1>
+                        <h1>-- BPM</h1>
                         <hr id="separador">
                         <img src="/static/img/iconDogCorrendoMal.png" alt="" class="atividade">
-                        <label for="img">Caminhada</label>
+                        <label for="img">{{ dog_data[dogs][5] }}</label>
     
                         <div class="estado-mensagem">
                             <img src="/static/img/iconAvisosMal.png" alt="" id="iconOk">
@@ -161,25 +154,23 @@
                     </div>
                     
                     <div class="form-group">
-                        <a href="{{ url_for('historico', dog_id=dog_data[dogs][0]) }}">
+                        <a href="{{ url_for('historico', dog_id=dog_data[dogs][4]) }}">
                             <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconNiveis.png" id="img-btn" alt="" > Histórico</button>
                         </a>
                     </div>
     
                     <div class="form-group">
-                        <a href="{{ url_for('avisos', dog_id=dog_data[dogs][0]) }}">
+                        <a href="{{ url_for('avisos', dog_id=dog_data[dogs][4]) }}">
                             <button type="" class="btn btn-secondary btn-block"><img src="/static/img/iconAvisos.png" id="img-btn2" alt=""> Avisos recentes</button>
                         </a>
                     </div>
                    
                 </div>
-    
-                
-                
+
                 <hr>
     
             <div class="text-center">
-                <a href="{{ url_for('editarpet', dog_id=dog_data[dogs][0]) }}" class="btn">Editar informações</a>      
+                <a href="{{ url_for('editarpet', dog_id=dog_data[dogs][4]) }}" class="btn">Editar informações</a>      
             </div>
             
         </div>
@@ -203,7 +194,7 @@
                         <hr id="separador">
                         <img src="/static/img/iconDogCorrendo.png" alt="" class="atividade">
                         <!--Arrumar aquele caracter que aparece-->
-                        <label for="img">indisponível</label>
+                        <label for="img">{{ dog_data[dogs][5] }}</label>
                         
                         <!--Arrumar a centralização dessa mensagem-->
                         <div class="estado-mensagem">

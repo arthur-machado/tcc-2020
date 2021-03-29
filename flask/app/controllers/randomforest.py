@@ -14,7 +14,7 @@ from pathlib                    import Path
 #funcao que prediz a acao do cao
 def WhichActivityIs(sensorData_Package):
 
-    activity = "undefined"
+    activity = "Indisponível"
 
     #carrega o dataset de treino
     dfTreino = pd.read_csv(Path('c:\\Projetos\\TCC\\tcc-2020\\flask\\app\\controllers\\datasetdog.csv'))
@@ -37,28 +37,9 @@ def WhichActivityIs(sensorData_Package):
 
     #passa a lista para o formato array do numpay
     sensorData = np.array(sensorData_Package)
-    
-    print("\nValores de X => ", X, "\n")
-    print("Valores Recebidos => ", sensorData, "\n")
-
-    ######################################################
-    #Codifica rotulos de destino entre 0 e n_classes-1
-    #lab_enc = preprocessing.LabelEncoder()
-    #sensorData = lab_enc.fit_transform(sensorData)
-
-    #Converte a matriz de 6-d para 1d
-    #sensorData = sensorData.reshape(-1, 1)
-
-    #Converte a lista para 24 colunas
-    #X = X.reshape(-1, 36)
-
-    #Inverte a lista, para que o sistema considere o mesmo numero de colunas [24]
-    #X = X.transpose()
-    #sensorData = sensorData.transpose()
-    ######################################################
 
     #Defini o tamanho da base de teste (split)
-    split_test_size = 0.20
+    split_test_size = 0.10
 
     #Criando dados de treino e de teste
     X_training, X_test, Y_training, Y_test = train_test_split(X,Y, test_size = split_test_size, random_state=42) 
@@ -72,8 +53,6 @@ def WhichActivityIs(sensorData_Package):
 
     Y_training = exchange_Zero.fit_transform(Y_training)
     Y_test = exchange_Zero.fit_transform(Y_test)
-   
-    #'''
 
     #Codifica rotulos de destino entre 0 e n_classes-1
     lab_enc = preprocessing.LabelEncoder()
@@ -84,21 +63,21 @@ def WhichActivityIs(sensorData_Package):
     clf.fit(X_training, Y_trainingEnc.ravel())
 
     #Calcula a acuracia e captura o id da atividade prevista
-    #result = clf.predict(X_test[-1:])
+    ##result = clf.predict(X_test[-1:]))
     result = clf.predict(sensorData[-1:])
 
     #Defini a atividade prevista
     if result == [0]:
-        activity = "sitting"
+        activity = "Sentado"
     elif result == [1]:
-        activity = "running"
+        activity = "Correndo"
     elif result == [2]:
-       activity = "walking"
+       activity = "Caminhando"
     elif result == [3]:
-        activity = "jumping"
+        activity = "Pulando"
     elif result == [4]:
-        activity = "lying_down"
+        activity = "Deitado"
     elif result == [5]:
-        activity = "stopped"#'''
+        activity = "Parado"
 
     return activity

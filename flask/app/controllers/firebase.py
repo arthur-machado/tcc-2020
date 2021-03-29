@@ -157,8 +157,12 @@ class Dog():
             'Weight': self.weight,
             'Breed': self.breed
         }
+        activityData = {
+            'Activity':'Indisponível'
+        }
         #salva os dados do cao
         firebase.put('Dogs/'+self.dog_id, 'Dog_Data', data)
+        firebase.put('Dogs/'+self.dog_id, 'Activity', activityData)
             
         result = "Feito"
         return result
@@ -192,14 +196,18 @@ class Dog():
             #faz consulta dos dados dos caes
             for dog in dogssearch:
                 FRdogsdata = firebase.get('Dogs/', dog+'/Dog_Data')
+                FRdogsActivity = firebase.get('Dogs/', dog+'/Activity')
+
                 #trata o dict com o metodo
                 firebaseResults = TransformationRequest(FRdogsdata)
+                firebaseActivity = TransformationRequest(FRdogsActivity)
+
                 #utiliza o metodo json
                 dog_dict = json.loads(firebaseResults)
+                activity = json.loads(firebaseActivity)
+
                 #pega os dados [nome, idade, raca, peso, id] de cada cachorro e salva na lista
-                dogsdata = [dog_dict['Dog_Name'], dog_dict['Age'], dog_dict['Breed'], dog_dict['Weight'], dog_dict['Dog_Id']]
-                #quando os sensores estiverem prontos
-                #dogsdata = [obj[dogs]['Dog_Name'], obj[dogs]['Age'], obj[dogs]['Breed'], obj[dogs]['Weight'], obj[dogs]['Status']]
+                dogsdata = [dog_dict['Dog_Name'], dog_dict['Age'], dog_dict['Breed'], dog_dict['Weight'], dog_dict['Dog_Id'], activity['Activity']]
                 dogsinf.append(dogsdata)
             result = dogsinf
         return result
@@ -340,9 +348,6 @@ class Dog():
 
         result = "ok"
         return result
-
-
-        
 
     #metodo para ler dados do cao
     def SearchDog(self):
@@ -1196,13 +1201,16 @@ class ReadRawData():
                               [DAMXAcc[0][0], despXAcc[0][0], MeArXAcc[0][0], RMSXAcc[0][0], medianXAcc[0][0], VaCXAcc[0][0]],
                               [DAMYAcc[0][0], despYAcc[0][0], MeArYAcc[0][0], RMSYAcc[0][0], medianYAcc[0][0], VaCYAcc[0][0]],
                               [DAMZAcc[0][0], despZAcc[0][0], MeArZAcc[0][0], RMSZAcc[0][0], medianZAcc[0][0], VaCZAcc[0][0]]]
-
+        
+        #'pega' a proxima atividade predita
         activity = WhichActivityIs(sensorData_Package)
-        print("Proxima atividade >>", activity, "\n")
+        
+        #monta o json formatado
+        activityData = {
+            'Activity':activity
+        }
+
+        #envia o json formatado para o firebase
+        firebase.put('Dogs/luna241/', 'Activity', activityData)
 
         return "ok"  
-#====================================================================#
-# Classificação da atividade com Random Forest
-# [Name: scikit-learn Version: 0.24.1]
-# [Name: scipy        Version: 1.6.0 ]
-
