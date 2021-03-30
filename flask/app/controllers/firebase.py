@@ -4,8 +4,8 @@ import json
 #importa bibliotecas
 import pandas as pd
 import numpy as np
-
-from app.models.functions import TransformationRequest, CurrentDate, CurrentHour, TransformationHour, TransformationDate, DogIdGenerator
+from werkzeug.security import generate_password_hash, check_password_hash
+from app.models.functions import TransformationRequest, CurrentDate, CurrentHour, TransformationHour, TransformationDate, DogIdGenerator, create_hash_password, check_password
 from app.controllers.randomforest import WhichActivityIs
 
 #configuracao do firebase
@@ -45,10 +45,11 @@ class User():
 
     #metodo para cadastrar usuario
     def InsertUser(self):
+        hashPassword = generate_password_hash(self.password)
         data = {
             'Username': self.username,
             'Email': self.email,
-            'Password': self.password
+            'Password': hashPassword
         }
         #defini o 'resultado'
         result = ""
@@ -77,7 +78,9 @@ class User():
         usernameTicket = firebase.get('/Users/'+self.username, 'User_Data/Username')
         passwordTicket = firebase.get('/Users/'+self.username, 'User_Data/Password')
         #defini as condições entre os dados digitados e os encontrados na base de dados
-        if self.username == usernameTicket and self.username != None and self.password == passwordTicket and self.password != None:
+        hashPassword = check_password_hash(passwordTicket, self.password)
+
+        if self.username == usernameTicket and self.username != None and hashPassword == True and self.password != None:
             ticket = True
             #'puxa' as variaveis globais para serem usadas dentro do metodo
             global logged, check_login

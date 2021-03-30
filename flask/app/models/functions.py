@@ -1,7 +1,6 @@
 from datetime import date, datetime
 from random import randint
 
-
 #adiciona aspas duplas
 def TransformationRequest(request):
     #para selecinar dados no JSON, o dicionário vindo do firebase precisa estar em aspas duplas
