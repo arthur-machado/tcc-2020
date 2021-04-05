@@ -9,8 +9,8 @@
 #include <Wire.h>
 #include <MPU6050_tockn.h> //biblioteca para tratamento de dados do acelerometro/giroscopio
 //biblioteca usada para medir o BPM
-//#define USE_ARDUINO_INTERRUPTS true
-//#include <PulseSensorPlayground.h>
+#define USE_ARDUINO_INTERRUPTS false
+#include <PulseSensorPlayground.h>
 
 // Emulate Serial1 on pins 6/7 if not present
 #ifndef HAVE_HWSERIAL1
@@ -20,16 +20,21 @@ SoftwareSerial Serial1(6, 7); // RX, TX
 
 //define o mpu6050
 MPU6050 mpu6050(Wire);
+
+//  Variables
+const int PulseWire = 0;
+int Threshold = 550; 
 //define o sensor de BPM
-//PulseSensorPlayground pulseSensor;
+PulseSensorPlayground pulseSensor;
 
 float accX, accY, accZ, girX, girY, girZ; //variáveis para os eixos
+int bpm; //variavel para bpm
 
 char ssid[] = "CLEANNET-LUCIANA";//SSID 
 char pass[] = "12345678";        // Password
 int status = WL_IDLE_STATUS;     // the Wifi radio's status
 
-char server[] = "192.168.0.104";
+char server[] = "192.168.0.108";
 
 // Initialize the Ethernet client object
 WiFiEspClient client;
@@ -37,6 +42,7 @@ WiFiEspClient client;
 void setup(){
   // initialize serial for debugging
   Serial.begin(9600);
+  
   // initialize serial for ESP module
   Serial1.begin(9600);
   // initialize ESP module
@@ -68,17 +74,18 @@ void setup(){
   mpu6050.calcGyroOffsets(true);
 
   //inicia o sensor de BPM
-//  pulseSensor.analogInput(PulseWire);   
-//  pulseSensor.blinkOnPulse(LED13);
-//  pulseSensor.setThreshold(Threshold);    
-//  if (pulseSensor.begin()) {
-//    Serial.println("We created a pulseSensor Object !");
-//  }
+  pulseSensor.analogInput(PulseWire);   
+  pulseSensor.setThreshold(Threshold);    
+  if (pulseSensor.begin()) {
+    Serial.println("Objeto Pulse Sensor criado!");
+  }
+
 }
 
 void loop()
 {
   mpu6050.update();
+  int myBPM = pulseSensor.getBeatsPerMinute();
 
   //pega todos os valores dos eixos do MPU6050
   accX = mpu6050.getAccX();
@@ -88,14 +95,14 @@ void loop()
   girY = mpu6050.getGyroY();
   girZ = mpu6050.getGyroZ();  
 
-  //sensor de BPM
-//  int myBPM = pulseSensor.getBeatsPerMinute();
-//                                              
-//  if (pulseSensor.sawStartOfBeat()) {           
-//    Serial.print("BPM: "); 
-//    Serial.println(myBPM);
-//  }
- 
+  //testa se aconteceu um beat
+  if (pulseSensor.sawStartOfBeat()) {
+    bpm = myBPM;
+  } 
+  else{
+    bpm = 0;  
+  }
+    
   // if there are incoming bytes available
   // from the server, read them and print them
   while (client.available()) {
@@ -117,6 +124,7 @@ void loop()
     girX = 0;
     girY = 0;
     girZ = 0;
+    bpm = 0;
 
     delay(1000);  
 }
@@ -124,7 +132,7 @@ void loop()
 void sendPostRequest(){
       
     // cria o json
-    String content = "{\"sensor\":\"gir/acc\",\"petID\":\"Jonas\",\"girX\":"+ String(girX) +",\"girY\":"+ String(girY) + ",\"girZ\":"+ String(girZ) + ",\"accX\":"+ String(accX) + ",\"accY\":" + String(accY)+ ",\"accZ\":" + String(accZ)+ ",\"HR\":" + String(10)+"}";
+    String content = "{\"sensor\":\"gir/acc\",\"petID\":\"Luna241\",\"girX\":"+ String(girX) +",\"girY\":"+ String(girY) + ",\"girZ\":"+ String(girZ) + ",\"accX\":"+ String(accX) + ",\"accY\":" + String(accY)+ ",\"accZ\":" + String(accZ)+ ",\"HR\":" + String(bpm)+"}";
     //Serial.print("JSON >> "); //usado para visualizar o JSON
     //Serial.println(content);
     
@@ -140,4 +148,3 @@ void sendPostRequest(){
     client.stop();
  
 }
-
