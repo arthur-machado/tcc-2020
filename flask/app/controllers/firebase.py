@@ -5,8 +5,8 @@ import json
 import pandas as pd
 import numpy as np
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models.functions import TransformationRequest, CurrentDate, CurrentHour, TransformationHour, TransformationDate, DogIdGenerator, create_hash_password, check_password
-from app.controllers.randomforest import WhichActivityIs
+from app.models.functions import TransformationRequest, CurrentDate, CurrentHour, TransformationHour, TransformationDate, DogIdGenerator, create_hash_password, check_password, DateBars
+from app.controllers.randomforest import WhichActivityIs, RiskValidation
 
 #configuracao do firebase
     #realtime database
@@ -480,9 +480,8 @@ class RawData():
         if len(block) < sample_window:
             block.append(self.raw_data)
         else:
-            #copia a dicionarios de ids temporarios para a dicionarios a ser enviada para analise
+            #copia a dicionarios de ids temporarios para o dicionario a ser enviado para analise
             data_id_block.extend(block)
-            #print(f"\n\n\nAQUI >>> {data_id_block}\n\n\n")
             ReadRawData.Read()
             block.clear()
             block.append(self.raw_data)
@@ -518,8 +517,8 @@ class ReadRawData():
         linesValues = []
         #for que pega os dados do sensor e armazena na lista
         for values in obj:
-            #sensor_data = [values['time'], values['girX'], values['girY'], values['girZ'], values['accX'], values['accY'], values['accZ'], values['HR']]
-            sensor_data = [values['time'], values['girX'], values['girY'], values['girZ'], values['accX'], values['accY'], values['accZ']]
+            sensor_data = [values['time'], values['girX'], values['girY'], values['girZ'], values['accX'], values['accY'], values['accZ'], values['HR']]
+            #sensor_data = [values['time'], values['girX'], values['girY'], values['girZ'], values['accX'], values['accY'], values['accZ']]
             linesValues.append(sensor_data)
         
         #print(f"\n\n\nLINHAS >>> {linesValues}\n\n\n")
@@ -1215,5 +1214,21 @@ class ReadRawData():
 
         #envia o json formatado para o firebase
         firebase.put('Dogs/luna241/', 'Activity', activityData)
+
+        #pega o HR
+        actual_HR = sensor_data[7]
+
+        #'verifica' se a situacao e de risco
+        frequency_Status = RiskValidation(actual_HR, activity)
+
+        hrData={
+            'Date': DateBars,
+            'Frequency': actual_HR,
+            'Frequency_Status': frequency_Status,
+            'Hour': CurrentHour()
+        }
+
+        #salva os dados brutos no firebase
+        firebase.put('Dogs/luna241/Warnings'+CurrentDate(), TransformationHour(CurrentHour()), hrData)
 
         return "ok"  

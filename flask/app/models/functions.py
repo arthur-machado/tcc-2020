@@ -33,6 +33,14 @@ def CurrentDate():
     current_date = register_date.strftime('%d_%m_%Y')
     return current_date
 
+#pega o data atual no formato padrao
+def DateBars():
+    #registra a data atual
+    register_date = date.today()
+    #grava a data, no forma de string, no formato usado para chave na base dados
+    current_date = register_date.strftime('%d/%m/%Y')
+    return current_date
+
 #pega a hora atual
 def CurrentHour():
     #registra a hora atual
