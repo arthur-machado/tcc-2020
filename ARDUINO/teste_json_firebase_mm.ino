@@ -23,7 +23,7 @@ MPU6050 mpu6050(Wire);
 
 //  Variables
 const int PulseWire = 0;
-int Threshold = 550; 
+int Threshold = 535; 
 //define o sensor de BPM
 PulseSensorPlayground pulseSensor;
 
@@ -76,17 +76,20 @@ void setup(){
   //inicia o sensor de BPM
   pulseSensor.analogInput(PulseWire);   
   pulseSensor.setThreshold(Threshold);    
-  if (pulseSensor.begin()) {
-    Serial.println("Objeto Pulse Sensor criado!");
-  }
-
+  pulseSensor.begin();
 }
 
 void loop()
 {
   mpu6050.update();
-  int myBPM = pulseSensor.getBeatsPerMinute();
-
+  bpm = pulseSensor.getBeatsPerMinute();
+  
+  if (pulseSensor.sawStartOfBeat()) {
+    true;
+  } 
+  else if (pulseSensor.sawStartOfBeat() == false){
+    bpm = 0;  
+  }
   //pega todos os valores dos eixos do MPU6050
   accX = mpu6050.getAccX();
   accY = mpu6050.getAccY();
@@ -94,14 +97,6 @@ void loop()
   girX = mpu6050.getGyroX();
   girY = mpu6050.getGyroY();
   girZ = mpu6050.getGyroZ();  
-
-  //testa se aconteceu um beat
-  if (pulseSensor.sawStartOfBeat()) {
-    bpm = myBPM;
-  } 
-  else{
-    bpm = 0;  
-  }
     
   // if there are incoming bytes available
   // from the server, read them and print them
@@ -109,7 +104,6 @@ void loop()
     char c = client.read();
     Serial.write(c);
   }
-
 
   if(client.connect(server, 5000)){
     //Serial.println("Conectado ao servidor");
@@ -132,7 +126,7 @@ void loop()
 void sendPostRequest(){
       
     // cria o json
-    String content = "{\"sensor\":\"gir/acc\",\"petID\":\"Luna241\",\"girX\":"+ String(girX) +",\"girY\":"+ String(girY) + ",\"girZ\":"+ String(girZ) + ",\"accX\":"+ String(accX) + ",\"accY\":" + String(accY)+ ",\"accZ\":" + String(accZ)+ ",\"HR\":" + String(bpm)+"}";
+    String content = "{\"sensor\":\"gir/acc/hr\",\"petID\":\"Luna241\",\"girX\":"+ String(girX) +",\"girY\":"+ String(girY) + ",\"girZ\":"+ String(girZ) + ",\"accX\":"+ String(accX) + ",\"accY\":" + String(accY)+ ",\"accZ\":" + String(accZ)+ ",\"HR\":" + String(bpm)+"}";
     //Serial.print("JSON >> "); //usado para visualizar o JSON
     //Serial.println(content);
     
