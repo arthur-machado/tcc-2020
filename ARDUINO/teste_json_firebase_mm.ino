@@ -8,9 +8,6 @@
 #include "WiFiEsp.h"
 #include <Wire.h>
 #include <MPU6050_tockn.h> //biblioteca para tratamento de dados do acelerometro/giroscopio
-//biblioteca usada para medir o BPM
-#define USE_ARDUINO_INTERRUPTS false
-#include <PulseSensorPlayground.h>
 
 // Emulate Serial1 on pins 6/7 if not present
 #ifndef HAVE_HWSERIAL1
@@ -21,14 +18,7 @@ SoftwareSerial Serial1(6, 7); // RX, TX
 //define o mpu6050
 MPU6050 mpu6050(Wire);
 
-//  Variables
-const int PulseWire = 0;
-int Threshold = 535; 
-//define o sensor de BPM
-PulseSensorPlayground pulseSensor;
-
 float accX, accY, accZ, girX, girY, girZ; //variáveis para os eixos
-int bpm; //variavel para bpm
 
 char ssid[] = "CLEANNET-LUCIANA";//SSID 
 char pass[] = "12345678";        // Password
@@ -45,6 +35,7 @@ void setup(){
   
   // initialize serial for ESP module
   Serial1.begin(9600);
+  
   // initialize ESP module
   WiFi.init(&Serial1);
 
@@ -73,23 +64,10 @@ void setup(){
   //calcula a calibracao do giroscopio
   mpu6050.calcGyroOffsets(true);
 
-  //inicia o sensor de BPM
-  pulseSensor.analogInput(PulseWire);   
-  pulseSensor.setThreshold(Threshold);    
-  pulseSensor.begin();
 }
 
-void loop()
-{
+void loop(){
   mpu6050.update();
-  bpm = pulseSensor.getBeatsPerMinute();
-  
-  if (pulseSensor.sawStartOfBeat()) {
-    true;
-  } 
-  else if (pulseSensor.sawStartOfBeat() == false){
-    bpm = 0;  
-  }
   //pega todos os valores dos eixos do MPU6050
   accX = mpu6050.getAccX();
   accY = mpu6050.getAccY();
@@ -118,17 +96,17 @@ void loop()
     girX = 0;
     girY = 0;
     girZ = 0;
-    bpm = 0;
 
     delay(1000);  
+
 }
 
 void sendPostRequest(){
       
     // cria o json
-    String content = "{\"sensor\":\"gir/acc/hr\",\"petID\":\"Luna241\",\"girX\":"+ String(girX) +",\"girY\":"+ String(girY) + ",\"girZ\":"+ String(girZ) + ",\"accX\":"+ String(accX) + ",\"accY\":" + String(accY)+ ",\"accZ\":" + String(accZ)+ ",\"HR\":" + String(bpm)+"}";
-    //Serial.print("JSON >> "); //usado para visualizar o JSON
-    //Serial.println(content);
+    String content = "{\"sensor\":\"gir/acc/hr\",\"petID\":\"Luna241\",\"girX\":"+ String(girX) +",\"girY\":"+ String(girY) + ",\"girZ\":"+ String(girZ) + ",\"accX\":"+ String(accX) + ",\"accY\":" + String(accY)+ ",\"accZ\":" + String(accZ)+ ",\"HR\":" + String(10)+"}";
+    Serial.print("JSON >> "); //usado para visualizar o JSON
+    Serial.println(content);
     
     //envia a requisição
     client.println("POST /rawData/ HTTP/1.1");
