@@ -7,7 +7,6 @@ import numpy as np
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models.functions import TransformationRequest, CurrentDate, CurrentHour, TransformationHour, TransformationDate, DogIdGenerator, DateBars
 from app.controllers.randomforest import WhichActivityIs
-from app.controllers.riskvalidation import RiskValidation
 
 #configuracao do firebase
     #realtime database
@@ -518,8 +517,8 @@ class ReadRawData():
         linesValues = []
         #for que pega os dados do sensor e armazena na lista
         for values in obj:
-            sensor_data = [values['time'], values['girX'], values['girY'], values['girZ'], values['accX'], values['accY'], values['accZ'], values['HR']]
-            #sensor_data = [values['time'], values['girX'], values['girY'], values['girZ'], values['accX'], values['accY'], values['accZ']]
+            #sensor_data = [values['time'], values['girX'], values['girY'], values['girZ'], values['accX'], values['accY'], values['accZ'], values['HR']]
+            sensor_data = [values['time'], values['girX'], values['girY'], values['girZ'], values['accX'], values['accY'], values['accZ']]
             linesValues.append(sensor_data)
         
         #print(f"\n\n\nLINHAS >>> {linesValues}\n\n\n")
@@ -1142,7 +1141,7 @@ class ReadRawData():
         print(f"\n\n\nVALORES DE X BRUTO>>> {MeArXGir[0][0]}")
         print(f"\n\n\nVALORES DE X EXEMP>>> {teste[0]}")'''
 
-        FeExt_data = {
+        '''FeExt_data = {
             'girX':{
                 #'media_aritmetica': teste[0],
                 'media_aritmetica': MeArXGir[0][0],
@@ -1192,10 +1191,10 @@ class ReadRawData():
                 'desvio_absoluto': DAMZAcc[0][0],
                 'media_quadratica': RMSZAcc[0][0]
             }
-        }
+        }'''
 
         #salva os dados brutos no firebase
-        firebase.put('FeExtDogThree/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
+        ##firebase.put('FeExtDogThree/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
 
         #monta o pacote com os dados brutos reconhecidos nos sensores
         sensorData_Package = [[DAMXGir[0][0], despXGir[0][0], MeArXGir[0][0], RMSXGir[0][0], medianXGir[0][0], VaCXGir[0][0]],
@@ -1209,32 +1208,72 @@ class ReadRawData():
         activity = WhichActivityIs(sensorData_Package)
         
         #monta o json formatado
-        activityData = {
+        '''activityData = {
             'Activity':activity,
             'Hour':CurrentHour()
-        }
+        }'''
 
-        print("\nDados >> ", activityData, "\n")
+        #print("\nDados >> ", activityData, "\n")
 
         #envia o json formatado para o firebase
         #firebase.put('Dogs/luna241/', 'Activity', activityData)
-        firebase.put('Dogs/luna241/', 'Activity', activityData)
-        
-        #pega o HR
-        '''actual_HR = sensor_data[7]
 
-        #'verifica' se a situacao e de risco
-        #frequency_Status = RiskValidation(actual_HR, activity)
-        frequency_Status = "Ok"
-
-        hrData={
-            'Date': DateBars,
-            'Frequency': actual_HR,
-            'Frequency_Status': frequency_Status,
-            'Hour': CurrentHour()
+        FeExt_data = {
+            'girX':{
+                #'media_aritmetica': teste[0],
+                'media_aritmetica': MeArXGir[0][0],
+                'variancia': VaCXGir[0][0],
+                'desvio_padrao': despXGir[0][0],
+                'mediana': medianXGir[0][0],
+                'desvio_absoluto': DAMXGir[0][0],
+                'media_quadratica': RMSXGir[0][0]
+            },
+            'girY':{
+                'media_aritmetica': MeArYGir[0][0],
+                'variancia': VaCYGir[0][0],
+                'desvio_padrao': despYGir[0][0],
+                'mediana': medianYGir[0][0],
+                'desvio_absoluto': DAMYGir[0][0],
+                'media_quadratica': RMSYGir[0][0]
+            },
+            'girZ':{
+                'media_aritmetica': MeArZGir[0][0],
+                'variancia': VaCZGir[0][0],
+                'desvio_padrao': despZGir[0][0],
+                'mediana': medianZGir[0][0],
+                'desvio_absoluto': DAMZGir[0][0],
+                'media_quadratica': RMSZGir[0][0]
+            },
+            'accX':{
+                'media_aritmetica': MeArXAcc[0][0],
+                'variancia': VaCXAcc[0][0],
+                'desvio_padrao': despXAcc[0][0],
+                'mediana': medianXAcc[0][0],
+                'desvio_absoluto': DAMXAcc[0][0],
+                'media_quadratica': RMSXAcc[0][0]
+            },
+            'accY':{
+                'media_aritmetica': MeArYAcc[0][0],
+                'variancia': VaCYAcc[0][0],
+                'desvio_padrao': despYAcc[0][0],
+                'mediana': medianYAcc[0][0],
+                'desvio_absoluto': DAMYAcc[0][0],
+                'media_quadratica': RMSYAcc[0][0]
+            },
+            'accZ':{
+                'media_aritmetica': MeArZAcc[0][0],
+                'variancia': VaCZAcc[0][0],
+                'desvio_padrao': despZAcc[0][0],
+                'mediana': medianZAcc[0][0],
+                'desvio_absoluto': DAMZAcc[0][0],
+                'media_quadratica': RMSZAcc[0][0]
+            },
+            'activityData':{
+            'Activity':activity,
+            'Hour':CurrentHour()
+            }
         }
-
         #salva os dados brutos no firebase
-        firebase.put('Dogs/luna241/Warnings'+CurrentDate(), TransformationHour(CurrentHour()), hrData)'''
+        firebase.put('FeExtDogFinal/'+CurrentDate(), TransformationHour(CurrentHour()), FeExt_data)
 
         return "ok"  
