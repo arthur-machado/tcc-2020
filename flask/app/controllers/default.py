@@ -214,7 +214,7 @@ def acompanhamento():
             #pega o numero de caes na lista
             dogs_in_list=len(dog_data)
             #esse valor, posteriormente, vai estar dentro de dog_data
-            dog_status = "zero"
+            dog_status = "ok"
             return render_template('acompanhamento.html', dogs_in_list=dogs_in_list, dog_status=dog_status, dog_data=dog_data)
 
         return render_template('acompanhamento.html')
