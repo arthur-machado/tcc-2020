@@ -102,7 +102,8 @@ class User():
         FRemail = firebase.get('/Users/'+logged, 'User_Data/Email')
         FRpassword = firebase.get('/Users/'+logged, 'User_Data/Password')
         #registra os dados lidos na base na lista
-        user_data_received = [FRusername, FRemail, FRpassword]
+        #user_data_received = [FRusername, FRemail, FRpassword]
+        user_data_received = [FRusername, FRemail, "******"]
         return user_data_received
     
     #metodo para editar usuario
